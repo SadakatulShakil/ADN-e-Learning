@@ -54,7 +54,7 @@ class InitState extends State<AssignmentDetailsPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0E0E95),
+          backgroundColor: const Color(0xFF01974D),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -67,7 +67,7 @@ class InitState extends State<AssignmentDetailsPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: SafeArea(
           child: Column(
             children: <Widget>[
@@ -287,7 +287,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                             padding: const EdgeInsets.only(left: 8.0),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(subFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),)),
+                                                child: Text(subFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.greenAccent),)),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -410,7 +410,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(feedBackFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),)),
+                                                child: Text(feedBackFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.greenAccent),)),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 8.0, right: 8.0),

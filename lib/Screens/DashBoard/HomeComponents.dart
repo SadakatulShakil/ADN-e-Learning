@@ -21,7 +21,7 @@ class InitState extends State<HomeComponents> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: Column(
           children: <Widget>[
             Container(

@@ -20,7 +20,7 @@ class InitState extends State<AllCoursesPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -33,7 +33,7 @@ class InitState extends State<AllCoursesPage> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF0E0E95),
+      backgroundColor: const Color(0xFF01974D),
       body: Column(
         children: <Widget>[
           Container(
@@ -133,7 +133,7 @@ class InitState extends State<AllCoursesPage> {
                             ' % complete'
                             : '0 % complete',
                         style: GoogleFonts.comfortaa(
-                            color: Colors.blueAccent,
+                            color: Colors.greenAccent,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),
                   ),

@@ -74,7 +74,7 @@ class InitState extends State<DashBoardCoursesList> {
                                 child: Center(
                                   child: Text('See All',
                                       style: GoogleFonts.comfortaa(
-                                          color: Colors.blueAccent,
+                                          color: Colors.greenAccent,
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold)),
                                 ),
@@ -84,79 +84,88 @@ class InitState extends State<DashBoardCoursesList> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          left: 12.0, right: 12, top: 5, bottom: 8),
-                      padding: const EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.black12)),
-                      child: Row(
-                        children: [
-                          FadeInImage.assetNetwork(
-                              placeholder: 'assets/images/course_image.png',
-                              image: recentCourseList.length > 0 ? recentCourseList[0].courseimage.toString() : "",
-                              height: 80,
-                              width: 80,
-                              fit: BoxFit.cover),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 5.0, top: 5),
-                                  child: Text(
-                                      recentCourseList.length > 0 ? recentCourseList[0]
-                                          .coursecategory
-                                          .toString() : "",
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.comfortaa(
-                                        color: Colors.black54,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
+                    InkWell(
+                      onTap: (){
+                        final recentCourseData = recentCourseList[0];
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CourseDetailsPage('recent', recentCourseData)));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 12.0, right: 12, top: 5, bottom: 8),
+                        padding: const EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.black12)),
+                        child: Row(
+                          children: [
+                            FadeInImage.assetNetwork(
+                                placeholder: 'assets/images/course_image.png',
+                                image: recentCourseList.length > 0 ? recentCourseList[0].courseimage.toString() : "",
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.cover),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 5.0, top: 5),
                                     child: Text(
-                                        recentCourseList.length > 0 ? recentCourseList[0].fullname.toString() : "",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                        recentCourseList.length > 0 ? recentCourseList[0]
+                                            .coursecategory
+                                            .toString() : "",
+                                        textAlign: TextAlign.left,
                                         style: GoogleFonts.comfortaa(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
-                                  child: Text(
-                                      recentCourseList.length > 0 ? DateFormat.yMMMEd().format(DateTime.parse(
-                                          getDateStump(recentCourseList[0]
-                                              .startdate
-                                              .toString()))) : "",
-                                      style: GoogleFonts.comfortaa(
                                           color: Colors.black54,
                                           fontSize: 13,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
-                                  child: Text('50% complete ',
-                                      style: GoogleFonts.comfortaa(
-                                          color: Colors.blueAccent,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold)),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 5.0),
+                                    child: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Text(
+                                          recentCourseList.length > 0 ? recentCourseList[0].fullname.toString() : "",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.comfortaa(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 5.0),
+                                    child: Text(
+                                        recentCourseList.length > 0 ? DateFormat.yMMMEd().format(DateTime.parse(
+                                            getDateStump(recentCourseList[0]
+                                                .startdate
+                                                .toString()))) : "",
+                                        style: GoogleFonts.comfortaa(
+                                            color: Colors.black54,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 5.0),
+                                    child: Text('50% complete ',
+                                        style: GoogleFonts.comfortaa(
+                                            color: Colors.greenAccent,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold)),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -189,7 +198,7 @@ class InitState extends State<DashBoardCoursesList> {
                         child: Center(
                           child: Text('See All',
                               style: GoogleFonts.comfortaa(
-                                  color: Colors.blueAccent,
+                                  color: Colors.greenAccent,
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold)),
                         ),
@@ -256,7 +265,7 @@ class InitState extends State<DashBoardCoursesList> {
   }
 
   void getAllCourses(String token, String userId) async {
-    //CommonOperation.showProgressDialog(context, "loading", true);
+    CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
         await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
@@ -266,7 +275,7 @@ class InitState extends State<DashBoardCoursesList> {
       //count = courseList.length.toString();
       print('data_count1 ' + courseList.first.toString());
       showToastMessage(message);
-      //CommonOperation.hideProgressDialog(context);
+      CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -297,7 +306,7 @@ class InitState extends State<DashBoardCoursesList> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => CourseDetailsPage(mCourseData)));
+                builder: (context) => CourseDetailsPage('all', mCourseData)));
       },
       child: Card(
         color: Colors.white,
@@ -357,7 +366,7 @@ class InitState extends State<DashBoardCoursesList> {
                                   ' % complete'
                               : '0 % complete',
                           style: GoogleFonts.comfortaa(
-                              color: Colors.blueAccent,
+                              color: Colors.greenAccent,
                               fontSize: 13,
                               fontWeight: FontWeight.bold)),
                     ),

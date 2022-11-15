@@ -17,9 +17,10 @@ import '../Helper/GapRF.dart';
 import '../Helper/operations.dart';
 
 class CourseDetailsPage extends StatefulWidget {
+  String form;
   dynamic mCourseData;
 
-  CourseDetailsPage(this.mCourseData);
+  CourseDetailsPage(this.form, this.mCourseData);
 
   @override
   State<StatefulWidget> createState() => InitState();
@@ -68,7 +69,7 @@ class InitState extends State<CourseDetailsPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0E0E95),
+          backgroundColor: const Color(0xFF01974D),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -81,7 +82,7 @@ class InitState extends State<CourseDetailsPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: SafeArea(
           child: Column(
             children: <Widget>[
@@ -116,7 +117,7 @@ class InitState extends State<CourseDetailsPage> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    widget.mCourseData.displayname.toString(),
+                                    widget.form == 'recent'?widget.mCourseData.fullname.toString(): widget.mCourseData.displayname.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.comfortaa(
@@ -476,7 +477,7 @@ class InitState extends State<CourseDetailsPage> {
                                         child: Text(
                                           "Check Now",
                                           style:
-                                              TextStyle(color: Colors.blueAccent),
+                                              TextStyle(color: Colors.greenAccent),
                                         ),
                                       ),
                                     ),
@@ -534,7 +535,7 @@ class InitState extends State<CourseDetailsPage> {
                               .contents[index]
                               .filename
                               .toString(),
-                          style: TextStyle(color: Colors.blueAccent),
+                          style: TextStyle(color: Colors.greenAccent),
                         )),
 
                     Visibility(
@@ -556,7 +557,7 @@ class InitState extends State<CourseDetailsPage> {
                             padding: const EdgeInsets.only(right: 25.0),
                             child: Icon(
                               Icons.play_circle,
-                              color: Colors.blueAccent,
+                              color: Colors.greenAccent,
                             )),
                       ),
                     )
@@ -720,7 +721,7 @@ class InitState extends State<CourseDetailsPage> {
                       },
                       child: Icon(
                         isPlaying ? Icons.pause_circle : Icons.play_circle,
-                        color: Colors.blueAccent,
+                        color: Colors.greenAccent,
                         size: 40,
                       ))
                 ],

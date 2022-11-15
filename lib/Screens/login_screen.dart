@@ -31,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(0xFF0E0E95),
       body: SafeArea(
         child: SingleChildScrollView(
           child: AnimatedContainer(
@@ -43,8 +42,7 @@ class _LoginScreenState extends State<LoginScreen>{
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    margin:  EdgeInsets.only(top: 50.0),
-                    child: Image.asset("assets/images/branding.png", width: 250, height: 250),
+                    child: Image.asset("assets/images/login_banner.png", fit: BoxFit.fill,),
                   ),
                 ),
                 Container(
@@ -62,10 +60,10 @@ class _LoginScreenState extends State<LoginScreen>{
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0),
-                          child: Text("Log in to Radda e-Learning",
+                          child: Text("Log in to DigiNet SkillUP",
                               style: GoogleFonts.comfortaa(color: const Color(
-                                  0xFF009AF1),
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                                  0xFF01974D),
+                                  fontSize: 20, fontWeight: FontWeight.w900)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0, left: 12, right: 12),
@@ -92,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen>{
                             keyboardType: TextInputType.text,
                             obscureText: !_passwordVisible,
                             decoration: InputDecoration(
+
                                 prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -156,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen>{
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text("Forget password?",
-                                    style: GoogleFonts.comfortaa(color: Color(0xFF009AF1))),
+                                    style: GoogleFonts.comfortaa(color: Color(0xFF01974D))),
                               ),
                             ],
                           ),

@@ -47,7 +47,7 @@ class InitState extends State<QuizDetailsPage> {
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0E0E95),
+          backgroundColor: const Color(0xFF01974D),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -60,7 +60,7 @@ class InitState extends State<QuizDetailsPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: Column(
           children: <Widget>[
             Container(

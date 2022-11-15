@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
+import 'package:radda_moodle_learning/Screens/courseDetailsPage.dart';
 class RecentAccessCourses extends StatefulWidget {
   List<dynamic> recentCourseList;
   RecentAccessCourses(this.recentCourseList);
@@ -20,7 +20,7 @@ class InitState extends State<RecentAccessCourses> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -33,7 +33,7 @@ class InitState extends State<RecentAccessCourses> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF0E0E95),
+      backgroundColor: const Color(0xFF01974D),
       body: Column(
         children: <Widget>[
           Container(
@@ -74,10 +74,10 @@ class InitState extends State<RecentAccessCourses> {
   Widget buildRecentCourse(mCourseData) => GestureDetector(
       onTap: () {
         /// do click item task
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => CoursesDetailsPage(mCourseData)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CourseDetailsPage('recent', mCourseData)));
       },
       child:
       Container(
@@ -151,7 +151,7 @@ class InitState extends State<RecentAccessCourses> {
                               ' % complete'
                               : '0 % complete',
                           style: GoogleFonts.comfortaa(
-                              color: Colors.blueAccent,
+                              color: Colors.green,
                               fontSize: 13,
                               fontWeight: FontWeight.bold)),
                     ),

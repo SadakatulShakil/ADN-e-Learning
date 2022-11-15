@@ -6,6 +6,7 @@ import 'package:radda_moodle_learning/Screens/courseDetailsPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ApiCall/HttpNetworkCall.dart';
+import '../Helper/operations.dart';
 
 class CategoryWiseCoursesPage extends StatefulWidget {
   String catId;
@@ -37,7 +38,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -50,7 +51,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF0E0E95),
+      backgroundColor: const Color(0xFF01974D),
       body: Column(
         children: <Widget>[
           Container(
@@ -90,6 +91,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
   Widget buildRecentCourse(mCourseData) => GestureDetector(
       onTap: () {
         /// do click item task
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailsPage('site', mCourseData)));
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -168,24 +170,19 @@ class InitState extends State<CategoryWiseCoursesPage> {
                               ]),
                         ),
                       ),
-                      InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailsPage(mCourseData)));
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Container(
+                          width:100,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: const Color(0xFFFFFFFF)
                           ),
-                          child: Container(
-                            width:100,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: const Color(0xFFFFFFFF)
-                            ),
-                            child: Center(
-                              child: Text("View details", style: GoogleFonts.comfortaa(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),),
-                            ),
+                          child: Center(
+                            child: Text("View details", style: GoogleFonts.comfortaa(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),),
                           ),
                         ),
                       ),
@@ -214,7 +211,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
     });
   }
   void getAllCourses(String token, String userId) async {
-    //CommonOperation.showProgressDialog(context, "loading", true);
+    CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
     await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
@@ -225,7 +222,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
       //count = courseList.length.toString();
       print('data_count1 ' + courseList.first.toString());
       showToastMessage(message);
-      //CommonOperation.hideProgressDialog(context);
+      CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();

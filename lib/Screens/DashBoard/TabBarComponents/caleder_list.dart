@@ -86,7 +86,7 @@ class InitState extends State<DashBoardCalederList> {
                     color: Colors.black,
                   ),
                 ),
-                Text(headerText, style: TextStyle(color: Colors.indigo, fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(headerText, style: TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold)),
                 IconButton(
                   onPressed: () {
                     pageController.nextPage(
@@ -154,7 +154,7 @@ class InitState extends State<DashBoardCalederList> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Upcoming Event', style: TextStyle(fontSize: 12)),
-                    Text('View all', style: TextStyle(color: Colors.blueAccent, fontSize: 12),),
+                    Text('View all', style: TextStyle(color: Colors.greenAccent, fontSize: 12),),
                   ],
                 ),
               ),

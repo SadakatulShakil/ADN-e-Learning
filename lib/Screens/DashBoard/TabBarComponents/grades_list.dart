@@ -195,7 +195,7 @@ class InitState extends State<DashBoardGradesList> {
                                 ' % complete'
                             : '0 % complete',
                         style: GoogleFonts.comfortaa(
-                            color: Colors.blueAccent,
+                            color: Colors.greenAccent,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),
                   ),

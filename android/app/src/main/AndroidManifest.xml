@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.radda_moodle_learning">
+    package="com.example.adn_e_learning">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -8,7 +8,7 @@
    <application
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
-        android:label="radda_moodle_learning"
+        android:label="DigiNet SkillUP"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
        tools:targetApi="m">

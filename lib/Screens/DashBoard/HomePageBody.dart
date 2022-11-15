@@ -36,7 +36,7 @@ class _DashBoardState extends State<DashBoard> {
       body: screens[_currentIndex],
       bottomNavigationBar: Container(
         child: ConvexAppBar(
-          backgroundColor: Color(0xFF0E0E95),
+          backgroundColor: Color(0xFF01974D),
           style: TabStyle.react,
           items: [
             TabItem(icon: SvgPicture.asset("assets/vectors/bottom_profile.svg"), title: 'Profile', isIconBlend: true),

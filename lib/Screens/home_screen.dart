@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:getwidget/components/badge/gf_badge.dart';
+import 'package:getwidget/components/badge/gf_button_badge.dart';
+import 'package:getwidget/components/badge/gf_icon_badge.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:radda_moodle_learning/ApiModel/notificationResponse.dart';
 import 'package:radda_moodle_learning/Helper/CustomScaffold.dart';
 import 'package:radda_moodle_learning/Screens/site_home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ApiCall/HttpNetworkCall.dart';
+import '../Helper/operations.dart';
 import '../language/Languages .dart';
 import '../language/LocalConstant.dart';
 import 'DashBoard/HomePageBody.dart';
+import 'NotoficationComponents/notificationPage.dart';
+import 'login_screen.dart';
 
 enum PopUpNavMenu { SwitchToBangla, RateThisApp }
 
@@ -23,12 +31,18 @@ class InitState extends State<HomeScreen> {
 
   double value = 0;
   NetworkCall networkCall = NetworkCall();
-
+  String token='';
+  String name='';
+  String imageUrl='';
+  String userId = '';
+  List<Messages> unReadNotiList = [];
+  List<Messages> readNotiList = [];
+  List<Messages> allNotification = [];
 
   @override
   void initState() {
     super.initState();
-    //getSharedData();
+    getSharedData();
     //getRecentCourseData();
   }
 
@@ -45,13 +59,13 @@ class InitState extends State<HomeScreen> {
         appBar: AppBar(
             bottom: PreferredSize(
                 child: Container(
-                  color: Color(0xFF0E0E95),
+                  color: Color(0xFF01974D),
                   height: 4.0,
                 ),
                 preferredSize: Size.fromHeight(4.0)),
             elevation: 0,
-            backgroundColor: Color(0xFF0E0E95),
-            title: Text('Radda e-Learning',
+            backgroundColor: Color(0xFF01974D),
+            title: Text('DigiNet SkillUP',
                 style: GoogleFonts.comfortaa(
                     color: const Color(0xFFFFFFFF),
                     fontWeight: FontWeight.w700,
@@ -59,11 +73,21 @@ class InitState extends State<HomeScreen> {
             centerTitle: false,
           automaticallyImplyLeading: false,
           actions: <Widget>[
-            IconButton(
-              icon: Image.asset("assets/icons/notification_icon.png",
-            height: 100, width: 100),
-              onPressed: () => {},
-            )
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
+              },
+              child: Container(
+                child: GFIconBadge(
+                  counterChild: Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Text(allNotification.length.toString(), style: TextStyle(color: Colors.red, fontWeight: FontWeight.w900),),
+                  ),
+                  child:  Icon(Icons.notifications_active),
+
+                ),
+              ),
+            ),
           ],
         )
     );
@@ -102,34 +126,6 @@ class InitState extends State<HomeScreen> {
           ),
         ]));
   }
-
-
-  // void getUserDetails(String token) async{
-  //
-  //   CommonOperation.showProgressDialog(
-  //       context, "loading", true);
-  //   final userDetailsData = await networkCall.UserDetailsCall(token);
-  //   if(userDetailsData != null){
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success';
-  //     OnDateClick();
-  //     print('hospital data'+ userDetailsData.firstname.toString());
-  //     CommonOperation.hideProgressDialog(context);
-  //     showToastMessage(message);
-  //     setState(() {
-  //       getURNotification(token, userDetailsData.userid.toString());
-  //       name = userDetailsData.fullname.toString();
-  //       imageUrl = userDetailsData.userpictureurl.toString();
-  //       userId = userDetailsData.userid.toString();
-  //     });
-  //
-  //   }else{
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  //
-  // }
   void showToastMessage(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -141,27 +137,51 @@ class InitState extends State<HomeScreen> {
         );
   }
 
-  // void getURNotification(String token, String userId) async{
-  //   CommonOperation.showProgressDialog(
-  //       context, "loading", true);
-  //   final uRNotificationData = await networkCall.UserUnReadNotificationCall(token, userId);
-  //   if(uRNotificationData != null){
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success';
-  //
-  //     CommonOperation.hideProgressDialog(context);
-  //     showToastMessage(message);
-  //     unReadNotiList = uRNotificationData.messages!;
-  //     setState(() {
-  //
-  //     });
-  //
-  //   }else{
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  // }
+  void getURNotification(String token, String userId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final uRNotificationData = await networkCall.UserUnReadNotificationCall(token, userId);
+    if(uRNotificationData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+
+      CommonOperation.hideProgressDialog(context);
+      showToastMessage(message);
+      unReadNotiList = uRNotificationData.messages!;
+      allNotification.addAll(unReadNotiList);
+      setState(() {
+
+        getRNotification(token, userId);
+      });
+
+    }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void getRNotification(String token, String userId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final rNotificationData = await networkCall.UserReadNotificationCall(token, userId);
+    if(rNotificationData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+
+      CommonOperation.hideProgressDialog(context);
+      showToastMessage(message);
+      readNotiList = rNotificationData.messages!;
+      setState(() {
+        allNotification.addAll(readNotiList);
+      });
+
+    }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
 
   void OnDateClick() {
     int timeNumber = 1658033030;
@@ -184,8 +204,8 @@ class InitState extends State<HomeScreen> {
             children: <Widget>[
               DrawerHeader(
                 child: Center(
-                  child: Image.asset("assets/images/banner.png",
-                      fit: BoxFit.cover),
+                  child: Image.asset("assets/images/login_banner.png",width: 200,
+                      fit: BoxFit.fill),
                 ),
               ),
               Divider(),
@@ -210,13 +230,13 @@ class InitState extends State<HomeScreen> {
                   setState(() {
                     value = 0;
                   });
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage(userId.toString())));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
                 },
                 leading: const Icon(
                   Icons.notifications_active,
                 ),
                 title: Text(
-                  "Notification (5)",
+                  "Notification ("+allNotification.length.toString()+")",
                   style: GoogleFonts.comfortaa(fontSize: 13),
                 ),
               ),
@@ -277,9 +297,9 @@ class InitState extends State<HomeScreen> {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   await prefs.setString('TOKEN', '');
                   await prefs.setString('isLoged', 'false');
-                  // Navigator.pushReplacement(context, MaterialPageRoute(
-                  //     builder: (context) => LoginScreen()
-                  // ));
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => LoginScreen()
+                  ));
                 },
                 leading: const Icon(
                   Icons.logout,
@@ -294,6 +314,15 @@ class InitState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void getSharedData() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('TOKEN')!;
+    userId = prefs.getString('userId')!;
+    setState(() {
+      getURNotification(token, userId);
+    });
   }
 
 }

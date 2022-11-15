@@ -15,16 +15,14 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewPageState extends State<WebViewPage> {
-  final Completer<WebViewController> _controller =
-  Completer<WebViewController>();
-
-  late WebViewController _webViewController;
+  bool isLoading = true;
+  late WebViewController _controller;
 
   @override
   void initState() {
     super.initState();
     if (Platform.isAndroid) {
-      print(widget.url.toString());
+      print("hhhhhhhhhhhhhhhh"+widget.url.toString());
       WebView.platform = SurfaceAndroidWebView();
     }
   }
@@ -34,7 +32,7 @@ class _WebViewPageState extends State<WebViewPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         title: Text(widget.title.toString(),
             style: GoogleFonts.comfortaa(
                 color: const Color(0xFFFFFFFF),
@@ -44,68 +42,28 @@ class _WebViewPageState extends State<WebViewPage> {
         onPressed: () => Navigator.of(context).pop(),
       ),
       ),
-      body: WebView(
-        initialUrl: widget.url.toString(),
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _webViewController = webViewController;
-          _controller.complete(webViewController);
-        },
-        onProgress: (int progress) {
-          new Column(
-            children: [
-              Container(
-                  child: CircularProgressIndicator(
-                      strokeWidth: 3
-                  ),
-                  width: 60,
-                  height: 32
-              ),
-              Text('Please wait ($progress%)')
-            ],
-          );
-          print('WebView is loading (progress : $progress%)');
-        },
-        javascriptChannels: <JavascriptChannel>{
-          _toasterJavascriptChannel(context),
-        },
-        navigationDelegate: (NavigationRequest request) {
-          if (request.url.startsWith('https://diginet-elarning.adnarchive.com/')) {
-            print('blocking navigation to $request}');
-            return NavigationDecision.prevent;
-          }
-          print('allowing navigation to $request');
-          return NavigationDecision.navigate;
-        },
-        onPageStarted: (String url) {
-          print('Page started loading: $url');
-        },
-        onPageFinished: (String url) {
-          print('Page finished loading: $url');
-          _webViewController
-              .evaluateJavascript("javascript:(function() { " +
-              "var head = document.getElementsByTagName('header')[0];" +
-              "head.parentNode.removeChild(head);" +
-              "var footer = document.getElementsByTagName('footer')[0];" +
-              "footer.parentNode.removeChild(footer);" +
-              "})()")
-              .then((value) => debugPrint('Page finished loading Javascript'))
-              .catchError((onError) => debugPrint('$onError'));
-        },
-        gestureNavigationEnabled: true,
-        backgroundColor: const Color(0x00000000),
+      body: Stack(
+        children: <Widget>[
+          WebView(
+            initialUrl: widget.url.toString(),
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (_controller) {
+              this._controller = _controller;
+
+            },
+            onPageFinished: (finish) {
+              setState(() {
+                _controller.evaluateJavascript("document.getElementByTagName('header')[0].style.display='none'");
+                _controller.evaluateJavascript("document.getElementByTagName('footer')[0].style.display='none'");
+                isLoading = false;
+              });
+            },
+          ),
+          isLoading ? Center( child: CircularProgressIndicator(),)
+              : Stack(),
+        ],
       ),
     );
-  }
-
-  JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-        name: 'Toaster',
-        onMessageReceived: (JavascriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        });
   }
 
 }

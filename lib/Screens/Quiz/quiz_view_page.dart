@@ -51,7 +51,7 @@ class InitState extends State<QuizViewPage> {
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0E0E95),
+          backgroundColor: const Color(0xFF01974D),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -64,7 +64,7 @@ class InitState extends State<QuizViewPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: Column(
           children: <Widget>[
             Container(
@@ -215,7 +215,7 @@ class InitState extends State<QuizViewPage> {
       DataCell(Text(item.attempt.toString())),
       DataCell(Text(item.state.toString())),
       DataCell(Text(item.sumgrades.toString())),
-      DataCell(Text('Review', style: TextStyle(color: Colors.blueAccent),))
+      DataCell(Text('Review', style: TextStyle(color: Colors.greenAccent),))
     ]))
         .toList();
   }

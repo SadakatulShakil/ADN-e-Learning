@@ -49,8 +49,12 @@ class InitState extends State<ChatDashBoardScreen> {
 
   Widget inItWidget() {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
+      backgroundColor: Color(0xFF00984D),
+      appBar: AppBar(leading: IconButton(
+        icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+        backgroundColor: Color(0xFF01974D),
         title: Text(
           widget.mChatData.name.toString(),
           style: TextStyle(
@@ -60,14 +64,6 @@ class InitState extends State<ChatDashBoardScreen> {
         ),
         centerTitle: true,
         elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_horiz),
-            iconSize: 30.0,
-            color: Colors.white,
-            onPressed: () {},
-          ),
-        ],
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -109,299 +105,7 @@ class InitState extends State<ChatDashBoardScreen> {
         ),
       ),
     );
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: const Color(0xFF0E0E95),
-    //     elevation: 0,
-    //     leading: IconButton(
-    //       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-    //       onPressed: () => Navigator.of(context).pop(),
-    //     ),
-    //     title: Text(widget.mChatData.name.toString(),
-    //         style: GoogleFonts.comfortaa(
-    //             color: const Color(0xFFFFFFFF),
-    //             fontWeight: FontWeight.w700,
-    //             fontSize: 18)),
-    //     centerTitle: false,
-    //   ),
-    //   backgroundColor: const Color(0xFF0E0E95),
-    //   body: Column(
-    //     children: <Widget>[
-    //       Container(
-    //         width: MediaQuery.of(context).size.width,
-    //         height: MediaQuery.of(context).size.height -
-    //             MediaQuery.of(context).size.height / 9,
-    //         transform: Matrix4.translationValues(0, 10, 1),
-    //         decoration: BoxDecoration(
-    //             color: Color(0xFFFAFAFA),
-    //             borderRadius: BorderRadius.only(
-    //                 topLeft: Radius.circular(25),
-    //                 topRight: Radius.circular(25))),
-    //         child: Stack(
-    //           fit: StackFit.expand,
-    //           children: [
-    //             Container(
-    //               child: Column(
-    //                 children: [
-    //                   Expanded(
-    //                     child: groupMessagesList.length > 0
-    //                         ? ListView.builder(
-    //                             reverse: true,
-    //                             shrinkWrap: true,
-    //                             controller: _scrollController,
-    //                             padding: EdgeInsets.symmetric(vertical: 8),
-    //                             itemCount: groupMessagesList.length,
-    //                             itemBuilder: (context, index) {
-    //                               final mMessageData = groupMessagesList[index];
-    //                               return MessageWidget(mMessageData);
-    //                             },
-    //                           )
-    //                         : Container(
-    //                             padding: EdgeInsets.symmetric(vertical: 8),
-    //                             child: Center(
-    //                               child: Column(
-    //                                 mainAxisAlignment: MainAxisAlignment.center,
-    //                                 children: [
-    //                                   Icon(
-    //                                     Icons.chat,
-    //                                     size: 80,
-    //                                     color: Colors.grey.shade400,
-    //                                   ),
-    //                                   SizedBox(
-    //                                     height: 20,
-    //                                   ),
-    //                                   Text(
-    //                                     'No messages yet',
-    //                                   ),
-    //                                 ],
-    //                               ),
-    //                             ),
-    //                           ),
-    //                   ),
-    //                   Align(
-    //                     alignment: Alignment.bottomCenter,
-    //                     child: Card(
-    //                       margin: EdgeInsets.zero,
-    //                       child: Padding(
-    //                         padding: EdgeInsets.only(
-    //                             right: 8,
-    //                             left: 8,
-    //                             bottom:
-    //                                 MediaQuery.of(context).viewInsets.bottom > 0
-    //                                     ? 15
-    //                                     : 28,
-    //                             top: 8),
-    //                         child: Stack(
-    //                           children: [
-    //                             Row(
-    //                               mainAxisAlignment: MainAxisAlignment.center,
-    //                               crossAxisAlignment: CrossAxisAlignment.end,
-    //                               children: [
-    //                                 Expanded(
-    //                                   child: Row(
-    //                                     children: [
-    //                                       IconButton(
-    //                                         splashRadius: 20,
-    //                                         icon: Icon(
-    //                                           Icons.add,
-    //                                           color: Colors.grey.shade700,
-    //                                           size: 28,
-    //                                         ),
-    //                                         onPressed: () {},
-    //                                       ),
-    //                                       Expanded(
-    //                                         child: Container(
-    //                                           margin:
-    //                                               EdgeInsets.only(bottom: 5),
-    //                                           child: TextField(
-    //                                             controller: textController,
-    //                                             minLines: 1,
-    //                                             maxLines: 5,
-    //                                             cursorColor: Colors.black,
-    //                                             decoration: InputDecoration(
-    //                                               isDense: true,
-    //                                               contentPadding:
-    //                                                   EdgeInsets.only(
-    //                                                       right: 16,
-    //                                                       left: 20,
-    //                                                       bottom: 10,
-    //                                                       top: 10),
-    //                                               hintStyle: TextStyle(
-    //                                                   fontSize: 14,
-    //                                                   color: Colors
-    //                                                       .grey.shade700),
-    //                                               hintText: 'Type a message',
-    //                                               border: InputBorder.none,
-    //                                               filled: true,
-    //                                               fillColor:
-    //                                                   Colors.grey.shade100,
-    //                                               enabledBorder:
-    //                                                   OutlineInputBorder(
-    //                                                 borderRadius:
-    //                                                     BorderRadius.circular(
-    //                                                         20),
-    //                                                 gapPadding: 0,
-    //                                                 borderSide: BorderSide(
-    //                                                     color: Colors
-    //                                                         .grey.shade200),
-    //                                               ),
-    //                                               focusedBorder:
-    //                                                   OutlineInputBorder(
-    //                                                 borderRadius:
-    //                                                     BorderRadius.circular(
-    //                                                         20),
-    //                                                 gapPadding: 0,
-    //                                                 borderSide: BorderSide(
-    //                                                     color: Colors
-    //                                                         .grey.shade300),
-    //                                               ),
-    //                                             ),
-    //                                             onChanged: (value) {
-    //                                               if (value.length > 0) {
-    //                                                 //hideTheMic();
-    //                                               } else {
-    //                                                 //showTheMic();
-    //                                               }
-    //                                             },
-    //                                           ),
-    //                                         ),
-    //                                       ),
-    //                                     ],
-    //                                   ),
-    //                                 ),
-    //                                 Row(
-    //                                   children: [
-    //                                     IconButton(
-    //                                       splashRadius: 20,
-    //                                       icon: Icon(
-    //                                         Icons.send,
-    //                                         color: Colors.blue,
-    //                                       ),
-    //                                       onPressed: () {
-    //                                         if (textController.text.length >
-    //                                             0) {
-    //                                           // addToMessages(
-    //                                           //     textController.text);
-    //                                           textController.clear();
-    //                                           //showTheMic();
-    //                                         }
-    //                                       },
-    //                                     ),
-    //                                   ],
-    //                                 ),
-    //                               ],
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //         // Column(
-    //         //   crossAxisAlignment: CrossAxisAlignment.center,
-    //         //   mainAxisSize: MainAxisSize.max,
-    //         //   mainAxisAlignment: MainAxisAlignment.end,
-    //         //   children: [
-    //         //     Container(
-    //         //       padding: EdgeInsets.symmetric(horizontal: 20),
-    //         //       color: Colors.white,
-    //         //       height: 100,
-    //         //       child: Row(
-    //         //         children: [
-    //         //           Expanded(
-    //         //             child: Container(
-    //         //               padding: EdgeInsets.symmetric(horizontal: 14),
-    //         //               height: 60,
-    //         //               decoration: BoxDecoration(
-    //         //                 color: Colors.grey[200],
-    //         //                 borderRadius: BorderRadius.circular(30),
-    //         //               ),
-    //         //               child: Row(
-    //         //                 children: [
-    //         //                   Icon(
-    //         //                     Icons.emoji_emotions_outlined,
-    //         //                     color: Colors.grey[500],
-    //         //                   ),
-    //         //                   SizedBox(
-    //         //                     width: 10,
-    //         //                   ),
-    //         //                   Expanded(
-    //         //                     child: TextField(
-    //         //                       decoration: InputDecoration(
-    //         //                         border: InputBorder.none,
-    //         //                         hintText: 'Type your message ...',
-    //         //                         hintStyle:
-    //         //                             TextStyle(color: Colors.grey[500]),
-    //         //                       ),
-    //         //                     ),
-    //         //                   ),
-    //         //                 ],
-    //         //               ),
-    //         //             ),
-    //         //           ),
-    //         //           SizedBox(
-    //         //             width: 16,
-    //         //           ),
-    //         //         ],
-    //         //       ),
-    //         //     )
-    //         //
-    //         //   ],
-    //         // ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
-  // _buildMessage(Messages message, bool isMe, ){
-  //   final Container msg = Container(
-  //     width: MediaQuery.of(context).size.width * 0.75,
-  //     margin: isMe
-  //         ? EdgeInsets.only(top: 7.0, bottom: 8.0, left: 80.0)
-  //         : EdgeInsets.only(top:8.0, bottom: 8.0),
-  //     padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-  //     decoration: isMe ? BoxDecoration(
-  //         color: Theme.of(context).accentColor,
-  //         borderRadius: BorderRadius.only(
-  //             topLeft: Radius.circular(15.0),
-  //             bottomLeft: Radius.circular(15.0),
-  //             topRight: Radius.circular(15.0)
-  //         )
-  //     ) : BoxDecoration(
-  //         color: Color(0xFFe4f1fe),
-  //         borderRadius: BorderRadius.only(
-  //             topLeft: Radius.circular(15.0),
-  //             topRight: Radius.circular(15.0),
-  //             bottomRight: Radius.circular(15.0)
-  //         )
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: <Widget>[
-  //         Text(
-  //           message.timecreated.toString(),
-  //           style: TextStyle(
-  //               color: Colors.blueGrey,
-  //               fontSize: 13.0,
-  //               fontWeight: FontWeight.w600
-  //           ),
-  //         ),
-  //         SizedBox(height: 8.0,)
-  //         ,       Html(data:
-  //             message.text.toString(),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  //   if (isMe){
-  //     return msg;
-  //   }
-  // }
 
   _buildMessageComposer() {
     return Container(
@@ -520,7 +224,7 @@ class InitState extends State<ChatDashBoardScreen> {
             margin: EdgeInsets.only(right: 8, bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Color(0xff1972F5),
+              color: Color(0xFF01974D),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

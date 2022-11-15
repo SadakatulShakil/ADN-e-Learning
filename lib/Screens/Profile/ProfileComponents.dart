@@ -36,7 +36,7 @@ class InitState extends State<ProfileComponents> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: Column(
           children: <Widget>[
             Container(

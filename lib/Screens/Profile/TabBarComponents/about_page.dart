@@ -356,7 +356,7 @@ class InitState extends State<ProfileAboutPage> {
                             padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                             child: Text("View",
                                 style: GoogleFonts.comfortaa(
-                                    color: Colors.blueAccent,
+                                    color: Colors.greenAccent,
                                     fontSize: 12, fontWeight: FontWeight.bold)),
                           ),
                         ),
@@ -369,7 +369,7 @@ class InitState extends State<ProfileAboutPage> {
                         padding: const EdgeInsets.only(left: 50, right: 30, bottom: 5),
                         child: Text(count,
                             style: GoogleFonts.comfortaa(
-                                color: Colors.blueAccent,
+                                color: Colors.greenAccent,
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
                     ),

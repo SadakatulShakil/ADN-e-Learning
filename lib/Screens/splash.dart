@@ -59,13 +59,18 @@ class _SplashState extends State<Splash> {
 
   Widget initWidget() {
     return Scaffold(
-      backgroundColor: Color(0xFF0E0E95),
       body: Stack(
         children: [
           Center(
             child: Container(
               margin:  EdgeInsets.only(bottom: 100.0),
-              child: Image.asset("assets/images/radda_icon.png", width: 200, height: 200),
+              child: Image.asset("assets/icons/adn_icon.png", width: 200, height: 200),
+            ),
+          ),
+          Center(
+            child: Container(
+              margin:  EdgeInsets.only(top: 120.0),
+              child: Text('DigiNet SkillUP', style: GoogleFonts.comfortaa(color: Color(0XFF01974D), fontSize: 25, fontWeight: FontWeight.bold),),
             ),
           ),
           Container(
@@ -90,7 +95,7 @@ class _SplashState extends State<Splash> {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text('কারিগরি সহায়তায় adn diginet', style: GoogleFonts.comfortaa(color: const Color(0xFFFFFFFF))),
+                  child: Text('Technical support from ADN Diginet', style: GoogleFonts.comfortaa(color: const Color(0xFFFFFFFF))),
                 )
               ],
             ),

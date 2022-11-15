@@ -50,7 +50,7 @@ class InitState extends State<MessageComponents> {
 
   Widget initWidget(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E0E95),
+      backgroundColor: const Color(0xFF01974D),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height -
@@ -96,7 +96,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 1?Color(0xFF0E0E95):Color(0xFFE7EAEC),
+                              color: fieldVisible == 1?Color(0xFF01974D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 fieldVisible = 1;
                                 setState(() {
@@ -112,7 +112,7 @@ class InitState extends State<MessageComponents> {
                           SizedBox(width: 5,),
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 2?Color(0xFF0E0E95):Color(0xFFE7EAEC),
+                              color: fieldVisible == 2?Color(0xFF01974D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 fieldVisible = 2;
                                 setState(() {
@@ -129,7 +129,7 @@ class InitState extends State<MessageComponents> {
                           SizedBox(width: 5,),
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 3?Color(0xFF0E0E95):Color(0xFFE7EAEC),
+                              color: fieldVisible == 3?Color(0xFF01974D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 fieldVisible = 3;
                                 setState(() {
@@ -145,7 +145,7 @@ class InitState extends State<MessageComponents> {
                           SizedBox(width: 5,),
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 4?Color(0xFF0E0E95):Color(0xFFE7EAEC),
+                              color: fieldVisible == 4?Color(0xFF01974D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList, userid)));
                                 setState(() {
@@ -185,7 +185,7 @@ class InitState extends State<MessageComponents> {
                         minLines: 1,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search, color: Colors.blueAccent,),
+                          prefixIcon: Icon(Icons.search, color: Colors.greenAccent,),
                           contentPadding: EdgeInsets.all(8),
                           hintText: 'search',
                           hintStyle: TextStyle(fontSize: 16),
@@ -353,7 +353,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mChatData.name.toString()==''?'--':mChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mChatData.isread?Colors.black:Colors.blueAccent,
+                                color: mChatData.isread?Colors.black:Colors.greenAccent,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -370,7 +370,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
+                            child: Icon(Icons.info_rounded, color: Colors.greenAccent,))
                       ],
                     ),
                     Container(
@@ -379,7 +379,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
-                          child: Text(mChatData.members.length>0?mChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mChatData.isread?Colors.black:Colors.blueAccent),),
+                          child: Text(mChatData.members.length>0?mChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mChatData.isread?Colors.black:Colors.greenAccent),),
         ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -446,7 +446,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mGroupChatData.name.toString()==''?'--':mGroupChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mGroupChatData.isread?Colors.black:Colors.blueAccent,
+                                color: mGroupChatData.isread?Colors.black:Colors.greenAccent,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -463,7 +463,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mGroupChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
+                            child: Icon(Icons.info_rounded, color: Colors.greenAccent,))
                       ],
                     ),
                     Container(
@@ -472,7 +472,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mGroupChatData.members.length>0?mGroupChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mGroupChatData.isread?Colors.black:Colors.blueAccent),),
+                            child: Text(mGroupChatData.members.length>0?mGroupChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mGroupChatData.isread?Colors.black:Colors.greenAccent),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -539,7 +539,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mPrivateChatData.name.toString()==''?'--':mPrivateChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mPrivateChatData.isread?Colors.black:Colors.blueAccent,
+                                color: mPrivateChatData.isread?Colors.black:Colors.greenAccent,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -556,7 +556,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mPrivateChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
+                            child: Icon(Icons.info_rounded, color: Colors.greenAccent,))
                       ],
                     ),
                     Container(
@@ -565,7 +565,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mPrivateChatData.members.length>0?mPrivateChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mPrivateChatData.isread?Colors.black:Colors.blueAccent),),
+                            child: Text(mPrivateChatData.members.length>0?mPrivateChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mPrivateChatData.isread?Colors.black:Colors.greenAccent),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,

@@ -1,4 +1,4 @@
-package com.example.radda_moodle_learning;
+package com.example.adn_e_learning;
 
 import io.flutter.embedding.android.FlutterActivity;
 

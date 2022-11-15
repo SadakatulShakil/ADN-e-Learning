@@ -47,7 +47,7 @@ class InitState extends State<ContactComponents> {
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0E0E95),
+          backgroundColor: const Color(0xFF00984D),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -60,7 +60,7 @@ class InitState extends State<ContactComponents> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF00984D),
         body: Column(
           children: <Widget>[
             Container(
@@ -96,7 +96,7 @@ class InitState extends State<ContactComponents> {
                           children: [
                             Container(
                               child: GFButtonBadge(
-                                color: fieldVisible == 1?Color(0xFF0E0E95):Color(0xFFE7EAEC),
+                                color: fieldVisible == 1?Color(0xFF00984D):Color(0xFFE7EAEC),
                                 onPressed: () {
                                   fieldVisible = 1;
                                       setState(() {
@@ -111,7 +111,7 @@ class InitState extends State<ContactComponents> {
                               ),),
                             Container(
                               child: GFButtonBadge(
-                                color: fieldVisible == 2?Color(0xFF0E0E95):Color(0xFFE7EAEC),
+                                color: fieldVisible == 2?Color(0xFF00984D):Color(0xFFE7EAEC),
                                 onPressed: () {
                                   fieldVisible = 2;
                                       setState(() {
@@ -141,7 +141,7 @@ class InitState extends State<ContactComponents> {
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.search,
-                                  color: Colors.blueAccent,
+                                  color: Colors.greenAccent,
                                 ),
                                 contentPadding: EdgeInsets.all(8),
                                 hintText: 'search',
@@ -281,7 +281,7 @@ class InitState extends State<ContactComponents> {
                                   style: GoogleFonts.comfortaa(
                                       color: mChatData.isread
                                           ? Colors.black
-                                          : Colors.blueAccent,
+                                          : Colors.greenAccent,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),
                             ),

@@ -60,6 +60,7 @@ dependencies:
   html_unescape: ^2.0.0
   table_calendar: ^3.0.8
   getwidget: ^3.0.1
+  webview_flutter: ^2.5.0
   flutter_localizations:
     sdk: flutter
 
@@ -81,7 +82,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/profile_icon.png"
+  image_path: "assets/icons/adn_icon.png"
 
 flutter:
   uses-material-design: true

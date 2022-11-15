@@ -42,7 +42,7 @@ class InitState extends State<CategoryDetailsPage> {
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0E0E95),
+          backgroundColor: const Color(0xFF01974D),
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -55,7 +55,7 @@ class InitState extends State<CategoryDetailsPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF0E0E95),
+        backgroundColor: const Color(0xFF01974D),
         body: Column(
           children: <Widget>[
             Container(
@@ -105,7 +105,7 @@ class InitState extends State<CategoryDetailsPage> {
                   Align(alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15, top: 8, bottom: 8),
-                      child: Text('Our Papers', style: TextStyle(color: Colors.blueAccent, fontSize: 18, fontWeight: FontWeight.bold),),
+                      child: Text('Our Papers', style: TextStyle(color: Colors.greenAccent, fontSize: 18, fontWeight: FontWeight.bold),),
                     ),
                   ),
                   SizedBox(height: 12,),
