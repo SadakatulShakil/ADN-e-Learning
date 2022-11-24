@@ -7,8 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
 import '../../../Helper/operations.dart';
+import '../../AllCoursesPage.dart';
 
 class ProfileAboutPage extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState() => InitState();
 }
@@ -51,6 +53,7 @@ class InitState extends State<ProfileAboutPage> {
           child:
           Column(
             children: [
+              SizedBox(height: 5,),
               InkWell(
                 onTap: (){
                   print('---------------- '+ 'clicked');
@@ -60,25 +63,28 @@ class InitState extends State<ProfileAboutPage> {
 
                   });
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0, top: 18, bottom: 12),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("Profile",
-                              style: GoogleFonts.comfortaa(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0, top: 18, bottom: 12),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("Profile",
+                                style: GoogleFonts.comfortaa(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0, top: 5),
-                        child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0, top: 5),
+                          child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -117,7 +123,7 @@ class InitState extends State<ProfileAboutPage> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text("Second name",
+                        child: Text("Last name",
                             style: GoogleFonts.comfortaa(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
@@ -165,32 +171,32 @@ class InitState extends State<ProfileAboutPage> {
                       child: Divider(thickness: 1,),
                     ),
                     SizedBox(height: 15,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12),
-                        child: Text("Preferred language",
-                            style: GoogleFonts.comfortaa(
-                                color: Colors.black45,
-                                fontSize: 12, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    SizedBox(height: 8,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text(language == 'en'? 'English':'Bangla',
-                            style: GoogleFonts.comfortaa(
-                                color: Colors.black,
-                                fontSize: 15, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, right: 12),
-                      child: Divider(thickness: 1,),
-                    ),
-                    SizedBox(height: 15,),
+                    // Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(left: 12, right: 12),
+                    //     child: Text("Preferred language",
+                    //         style: GoogleFonts.comfortaa(
+                    //             color: Colors.black45,
+                    //             fontSize: 12, fontWeight: FontWeight.bold)),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 8,),
+                    // Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
+                    //     child: Text(language == 'en'? 'English':'Bangla',
+                    //         style: GoogleFonts.comfortaa(
+                    //             color: Colors.black,
+                    //             fontSize: 15, fontWeight: FontWeight.bold)),
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 12.0, right: 12),
+                    //   child: Divider(thickness: 1,),
+                    // ),
+                    //SizedBox(height: 15,),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
@@ -206,7 +212,7 @@ class InitState extends State<ProfileAboutPage> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text(city,
+                        child: Text(city == 'null'? '': city,
                             style: GoogleFonts.comfortaa(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
@@ -245,13 +251,14 @@ class InitState extends State<ProfileAboutPage> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: generalVisibility? false:true,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12),
-                  child: Divider(thickness: 1,),
-                ),
-              ),
+              // Visibility(
+              //   visible: generalVisibility? false:true,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //     child: Divider(thickness: 1,),
+              //   ),
+              // ),
+              SizedBox(height: 8,),
               InkWell(
                 onTap: (){
                   print('---------------- '+ 'clicked');
@@ -261,23 +268,29 @@ class InitState extends State<ProfileAboutPage> {
 
                   });
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, top: 10, bottom: 12),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("Recent Activity",
-                            style: GoogleFonts.comfortaa(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                      ),
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0, top: 18, bottom: 12),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("Recent Activity",
+                                style: GoogleFonts.comfortaa(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               Visibility(
@@ -337,30 +350,39 @@ class InitState extends State<ProfileAboutPage> {
                       child: Divider(thickness: 1,),
                     ),
                     SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
-                            child: Text("Courses I have taken",
-                                style: GoogleFonts.comfortaa(
-                                    color: Colors.black45,
-                                    fontSize: 12, fontWeight: FontWeight.bold)),
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AllCoursesPage(courseList)));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
+                              child: Text("Courses I have taken",
+                                  style: GoogleFonts.comfortaa(
+                                      color: Colors.black45,
+                                      fontSize: 12, fontWeight: FontWeight.bold)),
+                            ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
-                            child: Text("View",
-                                style: GoogleFonts.comfortaa(
-                                    color: Colors.greenAccent,
-                                    fontSize: 12, fontWeight: FontWeight.bold)),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
+                              child: Text("View all",
+                                  style: GoogleFonts.comfortaa(
+                                      color: Colors.greenAccent,
+                                      fontSize: 12, fontWeight: FontWeight.bold)),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(height: 10,),
                     Align(
@@ -380,13 +402,13 @@ class InitState extends State<ProfileAboutPage> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: changePasswordVisibility?false:true,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12),
-                  child: Divider(thickness: 1,),
-                ),
-              ),
+              // Visibility(
+              //   visible: changePasswordVisibility?false:true,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //     child: Divider(thickness: 1,),
+              //   ),
+              // ),
             ],
           ),
     )
@@ -448,7 +470,7 @@ class InitState extends State<ProfileAboutPage> {
               .toString())));
       print('data_count1 ' + profileInfoList.first.toString());
       //CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         getAllCourses(token, userId);
       });
@@ -478,7 +500,7 @@ class InitState extends State<ProfileAboutPage> {
       courseList = userCoursesData;
       count = courseList.length.toString();
       print('data_count1 ' + courseList[0].fullname.toString());
-      showToastMessage(message);
+      //showToastMessage(message);
       //CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {

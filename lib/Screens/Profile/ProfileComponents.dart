@@ -16,13 +16,20 @@ class ProfileComponents extends StatefulWidget {
 }
 
 class InitState extends State<ProfileComponents> {
+  NetworkCall networkCall = NetworkCall();
+  List<dynamic> profileInfoList = [];
+  String imageurl ='';
+  String name ='';
+  String firstName ='';
+  String surName ='';
+  String email ='';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
-
+      getSharedData();
     });
   }
 
@@ -81,23 +88,28 @@ class InitState extends State<ProfileComponents> {
                             ),
                           ),
                           radius: 50.0,
-                          backgroundImage: AssetImage("assets/icons/profile_demo.jpg"),
+                          backgroundImage: NetworkImage(imageurl.toString()),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left:10, top: 50.0),
+                      padding: const EdgeInsets.only(left:10),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Jhon Smith", style: GoogleFonts.comfortaa(
+                          Text(name.toString(), style: GoogleFonts.comfortaa(
                               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white
                           ),),
                           Row(
                             children: [
-                              Icon(Icons.location_on_outlined, color: Colors.white, size: 13,),
-                              Text("Dhaka, Bangladesh", style: GoogleFonts.comfortaa(
-                                  fontSize: 10, color: Colors.white
-                              ),),
+                              Icon(Icons.email_outlined, size: 12, color: Colors.white,),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5.0, bottom: 2),
+                                child: Text(email, style: GoogleFonts.comfortaa(
+                                    fontSize: 12, color: Colors.white
+                                ),),
+                              ),
                             ],
                           ),
                         ],
@@ -137,6 +149,73 @@ class InitState extends State<ProfileComponents> {
           ],
         ),
       ),
+    );
+  }
+
+  void getSharedData() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString('name')!;
+    imageurl = prefs.getString('imageUrl')!;
+    String token = prefs.getString('TOKEN')!;
+    String userid = prefs.getString('userId')!;
+    setState(() {
+      getSiteInfo(token, userid);
+    });
+  }
+  void getSiteInfo(String token, String userid) async{
+
+    //CommonOperation.showProgressDialog(context, "loading", true);
+    final userDetailsData = await networkCall.UserDetailsCall(token);
+    if(userDetailsData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      print('hospital data'+ userDetailsData.firstname.toString());
+      surName = userDetailsData.lastname.toString();
+      firstName = userDetailsData.firstname.toString();
+      setState(() {
+        getProfileInfo(token, userid);
+      });
+
+    }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+
+  }
+
+
+  void getProfileInfo(String token, String userId) async {
+    //CommonOperation.showProgressDialog(context, "loading", true);
+    final profileInfoData =
+    await networkCall.ProfileInfoCall(token, userId);
+    if (profileInfoData != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      profileInfoList = profileInfoData;
+      email = profileInfoList[0].email.toString();
+      //userName = profileInfoList[0].username.toString();
+      print('data_count1 ' + profileInfoList.first.toString());
+      //CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        //getAllCourses(token, userId);
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void showToastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0 //message font size
     );
   }
 }

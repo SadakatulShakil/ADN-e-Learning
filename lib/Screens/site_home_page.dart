@@ -24,6 +24,12 @@ class InitState extends State<SiteHomePage> {
   String token = '';
   double value = 0;
   NetworkCall networkCall = NetworkCall();
+  List<String> courseImageList = [
+    'assets/images/banner.jpg',
+    'assets/images/papers.png',
+    'assets/images/banner.jpg',
+    'assets/images/papers.jpg'
+  ];
 
   @override
   void initState() {
@@ -118,12 +124,6 @@ class InitState extends State<SiteHomePage> {
                         child: Text('Our Courses', style: TextStyle(color: Colors.greenAccent, fontSize: 18, fontWeight: FontWeight.bold),),
                       ),
                     ),
-                    Align(alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15),
-                        child: Text('The community paramedic course offered at Radda Paramedic Institute has a duration of two years which are divided into four semesters. '),
-                      ),
-                    ),
                     SizedBox(height: 10,),
                     Expanded(
                       child: Padding(
@@ -162,7 +162,7 @@ class InitState extends State<SiteHomePage> {
       categoryList = categoryListCallData;
       //count = categoryList.length.toString();
       print('data_count1 '+ categoryList.first.toString());
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         CommonOperation.hideProgressDialog(context);
       });
@@ -215,7 +215,7 @@ class InitState extends State<SiteHomePage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'View Courses', style: GoogleFonts.comfortaa(
+                              mCategoryData.name.toString(), style: GoogleFonts.comfortaa(
                               color: const Color(0xFF000000),
                               fontSize: 15,
                               fontWeight: FontWeight.w900,
@@ -233,54 +233,54 @@ class InitState extends State<SiteHomePage> {
 
                         ),
                       ),),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child:  Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    mCategoryData.name.toString(), style: GoogleFonts.comfortaa(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                  ),
-                                ),
-                              ]
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child:  Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                const Icon(Icons.library_add_rounded,
-                                  color: Color(0xFF18D77E),
-                                  size: 17,),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    categoryList.where((element) => element.parent.toString() == mCategoryData.id.toString()).toList().length.toString()+' courses', style: GoogleFonts.comfortaa(
-                                    color: const Color(0xFF18D77E),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                  ),
-                                ),
-                              ]
-                          ),
-                        ),
-                      ),
-                    )
+                    // Container(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child:  Wrap(
+                    //           crossAxisAlignment: WrapCrossAlignment.center,
+                    //           children: [
+                    //             Padding(
+                    //               padding: const EdgeInsets.only(left: 5.0),
+                    //               child: Text(
+                    //                 mCategoryData.name.toString(), style: GoogleFonts.comfortaa(
+                    //                 fontSize: 18,
+                    //                 fontWeight: FontWeight.w900,
+                    //               ),
+                    //               ),
+                    //             ),
+                    //           ]
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child:  Wrap(
+                    //           crossAxisAlignment: WrapCrossAlignment.center,
+                    //           children: [
+                    //             const Icon(Icons.menu_book,
+                    //               color: Color(0xFF18D77E),
+                    //               size: 17,),
+                    //             Padding(
+                    //               padding: const EdgeInsets.only(left: 8.0),
+                    //               child: Text(
+                    //                 categoryList.where((element) => element.parent.toString() == mCategoryData.id.toString()).toList().length.toString()+' courses', style: GoogleFonts.comfortaa(
+                    //                 color: const Color(0xFF18D77E),
+                    //                 fontSize: 15,
+                    //                 fontWeight: FontWeight.w900,
+                    //               ),
+                    //               ),
+                    //             ),
+                    //           ]
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               )

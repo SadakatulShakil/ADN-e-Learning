@@ -173,7 +173,7 @@ class InitState extends State<QuizDetailsPage> {
       dumpQuestion = unescape.convert(quizQuestionData.questions![0].html.toString());
       print('Unecaped String----> '+dumpQuestion);
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
       });

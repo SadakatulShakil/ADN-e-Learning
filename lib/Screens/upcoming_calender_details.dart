@@ -158,7 +158,7 @@ class InitState extends State<UpcomingCalenderDetailsPage> {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Icon(Icons.access_time, color: Colors.black54, size: 20,),
+                    child: Icon(Icons.menu_book, color: Colors.black54, size: 20,),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width/1.3,
@@ -168,7 +168,7 @@ class InitState extends State<UpcomingCalenderDetailsPage> {
                         children: [
                           Flexible(
                             child: Text(
-                                mCourseData.course.shortname.toString(),
+                                mCourseData.description.toString() == ''?'no description':mCourseData.description.toString(),
                                 style: GoogleFonts.comfortaa(
                                     color: Colors.black54,
                                     fontSize: 18,

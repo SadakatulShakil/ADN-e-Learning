@@ -137,7 +137,7 @@ class InitState extends State<HomeScreen> {
         );
   }
 
-  void getURNotification(String token, String userId) async{
+  Future getURNotification(String token, String userId) async{
     CommonOperation.showProgressDialog(
         context, "loading", true);
     final uRNotificationData = await networkCall.UserUnReadNotificationCall(token, userId);
@@ -146,7 +146,7 @@ class InitState extends State<HomeScreen> {
       String message = 'Success';
 
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       unReadNotiList = uRNotificationData.messages!;
       allNotification.addAll(unReadNotiList);
       setState(() {
@@ -161,7 +161,7 @@ class InitState extends State<HomeScreen> {
     }
   }
 
-  void getRNotification(String token, String userId) async{
+  Future getRNotification(String token, String userId) async{
     CommonOperation.showProgressDialog(
         context, "loading", true);
     final rNotificationData = await networkCall.UserReadNotificationCall(token, userId);
@@ -170,7 +170,7 @@ class InitState extends State<HomeScreen> {
       String message = 'Success';
 
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       readNotiList = rNotificationData.messages!;
       setState(() {
         allNotification.addAll(readNotiList);
@@ -221,7 +221,7 @@ class InitState extends State<HomeScreen> {
                   Icons.menu_book,
                 ),
                 title: Text(
-                  "Site Home",
+                  "Home",
                   style: GoogleFonts.comfortaa(fontSize: 15),
                 ),
               ),

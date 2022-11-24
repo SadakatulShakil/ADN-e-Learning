@@ -20,8 +20,8 @@ class InitState extends State<ProfileSettingsPage> {
   String firstName ='';
   String surName ='';
   String email ='';
-  String language ='';
   String city ='';
+  String language ='';
   String startDate ='';
   String lastDate ='';
   List <String> languageList = [
@@ -108,6 +108,7 @@ class InitState extends State<ProfileSettingsPage> {
   final firstNameController = TextEditingController();
   final surnameController = TextEditingController();
   final emailController = TextEditingController();
+  final cityController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -131,6 +132,7 @@ class InitState extends State<ProfileSettingsPage> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
+              SizedBox(height: 5,),
               InkWell(
                 onTap: (){
                   print('---------------- '+ 'clicked');
@@ -140,25 +142,28 @@ class InitState extends State<ProfileSettingsPage> {
 
                   });
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0, top: 18, bottom: 12),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("General",
-                              style: GoogleFonts.comfortaa(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0, top: 18, bottom: 12),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("General",
+                                style: GoogleFonts.comfortaa(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0, top: 5),
-                        child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0, top: 5),
+                          child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -206,7 +211,7 @@ class InitState extends State<ProfileSettingsPage> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text("Second name",
+                        child: Text("Last name",
                             style: GoogleFonts.comfortaa(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
@@ -225,7 +230,7 @@ class InitState extends State<ProfileSettingsPage> {
                               borderSide: BorderSide(color: Colors.black12),
                             ),
                             //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                            hintText: 'Enter second name',hintStyle: GoogleFonts.comfortaa(
+                            hintText: 'Enter last name',hintStyle: GoogleFonts.comfortaa(
                           color: Colors.black,
                           fontSize: 15,
                         )
@@ -238,7 +243,7 @@ class InitState extends State<ProfileSettingsPage> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text("Email",
+                        child: Text("Email address",
                             style: GoogleFonts.comfortaa(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
@@ -257,7 +262,7 @@ class InitState extends State<ProfileSettingsPage> {
                               borderSide: BorderSide(color: Colors.black12),
                             ),
                             //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                            hintText: 'Enter email',hintStyle: GoogleFonts.comfortaa(
+                            hintText: 'Enter email address',hintStyle: GoogleFonts.comfortaa(
                           color: Colors.black,
                           fontSize: 15,
                         )
@@ -266,53 +271,53 @@ class InitState extends State<ProfileSettingsPage> {
                       ),
                     ),
                     SizedBox(height: 20,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12),
-                        child: Text("Preferred language",
-                            style: GoogleFonts.comfortaa(
-                                color: Colors.black45,
-                                fontSize: 12, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-
-                        child:DropdownButton<String>(
-                          // Not necessary for Option 1
-                          //underline: SizedBox(), //remove underline
-                          hint: Text('Select language',
-                            style: GoogleFonts.comfortaa(
-                              color: Colors.black45,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          value: _selectedLanguage,
-                          isExpanded: true,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              //hint = '';
-                              _selectedLanguage = newValue!;
-                              print("Accoutn no: " + _selectedLanguage.toString());
-                            });
-                          },
-                          items: languageList.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value, style: GoogleFonts.comfortaa(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,)),
-                            );
-                          })
-                              .toList(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8,),
+                    // Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(left: 12, right: 12),
+                    //     child: Text("Preferred language",
+                    //         style: GoogleFonts.comfortaa(
+                    //             color: Colors.black45,
+                    //             fontSize: 12, fontWeight: FontWeight.bold)),
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width,
+                    //
+                    //     child:DropdownButton<String>(
+                    //       // Not necessary for Option 1
+                    //       //underline: SizedBox(), //remove underline
+                    //       hint: Text('Select language',
+                    //         style: GoogleFonts.comfortaa(
+                    //           color: Colors.black45,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.w700,
+                    //         ),
+                    //       ),
+                    //       value: _selectedLanguage,
+                    //       isExpanded: true,
+                    //       onChanged: (String? newValue) {
+                    //         setState(() {
+                    //           //hint = '';
+                    //           _selectedLanguage = newValue!;
+                    //           print("Accoutn no: " + _selectedLanguage.toString());
+                    //         });
+                    //       },
+                    //       items: languageList.map<DropdownMenuItem<String>>((String value) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: value,
+                    //           child: Text(value, style: GoogleFonts.comfortaa(
+                    //             fontSize: 15,
+                    //             fontWeight: FontWeight.w700,)),
+                    //         );
+                    //       })
+                    //           .toList(),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 8,),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
@@ -325,37 +330,24 @@ class InitState extends State<ProfileSettingsPage> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-
-                        child:DropdownButton<String>(
-                          // Not necessary for Option 1
-                          hint: Text('Select city',
-                            style: GoogleFonts.comfortaa(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
+                      padding: const EdgeInsets.only(left: 12, right: 12),
+                      child: TextField(
+                        controller: city == 'null'?(cityController..text = ""):(cityController..text = city),
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black12),
                             ),
-                          ),
-                          value: _selectedCity,
-                          isExpanded: true,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              //hint = '';
-                              _selectedCity = newValue!;
-                              print("Accoutn no: " + _selectedCity.toString());
-                            });
-                          },
-                          items: cityList.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value, style: GoogleFonts.comfortaa(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,)),
-                            );
-                          })
-                              .toList(),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black12),
+                            ),
+                            //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
+                            hintText: 'Enter city',hintStyle: GoogleFonts.comfortaa(
+                          color: Colors.black,
+                          fontSize: 15,
+                        )
                         ),
+                        autofocus: false,
                       ),
                     ),
                     SizedBox(height: 8,),
@@ -405,13 +397,14 @@ class InitState extends State<ProfileSettingsPage> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: generalVisibility? false:true,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12),
-                  child: Divider(thickness: 1,),
-                ),
-              ),
+              // Visibility(
+              //   visible: generalVisibility? false:true,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //     child: Divider(thickness: 1,),
+              //   ),
+              // ),
+              SizedBox(height: 8,),
               InkWell(
                 onTap: (){
                   print('---------------- '+ 'clicked');
@@ -421,23 +414,29 @@ class InitState extends State<ProfileSettingsPage> {
 
                   });
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, top: 10, bottom: 12),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("Change password",
-                            style: GoogleFonts.comfortaa(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                      ),
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0, top: 18, bottom: 12),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("Change password",
+                                style: GoogleFonts.comfortaa(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               Visibility(
@@ -588,19 +587,20 @@ class InitState extends State<ProfileSettingsPage> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: changePasswordVisibility?false:true,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12),
-                  child: Divider(thickness: 1,),
-                ),
-              ),
+              // Visibility(
+              //   visible: changePasswordVisibility?false:true,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //     child: Divider(thickness: 1,),
+              //   ),
+              // ),
               SizedBox(height: 25,),
               Padding(
                 padding: EdgeInsets.only(left: 30.0, right: 30.0),
                 child: InkWell(
                   onTap: (){
                     print('check settings  '+ firstNameController.text.toString());
+                    OpenDialog();
                     //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                   child: Card(
@@ -621,32 +621,32 @@ class InitState extends State<ProfileSettingsPage> {
                   ),
                 ),
               ),
-
-              SizedBox(height: 15,),
-              Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30),
-                child: InkWell(
-                  onTap: (){
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Container(
-                      width:350,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-
-                      ),
-                      child: Center(
-                        child: Text("Cancel", style: GoogleFonts.comfortaa(color: Colors.black, fontWeight: FontWeight.bold),),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              //
+              // SizedBox(height: 15,),
+              // Padding(
+              //   padding: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30),
+              //   child: InkWell(
+              //     onTap: (){
+              //       //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              //     },
+              //     child: Card(
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(15),
+              //       ),
+              //       child: Container(
+              //         width:350,
+              //         height: 50,
+              //         decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(15),
+              //
+              //         ),
+              //         child: Center(
+              //           child: Text("Cancel", style: GoogleFonts.comfortaa(color: Colors.black, fontWeight: FontWeight.bold),),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         )
@@ -694,10 +694,10 @@ class InitState extends State<ProfileSettingsPage> {
       name = profileInfoList[0].fullname.toString();
       email = profileInfoList[0].email.toString();
       _selectedLanguage = profileInfoList[0].lang.toString()=='en'?'English':'Bangla';
-      _selectedCity = profileInfoList[0].city.toString();
+      city = profileInfoList[0].city.toString();
       print('data_count1 ' + profileInfoList.first.toString());
       //CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         getAllCourses(token, userId);
       });
@@ -727,7 +727,7 @@ class InitState extends State<ProfileSettingsPage> {
       courseList = userCoursesData;
       //count = courseList.length.toString();
       print('data_count1 ' + courseList[0].fullname.toString());
-      showToastMessage(message);
+      //showToastMessage(message);
       //CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {
@@ -740,5 +740,84 @@ class InitState extends State<ProfileSettingsPage> {
   String getDateStump(String sTime) {
     int timeNumber = int.parse(sTime);
     return DateTime.fromMillisecondsSinceEpoch(timeNumber * 1000).toString();
+  }
+
+  OpenDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Alert !'),
+            content: Container(
+              height: 120.0, // Change as per your requirement
+              width: MediaQuery.of(context).size.width/3,
+              child: Column(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      height: 100,
+                      child: Column(
+                        children: [
+                          Text('Are you sure to update the information? '),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              Row(
+                children: [
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage()));
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(
+                        width:120,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.redAccent,
+                        ),
+                        child: Center(
+                          child: Text("Cancel", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage()));
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(
+                        width:120,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.greenAccent,
+                        ),
+                        child: Center(
+                          child: Text("Ok", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
   }
 }

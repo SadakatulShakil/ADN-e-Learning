@@ -1,15 +1,21 @@
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:html/parser.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:power_file_view/power_file_view.dart';
 import 'package:radda_moodle_learning/Screens/Quiz/quiz_view_page.dart';
 import 'package:radda_moodle_learning/Screens/assignmentDetailsPage.dart';
+import 'package:radda_moodle_learning/Screens/demo_video_content.dart';
 import 'package:radda_moodle_learning/Screens/pdfViwer.dart';
+import 'package:radda_moodle_learning/Screens/video_content_page.dart';
 import 'package:radda_moodle_learning/Screens/webViewPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ApiCall/HttpNetworkCall.dart';
@@ -87,9 +93,18 @@ class InitState extends State<CourseDetailsPage> {
           child: Column(
             children: <Widget>[
               Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).size.height / 9,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height -
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height / 9,
                   transform: Matrix4.translationValues(0, 10, 1),
                   decoration: BoxDecoration(
                       color: Color(0xFFFAFAFA),
@@ -113,11 +128,13 @@ class InitState extends State<CourseDetailsPage> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 8, top: 20.0, right: 8),
+                                    left: 18, top: 20.0, right: 8),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    widget.form == 'recent'?widget.mCourseData.fullname.toString(): widget.mCourseData.displayname.toString(),
+                                    widget.form == 'recent' ? widget.mCourseData
+                                        .fullname.toString() : widget
+                                        .mCourseData.displayname.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.comfortaa(
@@ -132,48 +149,35 @@ class InitState extends State<CourseDetailsPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         left: 10.0, top: 5, bottom: 5),
-                                    child: Text(
-                                        'Start date: ' +
-                                            DateFormat.yMMMEd().format(
-                                                DateTime.parse(getDateStump(
-                                                    widget.mCourseData.startdate
-                                                        .toString()))),
-                                        style: GoogleFonts.comfortaa(
-                                            color: Colors.white,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold)),
+                                    child: Html(data: widget.mCourseData.summary
+                                        .toString(),),
                                   )),
                             ],
                           )),
-                      Container(
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Text(
-                                  "Course Content",
-                                  style: GoogleFonts.comfortaa(fontSize: 13),
-                                ),
-                              ),
-                            ),
-                          ],
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            "Course Content",
+                            style: GoogleFonts.comfortaa(fontSize: 13),
+                          ),
                         ),
                       ),
                       Expanded(
                           child: SingleChildScrollView(
-                        controller: scrollController,
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          key: GlobalKey(),
-                          children: [
-                            Container(
-                                width: ScreenRF.width(context), child: list())
-                          ],
-                        ),
-                      )),
+                            controller: scrollController,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              key: GlobalKey(),
+                              children: [
+                                Container(
+                                    width: ScreenRF.width(context),
+                                    child: list())
+                              ],
+                            ),
+                          )),
                     ],
                   )),
             ],
@@ -197,14 +201,14 @@ class InitState extends State<CourseDetailsPage> {
   void getCourseContent(String token, String courseId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userCourseContentData =
-        await networkCall.CourseContentCall(token, courseId);
+    await networkCall.CourseContentCall(token, courseId);
     if (userCourseContentData != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
       courseContentList = userCourseContentData;
       print('data_content ' + courseContentList.first.name.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -221,7 +225,7 @@ class InitState extends State<CourseDetailsPage> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 
   list() {
@@ -230,24 +234,9 @@ class InitState extends State<CourseDetailsPage> {
         itemBuilder: (context, index) {
           return InkWell(
               child: Container(
-                margin: const EdgeInsets.all(1),
-                padding: const EdgeInsets.all(10),
+                color: (index ==0 || index%2== 0)?Color(0xFFFFFFFF):Color(0xFFF5F5F5),
+                padding: EdgeInsets.only(top: 13, bottom: 11),
                 width: ScreenRF.width(context),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.white, Colors.white70],
-                      begin: FractionalOffset(0, 0),
-                      end: FractionalOffset(0, 1),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        offset: Offset(0, 2),
-                        blurRadius: 5,
-                        color: Colors.black.withOpacity(0.4)),
-                  ],
-                ),
                 child: Column(
                   children: [
                     SizedBox(
@@ -255,66 +244,74 @@ class InitState extends State<CourseDetailsPage> {
                     ),
                     Stack(
                       children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Text(
-                                  courseContentList[index].name.toString(),
-                                  style: TextStyle(
-                                      fontSize: 14, fontWeight: FontWeight.bold),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        courseContentList[index].name.toString(),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: index == showSub
-                                ? Icon(
+                              ),
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: index == showSub
+                                      ? Icon(
                                     Icons.keyboard_arrow_down_outlined,
                                     color: Colors.black,
                                     size: 24.0,
 
                                     /// semanticLabel: 'Text to announce in accessibility modes',
                                   )
-                                : Icon(
+                                      : Icon(
                                     Icons.keyboard_arrow_right,
                                     color: Colors.black,
                                     size: 24.0,
 
                                     /// semanticLabel: 'Text to announce in accessibility modes',
                                   )),
+                            ],
+                          )
+                        ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: index == showSub
                               ? Row(
-                                  children: [
-                                    Expanded(
-                                        child: SingleChildScrollView(
-                                      controller: scrollController,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      scrollDirection: Axis.horizontal,
-                                      child: Column(
-                                        key: GlobalKey(),
-                                        children: [
-                                          SizedBox(
-                                            height: 30,
-                                          ),
-                                          Container(
-                                              width: ScreenRF.width(context),
-                                              child: sublist(index))
-                                        ],
-                                      ),
-                                    ))
-                                  ],
-                                )
+                            children: [
+                              Expanded(
+                                  child: SingleChildScrollView(
+                                    controller: scrollController,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: Column(
+                                      key: GlobalKey(),
+                                      children: [
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Container(
+                                            width: ScreenRF.width(context),
+                                            child: sublist(index))
+                                      ],
+                                    ),
+                                  ))
+                            ],
+                          )
                               : Container(),
                         )
                       ],
@@ -346,144 +343,237 @@ class InitState extends State<CourseDetailsPage> {
         itemBuilder: (context, index) {
           return InkWell(
               child: Container(
-                margin: const EdgeInsets.only(right: 25, top: 0, bottom: 0),
-                padding: const EdgeInsets.all(5),
+                color: Color(0xFF49C4AA),
+                padding: EdgeInsets.only(left: 15, right: 15, bottom: 5),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: Text(
-                            courseContentList[sub_index]
-                                .modules[index]
-                                .name
-                                .toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Stack(
+                    children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0, right: 12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
                         ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: index == showContact
-                                ? Icon(
-                                    Icons.keyboard_arrow_down_outlined,
-                                    color: Colors.black,
-                                    size: 24.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        courseContentList[sub_index]
+                                            .modules[index]
+                                            .modname
+                                            .toString() == 'hvp'?Image.asset("assets/images/video_icon.png", height:40,width: 40,)
+                                            :courseContentList[sub_index]
+                                            .modules[index]
+                                            .modname
+                                            .toString() == 'quiz'?Image.asset("assets/images/quiz_icon.png", height:40,width: 40,):
+                                        Image.asset("assets/images/course_icon.png", height:40,width: 40,),
 
-                                    /// semanticLabel: 'Text to announce in accessibility modes',
-                                  )
-                                : Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: Colors.black,
-                                    size: 24.0,
+                                        Column(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context).size.width/1.7,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 12.0,right: 12.0),
+                                                child: Text(
+                                                  courseContentList[sub_index]
+                                                      .modules[index]
+                                                      .name
+                                                      .toString(),
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Align(
+                                alignment: Alignment.centerRight,
+                                child: index == showContact
+                                    ? Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  color: Colors.black,
+                                  size: 24.0,
 
-                                    /// semanticLabel: 'Text to announce in accessibility modes',
-                                  )),
-                      ],
-                    ),
+                                  /// semanticLabel: 'Text to announce in accessibility modes',
+                                )
+                                    : Icon(
+                                  Icons.keyboard_arrow_right,
+                                  color: Colors.black,
+                                  size: 24.0,
+
+                                  /// semanticLabel: 'Text to announce in accessibility modes',
+                                )),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                  ),
                     Align(
                       alignment: Alignment.topLeft,
                       child: index == showContact &&
-                                  courseContentList[sub_index]
-                                          .modules[index]
-                                          .modname !=
-                                      "attendance" &&
-                              courseContentList[sub_index]
-                                      .modules[index]
-                                      .modname !=
-                                  "quiz" &&
-                              courseContentList[sub_index]
-                                      .modules[index]
-                                      .modname !=
-                                  "assign"&&
                           courseContentList[sub_index]
                               .modules[index]
                               .modname !=
-                              "hvp"
-                          ? Row(
-                              children: [
-                                Expanded(
-                                    child: SingleChildScrollView(
-                                  controller: scrollController,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  child: Column(
-                                    key: GlobalKey(),
-                                    children: [
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Container(
-                                          width: ScreenRF.width(context),
-                                          child: sublist2(sub_index, index))
-                                    ],
-                                  ),
-                                ))
-                              ],
-                            )
-                          : index == showContact
-                              ? InkWell(
-                        onTap: (){
+                              "attendance" &&
                           courseContentList[sub_index]
                               .modules[index]
-                              .modname ==
-                              "assign"?Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AssignmentDetailsPage(
-                                      widget.mCourseData.id.toString(),
-                                      courseContentList[sub_index].modules[index].name.toString(),
-                              courseContentList[sub_index].modules[index].instance.toString(),
-                              DateFormat.yMMMEd().format(DateTime.parse(getDateStump(courseContentList[sub_index].modules[index].dates[0].timestamp.toString()))),
-                              DateFormat.yMMMEd().format(DateTime.parse(getDateStump(courseContentList[sub_index].modules[index].dates[1].timestamp.toString())))
-                                  ))) :print("Not assignment clicked !");
-                        },
-                                child: InkWell(
-                                  onTap: (){
-                                    //quizDialog();
-                                    courseContentList[sub_index]
-                                        .modules[index]
-                                        .modname ==
-                                        "quiz"?Navigator.push(context, MaterialPageRoute(builder: (context) => QuizViewPage(courseContentList[sub_index].modules[index].name.toString(), courseContentList[sub_index].modules[index].instance.toString())))
-                                        :courseContentList[sub_index]
-                                        .modules[index]
-                                        .modname ==
-                                        "assign"?Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AssignmentDetailsPage(
-                                                widget.mCourseData.id.toString(),
-                                                courseContentList[sub_index].modules[index].name.toString(),
-                                                courseContentList[sub_index].modules[index].instance.toString(),
-                                                DateFormat.yMMMEd().format(DateTime.parse(getDateStump(courseContentList[sub_index].modules[index].dates[0].timestamp.toString()))),
-                                                DateFormat.yMMMEd().format(DateTime.parse(getDateStump(courseContentList[sub_index].modules[index].dates[1].timestamp.toString())))
-                                            ))):courseContentList[sub_index]
-                                        .modules[index]
-                                        .modname ==
-                                        "hvp"?Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => WebViewPage(
-                                                courseContentList[sub_index].modules[index].url.toString(),
-                                                courseContentList[sub_index].modules[index].name.toString()
-                                            ))):print("Not assignment clicked !");
-                                  },
-                                  child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Check Now",
-                                          style:
-                                              TextStyle(color: Colors.greenAccent),
-                                        ),
-                                      ),
+                              .modname !=
+                              "quiz" &&
+                          courseContentList[sub_index]
+                              .modules[index]
+                              .modname !=
+                              "assign" &&
+                          courseContentList[sub_index]
+                              .modules[index]
+                              .modname !=
+                              "hvp" &&
+                          courseContentList[sub_index]
+                              .modules[index]
+                              .modname !=
+                              "label"&&
+                          courseContentList[sub_index]
+                              .modules[index]
+                              .modname !=
+                              "forum"&&
+                          courseContentList[sub_index]
+                              .modules[index]
+                              .modname !=
+                              "page"
+                          ? Row(
+                        children: [
+                          Expanded(
+                              child: SingleChildScrollView(
+                                controller: scrollController,
+                                physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                child: Column(
+                                  key: GlobalKey(),
+                                  children: [
+                                    const SizedBox(
+                                      height: 8,
                                     ),
+                                    Container(
+                                        width: ScreenRF.width(context),
+                                        child: sublist2(sub_index, index))
+                                  ],
                                 ),
-                              )
-                              : Container(),
+                              ))
+                        ],
+                      )
+                          : index == showContact
+                          ? InkWell(
+                            onTap: () {
+                              //quizDialog();
+                              courseContentList[sub_index]
+                                  .modules[index]
+                                  .modname ==
+                                  "quiz" ? Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      QuizViewPage(courseContentList[sub_index]
+                                          .modules[index].name.toString(),
+                                          courseContentList[sub_index]
+                                              .modules[index].instance
+                                              .toString())))
+                                  : courseContentList[sub_index].modules[index]
+                                  .modname ==
+                                  "assign" ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AssignmentDetailsPage(
+                                              widget.mCourseData.id.toString(),
+                                              courseContentList[sub_index]
+                                                  .modules[index].name.toString(),
+                                              courseContentList[sub_index]
+                                                  .modules[index].instance
+                                                  .toString(),
+                                              DateFormat.yMMMEd().format(
+                                                  DateTime.parse(getDateStump(
+                                                      courseContentList[sub_index]
+                                                          .modules[index].dates[0]
+                                                          .timestamp
+                                                          .toString()))),
+                                              DateFormat.yMMMEd().format(
+                                                  DateTime.parse(getDateStump(
+                                                      courseContentList[sub_index]
+                                                          .modules[index].dates[1]
+                                                          .timestamp.toString())))
+                                          ))) :
+                                   courseContentList[sub_index].modules[index]
+                                  .modname ==
+                                  "hvp" ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          WebViewPage(
+                                              courseContentList[sub_index]
+                                                  .modules[index].url.toString(),
+                                              courseContentList[sub_index]
+                                                  .modules[index].name.toString()
+                                          ))) :
+                                   courseContentList[sub_index].modules[index]
+                                       .modname ==
+                                       "label" ? OpenHtmlDialog(courseContentList[sub_index].modules[index]
+                                       .name, "<p dir=\"ltr\" style=\"text-align: left;\"></p><p></p><p>Python is the most popular programming language in the\r\nworld. The average salary for a Python developer is 116k in the USA. That's\r\nalmost 30k more than other developers!</p>\r\n\r\n<p>Python is used by big companies like Google, Facebook,\r\nDropbox, Reddit, Spotify, Quora, etc.</p>\r\n\r\n<p>Mathematicians, scientists, engineers and developers love\r\nit because of its simple and elegant syntax.</p>\r\n\r\n<p>It's the #1 language for AI and machine learning, and the\r\nideal language to learn for beginners. Much easier than C++ or JavaScript!</p>\r\n\r\n<p>This course teaches you everything Python has to offer from\r\nthe basics to more advanced topics.</p>\r\n\r\n<p>A perfect mix of theory and practice, packed with\r\nreal-world examples, exercises and step-by-step solutions - free of \"fluff\"\r\nand lengthy description!</p>\r\n\r\n<p><b>Discover how to use Python in automation, web\r\ndevelopment and machine learning.</b></p><br><p></p><br><p></p>"
+                                        )
+                                       : courseContentList[sub_index].modules[index]
+                                       .modname ==
+                                       "forum" ? OpenDialog(courseContentList[sub_index].modules[index]
+                                       .name.toString(), 'No description Yet!'):courseContentList[sub_index].modules[index]
+                                       .modname ==
+                                       "page" ? findVideoUrl(token, courseContentList[sub_index].modules[index].contents[0].fileurl.toString(), courseContentList[sub_index].modules[index].name.toString()):
+                                                    print("Not assignment clicked !");
+                                   // Navigator.push(
+                                   //     context,
+                                   //     MaterialPageRoute(
+                                   //         builder: (context) =>
+                                   //             YoutubePlayerDemoApp())): print("Not assignment clicked !");
+                              setState(() {
+
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "View details",
+                                  style:
+                                  TextStyle(color: Colors.greenAccent),
+                                ),
+                              ),
+                            ),
+                          )
+                          : Container(),
                     )
                   ],
                 ),
@@ -515,7 +605,7 @@ class InitState extends State<CourseDetailsPage> {
             .toString());
     return ListView.builder(
         itemCount:
-            courseContentList[sub_index].modules[sub_index2].contents.length,
+        courseContentList[sub_index].modules[sub_index2].contents.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           return InkWell(
@@ -540,11 +630,11 @@ class InitState extends State<CourseDetailsPage> {
 
                     Visibility(
                       visible: courseContentList[sub_index]
-                                  .modules[sub_index2]
-                                  .contents[index]
-                                  .mimetype
-                                  .toString() ==
-                              "audio/mp3"
+                          .modules[sub_index2]
+                          .contents[index]
+                          .mimetype
+                          .toString() ==
+                          "audio/mp3"
                           ? true
                           : false,
                       child: InkWell(
@@ -594,10 +684,10 @@ class InitState extends State<CourseDetailsPage> {
                 //             .toString(), token)));
                 FileDownloader.downloadFile(
                     url: courseContentList[sub_index]
-                            .modules[sub_index2]
-                            .contents[index]
-                            .fileurl
-                            .toString() +
+                        .modules[sub_index2]
+                        .contents[index]
+                        .fileurl
+                        .toString() +
                         '&token=$token',
                     name: courseContentList[sub_index]
                         .modules[sub_index2]
@@ -663,11 +753,12 @@ class InitState extends State<CourseDetailsPage> {
 
   Future getFilePath(String type, String assetPath) async {
     final _directory = await getTemporaryDirectory();
-    return "${_directory.path}/fileview/${base64.encode(utf8.encode(assetPath))}.$type";
+    return "${_directory.path}/fileview/${base64.encode(
+        utf8.encode(assetPath))}.$type";
   }
 
-  void tapingFunction(
-      BuildContext context, String downloadUrl, String downloadPath) {
+  void tapingFunction(BuildContext context, String downloadUrl,
+      String downloadPath) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (ctx) {
         return PdfViwerPage(
@@ -738,7 +829,112 @@ class InitState extends State<CourseDetailsPage> {
         'https://radda.adnarchive.com/webservice/pluginfile.php/31/mod_folder/content/4/audio%201.mp3?forcedownload=1&token=f201f9cd0e050c8fdf4541115195c250');
   }
 
-// String formatTime(Duration time) {
-//   return();
-// }
+  OpenDialog(String name, String description) {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Align(
+                    alignment: Alignment.center,
+                    child: Text(name,style: GoogleFonts.comfortaa(
+                        fontSize: 12
+                    )),
+                  )),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context, false);
+                          },
+                          child: Icon(Icons.cancel_outlined))),
+                ]),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(description.toString())
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+  OpenHtmlDialog(String name, String description) {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Align(
+                    alignment: Alignment.center,
+                    child: Text(name,style: GoogleFonts.comfortaa(
+                        fontSize: 12
+                    )),
+                  )),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context, false);
+                          },
+                          child: Icon(Icons.cancel_outlined))),
+                ]),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Html(data: description.toString())
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  findVideoUrl(String token, String url, String name) async{
+    CommonOperation.showProgressDialog(context, "loading", true);
+    dynamic contentdata =
+    await networkCall.VideoUrlCall(token, url);
+    if (contentdata != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print('data_content_html ' + HtmlUnescape().convert(contentdata).toString());
+      CommonOperation.hideProgressDialog(context);
+      dom.Document document = parse(HtmlUnescape().convert(contentdata));
+      var mainUrl = document
+          .getElementsByClassName('mediafallbacklink')[0].attributes["href"].toString();
+      String vidUrl = mainUrl; //|| 'https://www.youtube.com/watch?v=1gDhl4leEzA&t=2s';
+
+      setState(() {
+         Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    VideoContentStanding(vidUrl, name)));
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
 }

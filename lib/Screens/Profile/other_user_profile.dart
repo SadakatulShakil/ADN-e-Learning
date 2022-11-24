@@ -11,8 +11,8 @@ import '../../ApiModel/userCoursesList.dart';
 import '../../Helper/operations.dart';
 
 class OtherProfileBody extends StatefulWidget {
-  String currentUserId, requestId;
-  OtherProfileBody(this.currentUserId, this.requestId);
+  String from, currentUserId, requestId;
+  OtherProfileBody(this.from, this.currentUserId, this.requestId);
   @override
   State<StatefulWidget> createState() => InitState();
 // TODO: implement createState
@@ -45,7 +45,7 @@ class InitState extends State<OtherProfileBody> {
   Widget inItWidget() {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: const Color(0xFF00984D),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -58,71 +58,74 @@ class InitState extends State<OtherProfileBody> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF01974D),
+      backgroundColor: const Color(0xFF00984D),
       body: Column(
         children: <Widget>[
           Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
-              transform: Matrix4.translationValues(0, 10, 1),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25)
-                  )
-              ),
-              child:  Column(
-                children: [
-                  Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        SizedBox(height: 10,),
-                        Image(
-                          height: MediaQuery.of(context).size.height / 3,
-                          fit: BoxFit.cover,
-                          image: NetworkImage(imageUrl),
-                        ),
-                        Positioned(
-                            bottom: -50.0,
-                            child: CircleAvatar(
-                              backgroundColor:
-                              Get.isDarkMode ? Colors.black : Color(0xFFFCFAFA),
-                              radius: 80,
-                              backgroundImage:
-                              NetworkImage(imageUrl),
-                            ))
-                      ]),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
+            transform: Matrix4.translationValues(0, 10, 1),
+            decoration: BoxDecoration(
+                color: Color(0xFFFAFAFA),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25)
+                )
+            ),
+            child:  Column(
+              children: [
+                Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.bottomCenter,
                     children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 50),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 5.0, right: 10, top: 8, bottom: 8),
-                            child: Text('Reject',
-                                style: GoogleFonts.comfortaa(
-                                  color: const Color(0xFFFFFFFF),
-                                  fontWeight: FontWeight.w900,
-                                )),
+                      SizedBox(height: 10,),
+                      Image(
+                        height: MediaQuery.of(context).size.height / 3,
+                        fit: BoxFit.cover,
+                        image: NetworkImage(imageUrl),
+                      ),
+                      Positioned(
+                          bottom: -50.0,
+                          child: CircleAvatar(
+                            backgroundColor:
+                            Get.isDarkMode ? Colors.black : Color(0xFFFCFAFA),
+                            radius: 80,
+                            backgroundImage:
+                            NetworkImage(imageUrl),
+                          ))
+                    ]),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Visibility(
+                      visible: widget.from == 'search'?false:true,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 50),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 5.0, right: 10, top: 8, bottom: 8),
+                              child: Text('Reject',
+                                  style: GoogleFonts.comfortaa(
+                                    color: const Color(0xFFFFFFFF),
+                                    fontWeight: FontWeight.w900,
+                                  )),
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50.0),
+                      padding: widget.from == 'search'?EdgeInsets.only(left: 150.0, top: 30):EdgeInsets.only(left: 50.0),
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -133,7 +136,11 @@ class InitState extends State<OtherProfileBody> {
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 5.0, right: 10, top: 8, bottom: 8),
-                            child: Text('Accept',
+                            child: widget.from == 'search'?Text('Send request',
+                                style: GoogleFonts.comfortaa(
+                                  color: const Color(0xFFFFFFFF),
+                                  fontWeight: FontWeight.w900,
+                                )): Text('Accept',
                                 style: GoogleFonts.comfortaa(
                                   color: const Color(0xFFFFFFFF),
                                   fontWeight: FontWeight.w900,
@@ -143,67 +150,38 @@ class InitState extends State<OtherProfileBody> {
                       ),
                     ),
                   ],),
-                  SizedBox(
-                    height: 25,
+                SizedBox(
+                  height: 20,
+                ),
+                Text(name,
+                    style: GoogleFonts.comfortaa(
+                        fontWeight: FontWeight.w900, fontSize: 18)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(email,
+                    style: GoogleFonts.comfortaa(
+                        fontWeight: FontWeight.w900, fontSize: 12)),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0, right: 18),
+                  child: Divider(
+                    thickness: 2,
                   ),
-                  Text(name,
-                      style: GoogleFonts.comfortaa(
-                          fontWeight: FontWeight.w900, fontSize: 18)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(email,
-                      style: GoogleFonts.comfortaa(
-                          fontWeight: FontWeight.w900, fontSize: 12)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0, right: 18),
-                    child: Divider(
-                      thickness: 2,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: (){
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => MyCourses(widget.userId.toString())));
-                            },
-                            child: Container(
-                              width: 160,
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Text('Courses I have',style: GoogleFonts.comfortaa(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 15)),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(count,style: GoogleFonts.comfortaa(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 15)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: (){
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => MyCourses(widget.userId.toString())));
+                          },
                           child: Container(
                             width: 160,
                             child: Card(
@@ -215,26 +193,55 @@ class InitState extends State<OtherProfileBody> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
-                                    Text('Last visited',style: GoogleFonts.comfortaa(
+                                    Text('Courses I have',style: GoogleFonts.comfortaa(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 15)),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(lastAccess,style: GoogleFonts.comfortaa(
+                                    Text(count,style: GoogleFonts.comfortaa(
                                         fontWeight: FontWeight.w900,
-                                        fontSize: 12)),
+                                        fontSize: 15)),
                                   ],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 160,
+                          child: Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text('Last visited',style: GoogleFonts.comfortaa(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15)),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(lastAccess,style: GoogleFonts.comfortaa(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 12)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -258,7 +265,7 @@ class InitState extends State<OtherProfileBody> {
       String message = 'Success';
       //print('hospital data'+ userProfilesData.firstname.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         name = userProfilesData.fullname.toString();
         imageUrl = userProfilesData.profileimageurl.toString();
@@ -303,7 +310,7 @@ class InitState extends State<OtherProfileBody> {
       count = courseList.length.toString();
       print('data_count '+ courseList.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
       });
 

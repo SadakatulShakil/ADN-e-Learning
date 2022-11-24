@@ -51,7 +51,8 @@ class InitState extends State<AllCoursesPage> {
                 children: [
                   SizedBox(height: 15,),
                   Expanded(
-                    child: Padding(
+                    child:
+                    Padding(
                         padding:
                         const EdgeInsets.only(left: 12.0, right: 12.0),
                         child: ListView.builder(

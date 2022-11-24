@@ -20,12 +20,6 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
 
   Widget initWidget(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage()));
-      },
-          label: Text('Create Event')
-      ),
       appBar: AppBar(
         backgroundColor: const Color(0xFF01974D),
         elevation: 0,

@@ -159,7 +159,7 @@ class InitState extends State<ChatDashBoardScreen> {
       groupMessagesList = groupMessageData.messages!;
       //print('hospital data' + groupMessageData.messages!.first.text.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         // name = userProfilesData.fullname.toString();
         // imageUrl = userProfilesData.profileimageurl.toString();
@@ -204,7 +204,7 @@ class InitState extends State<ChatDashBoardScreen> {
       count = courseList.length.toString();
       print('data_count ' + courseList.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();

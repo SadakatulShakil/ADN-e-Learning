@@ -450,7 +450,7 @@ class InitState extends State<ContactComponents> {
                     child: InkWell(
                       onTap: (){
                         Navigator.pop(context, false);
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => OtherProfileBody(widget.userid, mContactData.id.toString())));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => OtherProfileBody('contact', widget.userid, mContactData.id.toString())));
                         // setState(() {
                         //
                         // });

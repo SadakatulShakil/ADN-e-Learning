@@ -81,7 +81,7 @@ class CommonOperation {
       ),
     );
     showDialog(
-      barrierDismissible: isCancelAble,
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;

@@ -74,18 +74,9 @@ class InitState extends State<NotificationPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(25.0)
-                  ),
+                  height: 50,
                   child:  TabBar(
-                    indicator: BoxDecoration(
-                        color: const Color(0xFF00A6FF),
-                        borderRadius:  BorderRadius.circular(25.0)
-                    ) ,
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.black,
+                    labelColor: Colors.black,
                     tabs: const  [
                       Tab(text: 'Recent '),
                       Tab(text: 'Previous ',)
@@ -126,7 +117,7 @@ class InitState extends State<NotificationPage> {
       String message = 'Success';
 
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       unReadNotiList = uRNotificationData.messages!;
       allNotification.addAll(unReadNotiList);
       setState(() {
@@ -150,7 +141,7 @@ class InitState extends State<NotificationPage> {
       String message = 'Success';
 
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       readNotiList = rNotificationData.messages!;
       setState(() {
         allNotification.addAll(readNotiList);

@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
 import '../../Helper/operations.dart';
+import '../Profile/other_user_profile.dart';
 import 'chat_dash_board.dart';
 
 class MessageComponents extends StatefulWidget {
@@ -30,6 +31,8 @@ class InitState extends State<MessageComponents> {
   List<Conversations> privateChatHolderList = [];
   List<Conversations> contactsList = [];
   List<dynamic> contactRequestList = [];
+  List<dynamic> searchedUserList = [];
+  var searchCtrl = TextEditingController();
   bool selectedCat = false;
   int fieldVisible = 1;
   String token ='';
@@ -50,7 +53,7 @@ class InitState extends State<MessageComponents> {
 
   Widget initWidget(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF01974D),
+      backgroundColor: const Color(0xFF00984D),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height -
@@ -96,7 +99,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 1?Color(0xFF01974D):Color(0xFFE7EAEC),
+                              color: fieldVisible == 1?Color(0xFF00984D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 fieldVisible = 1;
                                 setState(() {
@@ -112,7 +115,7 @@ class InitState extends State<MessageComponents> {
                           SizedBox(width: 5,),
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 2?Color(0xFF01974D):Color(0xFFE7EAEC),
+                              color: fieldVisible == 2?Color(0xFF00984D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 fieldVisible = 2;
                                 setState(() {
@@ -129,7 +132,7 @@ class InitState extends State<MessageComponents> {
                           SizedBox(width: 5,),
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 3?Color(0xFF01974D):Color(0xFFE7EAEC),
+                              color: fieldVisible == 3?Color(0xFF00984D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 fieldVisible = 3;
                                 setState(() {
@@ -145,7 +148,7 @@ class InitState extends State<MessageComponents> {
                           SizedBox(width: 5,),
                           Container(
                             child: GFButtonBadge(
-                              color: fieldVisible == 4?Color(0xFF01974D):Color(0xFFE7EAEC),
+                              color: fieldVisible == 4?Color(0xFF00984D):Color(0xFFE7EAEC),
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList, userid)));
                                 setState(() {
@@ -160,16 +163,16 @@ class InitState extends State<MessageComponents> {
                             ),
                           ),
                         ],
-                          // children: List.generate(categoryList.length,
-                          //         (index) => CategoryCard(
-                          //         text: categoryList[index]['name'],
-                          //         press: () {
-                          //           selectedCat = true;
-                          //           Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList)));
-                          //           debugPrint('>>>>>>>>>>  '+categoryList[index]['name']+ ' is clicked !');
-                          //         }
-                          //     )
-                          // )
+                        // children: List.generate(categoryList.length,
+                        //         (index) => CategoryCard(
+                        //         text: categoryList[index]['name'],
+                        //         press: () {
+                        //           selectedCat = true;
+                        //           Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList)));
+                        //           debugPrint('>>>>>>>>>>  '+categoryList[index]['name']+ ' is clicked !');
+                        //         }
+                        //     )
+                        // )
                       ),
                     ),
                   ),
@@ -179,8 +182,9 @@ class InitState extends State<MessageComponents> {
                     child: SizedBox(
                       height: 40,
                       child: TextField(
-                        //controller: searchCtrl,
+                        controller: searchCtrl,
                         textInputAction: TextInputAction.go,
+                        onSubmitted: (val) => val != ''?searchUser(token, searchCtrl.text): showToastMessage('please enter valid user'),
                         maxLines: 1,
                         minLines: 1,
                         keyboardType: TextInputType.text,
@@ -285,7 +289,7 @@ class InitState extends State<MessageComponents> {
 
       //print('data_count1 ' + chatHolderData.first.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         getContactRequest(token, userId);
       });
@@ -337,7 +341,7 @@ class InitState extends State<MessageComponents> {
                       fit: BoxFit.cover),
 
                   Visibility(
-                    visible: mChatData.isfavourite?true:false,
+                      visible: mChatData.isfavourite?true:false,
                       child: Icon(Icons.star, color: Colors.deepOrange,))
                 ],
               ),
@@ -346,41 +350,45 @@ class InitState extends State<MessageComponents> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 1.4,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(mChatData.name.toString()==''?'--':mChatData.name.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.comfortaa(
-                                color: mChatData.isread?Colors.black:Colors.greenAccent,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ),
                     Row(
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Text( mChatData.subname.toString(),
-                              style: GoogleFonts.comfortaa(
-                                  color: Colors.black54,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold)),
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: Text(mChatData.name.toString()==''?mChatData.members.first.fullname.toString():mChatData.name.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.comfortaa(
+                                    color: mChatData.isread?Colors.black:Colors.blueAccent,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold)),
+                          ),
                         ),
                         Visibility(
                             visible: !mChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.greenAccent,))
+                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
                       ],
                     ),
+                    // Row(
+                    //   children: [
+                    //     Container(
+                    //       width: MediaQuery.of(context).size.width / 2,
+                    //       child: Text( mChatData.subname.toString(),
+                    //           style: GoogleFonts.comfortaa(
+                    //               color: Colors.black54,
+                    //               fontSize: 13,
+                    //               fontWeight: FontWeight.bold)),
+                    //     ),
+                    //   ],
+                    // ),
                     Container(
                       width: MediaQuery.of(context).size.width / 1.4,
                       child: Row(
                         children: [
                           Padding(
-                          padding: const EdgeInsets.only(bottom: 5.0),
-                          child: Text(mChatData.members.length>0?mChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mChatData.isread?Colors.black:Colors.greenAccent),),
-        ),
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: Text(mChatData.members.length>0?mChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mChatData.isread?Colors.black:Colors.blueAccent),),
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
                             child: Padding(
@@ -446,7 +454,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mGroupChatData.name.toString()==''?'--':mGroupChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mGroupChatData.isread?Colors.black:Colors.greenAccent,
+                                color: mGroupChatData.isread?Colors.black:Colors.blueAccent,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -463,7 +471,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mGroupChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.greenAccent,))
+                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
                       ],
                     ),
                     Container(
@@ -472,7 +480,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mGroupChatData.members.length>0?mGroupChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mGroupChatData.isread?Colors.black:Colors.greenAccent),),
+                            child: Text(mGroupChatData.members.length>0?mGroupChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mGroupChatData.isread?Colors.black:Colors.blueAccent),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -495,10 +503,10 @@ class InitState extends State<MessageComponents> {
   Widget buildPrivateHolderList(mPrivateChatData) => GestureDetector(
       onTap: () {
         /// do click item task
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => CourseDetailsPage(mCourseData)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatDashBoardScreen(userid, mPrivateChatData)));
       },
       child: Card(
         color: !mPrivateChatData.isread?Colors.grey.shade200:Colors.white,
@@ -539,7 +547,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mPrivateChatData.name.toString()==''?'--':mPrivateChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mPrivateChatData.isread?Colors.black:Colors.greenAccent,
+                                color: mPrivateChatData.isread?Colors.black:Colors.blueAccent,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -556,7 +564,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mPrivateChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.greenAccent,))
+                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
                       ],
                     ),
                     Container(
@@ -565,7 +573,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mPrivateChatData.members.length>0?mPrivateChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mPrivateChatData.isread?Colors.black:Colors.greenAccent),),
+                            child: Text(mPrivateChatData.members.length>0?mPrivateChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mPrivateChatData.isread?Colors.black:Colors.blueAccent),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -585,7 +593,7 @@ class InitState extends State<MessageComponents> {
         ),
       )
   );
-  
+
 
   void getContactRequest(String token, String userId) async{
     CommonOperation.showProgressDialog(context, "loading", true);
@@ -598,9 +606,9 @@ class InitState extends State<MessageComponents> {
       contactRequestList = contactRequestData;
       //print('data_count1 ' + chatHolderData.first.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
-       // getContactRequest(token, userId);
+        // getContactRequest(token, userId);
       });
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -608,6 +616,110 @@ class InitState extends State<MessageComponents> {
       showToastMessage('your session is expire ');
     }
   }
+
+  void searchUser(String token, String searchText) async{
+    CommonOperation.showProgressDialog(context, "loading", true);
+    final userSearchData =
+    await networkCall.UserSearchCall(token, searchText);
+    if (userSearchData != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'SuccessMessage done';
+
+      searchedUserList = userSearchData;
+      //print('data_count1 ' + chatHolderData.first.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        if(searchedUserList != null && searchedUserList.length>0){
+          OpenUserDialog(searchedUserList);
+        }else{
+          message = 'No User matched !';
+        }
+        // getContactRequest(token, userId);
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void OpenUserDialog(List<dynamic> searchedUserList) {
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Searched User'),
+            content: Container(
+              // Change as per your requirement
+              height: 250,
+              width: MediaQuery.of(context).size.width/3,
+              child: Column(
+                children: [
+                  Container(
+                    height: 220,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: searchedUserList.length,
+                        itemBuilder: (context, index) {
+                          final mSearchData = searchedUserList[index];
+
+                          return buildSearchEvent(mSearchData);
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget buildSearchEvent(mSearchData) => GestureDetector(
+      onTap: () {
+        /// do click item task
+        Navigator.pop(context, false);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => OtherProfileBody('search', userid, mSearchData.id.toString())));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(left: 12.0, right: 12, top: 5, bottom: 8),
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.black12)),
+        child: Row(
+          children: [
+            FadeInImage.assetNetwork(
+                placeholder: 'assets/images/chat_head.jpg',
+                image:  mSearchData.profileimageurl.toString(),
+                height: 40,
+                width: 40,
+                fit: BoxFit.cover),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(mSearchData.fullname.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: GoogleFonts.comfortaa(
+                              color: Colors.black,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      )
+  );
 
 }
 class CategoryCard extends StatelessWidget {
@@ -635,7 +747,7 @@ class CategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child:  Text(text!, textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
-                color: const Color(0xFF01A9B8)) ),
+                  color: const Color(0xFF01A9B8)) ),
             ),
           ],
         ),

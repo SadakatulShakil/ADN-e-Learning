@@ -32,24 +32,29 @@ class InitState extends State<PreviousNotificationPage> {
   Widget inItWidget() {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, top: 10),
-                child: Text('Total ',style: GoogleFonts.comfortaa(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, top: 10),
-                child: Text(widget.readNotiList.length.toString(),style: GoogleFonts.comfortaa(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
-              ),
-            ],
+          Visibility(
+            visible: widget.readNotiList.length>0?true:false,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 10),
+                  child: Text('Total '+widget.readNotiList.length.toString(),style: GoogleFonts.comfortaa(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, top: 10),
+                  child: Text(widget.readNotiList.length.toString() == '1'? ' Notification': ' Notifications',style: GoogleFonts.comfortaa(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
           ),
           Divider(),
           SizedBox(
             height: 8,
           ),
+          widget.readNotiList.length>0?
           Expanded(
             child: Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -60,6 +65,16 @@ class InitState extends State<PreviousNotificationPage> {
 
                       return buildNotification(mNotificationData);
                     })),
+          ): Center(
+            child: SizedBox(
+              height: 100,
+              child: Column(
+                children: [
+                  Icon(Icons.warning_amber, size: 30,),
+                  Text('No Notification Found!'),
+                ],
+              ),
+            ),
           ),
         ],
       ),

@@ -45,7 +45,7 @@ class InitState extends State<GradesDetailsPage> {
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Grades Details',
+          title: Text('Grade Details',
               style: GoogleFonts.comfortaa(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
@@ -114,28 +114,29 @@ class InitState extends State<GradesDetailsPage> {
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                       )),
+                                  // Align(
+                                  //     alignment: Alignment.centerLeft,
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.only(
+                                  //           left: 10.0, top: 5, bottom: 5),
+                                  //       child: Text(
+                                  //           'Start date: ' +
+                                  //               DateFormat.yMMMEd().format(DateTime.parse(
+                                  //                   getDateStump(
+                                  //                       widget.mGradeData.startdate.toString()))),
+                                  //           style: GoogleFonts.comfortaa(
+                                  //               color: Colors.white,
+                                  //               fontSize: 11,
+                                  //               fontWeight: FontWeight.bold)),
+                                  //     )),
                                   Align(
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 10.0, top: 5, bottom: 5),
                                         child: Text(
-                                            'Start date: ' +
-                                                DateFormat.yMMMEd().format(DateTime.parse(
-                                                    getDateStump(
-                                                        widget.mGradeData.startdate.toString()))),
-                                            style: GoogleFonts.comfortaa(
-                                                color: Colors.white,
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold)),
-                                      )),
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10.0, top: 5, bottom: 5),
-                                        child: Text(
-                                             'Total Grade: ' + widget.mGradesData.grade.toString(),
+                                            widget.mGradesData.grade.toString() != null && widget.mGradesData.grade.toString() != '-'?
+                                            'Total Grade: ' + widget.mGradesData.grade.toString():'Total Grade: ' + "Not evaluated yet",
                                             style: GoogleFonts.comfortaa(
                                                 color: Colors.white,
                                                 fontSize: 11,
@@ -187,7 +188,7 @@ class InitState extends State<GradesDetailsPage> {
       gradeDetailsList = userGradeDetailsData.usergrades![0].gradeitems!;
       print('data_content ' + gradeDetailsList.first.itemname.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);
@@ -213,13 +214,13 @@ class InitState extends State<GradesDetailsPage> {
         .map((item) => DataRow(cells: [
               DataCell(Container(
                   width: MediaQuery.of(context).size.width / 2.8,
-                  child: Text(
+                  child: Text(item.itemname.toString() == 'null'?'Not evaluated yet':
                     item.itemname.toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ))),
-              DataCell(Text(item.weightformatted.toString())),
-              DataCell(Text(item.gradeformatted.toString())),
+              DataCell(Text(item.weightformatted.toString() == 'null'?'Not evaluated yet':item.weightformatted.toString())),
+              DataCell(Text(item.gradeformatted.toString() != null && item.gradeformatted.toString() != '-'?item.gradeformatted.toString():"Not evaluated yet")),
               DataCell(Text(
                   item.grademin.toString() + '-' + item.grademax.toString()))
             ]))

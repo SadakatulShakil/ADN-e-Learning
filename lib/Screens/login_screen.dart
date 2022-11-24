@@ -17,14 +17,20 @@ class _LoginScreenState extends State<LoginScreen>{
 
   bool _passwordVisible =false;
   bool agree = false;
+  int error = 0;
   NetworkCall networkCall = NetworkCall();
-  var userNameController = TextEditingController();
-  var passwordController = TextEditingController();
-  String val = 'false', name ='', userId='', imageUrl= '';
+  late TextEditingController userNameController;
+  late TextEditingController passwordController;
+  String val = 'false', name ='', userId='', imageUrl= '', _getUserName = "", _getPassword = "", userName = '', password = '';
 
   @override
   void initState() {
     _passwordVisible = false;
+    setState(() {
+      userNameController = TextEditingController();
+      passwordController = TextEditingController();
+      getSharedData();
+    });
   }
 
   @override
@@ -68,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen>{
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0, left: 12, right: 12),
                           child: TextField(
+                            textInputAction: TextInputAction.next,
                             controller: userNameController,
                             decoration: InputDecoration(
                               prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
@@ -116,10 +123,15 @@ class _LoginScreenState extends State<LoginScreen>{
                               fontSize: 15,
                             )
                             ),
-                            autofocus: false,
+                            autofocus: true,
                           ),
                         ),
-
+                        SizedBox(height: 8,),
+                        Visibility(
+                          visible: error == 1?true:false,
+                          child: Text("Warning: "+ 'Invalid credentials',
+                              style: GoogleFonts.comfortaa(color: Colors.red)),
+                        ),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,12 +172,16 @@ class _LoginScreenState extends State<LoginScreen>{
                             ],
                           ),
                         ),
-
                         SizedBox(height: 25,),
                         Padding(
                           padding: EdgeInsets.only(left: 20.0, right: 20.0),
                           child: InkWell(
-                            onTap: (){
+                            onTap: ()async{
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              if(agree){
+                                await prefs.setString('userName', userNameController.text.toString());
+                                await prefs.setString('password', passwordController.text.toString());
+                              }
                               callLoginApi(userNameController.text, passwordController.text);
                               //agree?Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())): showToastMessage('please accept our terms & condition');
                             },
@@ -220,7 +236,8 @@ class _LoginScreenState extends State<LoginScreen>{
       if (loginresponseData.token.toString() == 'null') {
         CommonOperation.hideProgressDialog(context);
         setState(() {});
-        showToastMessage(loginresponseData.error.toString());
+        error = 1;
+        //showToastMessage(loginresponseData.error.toString());
         print('error '+ loginresponseData.errorcode.toString());
 
       }
@@ -232,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen>{
         print('token data'+ loginresponseData.token.toString());
         await prefs.setString('TOKEN', loginresponseData.token.toString());
         CommonOperation.hideProgressDialog(context);
-        showToastMessage(message);
+        //showToastMessage(message);
         setState(() {
           callUserSiteDetail(loginresponseData.token.toString());
         });
@@ -259,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen>{
       await prefs.setString('imageUrl', userDetailsData.userpictureurl.toString());
       await prefs.setString('name', userDetailsData.fullname.toString());
       CommonOperation.hideProgressDialog(context);
-      showToastMessage(message);
+      //showToastMessage(message);
       setState(() {
         //getURNotification(token, userDetailsData.userid.toString());
         name = userDetailsData.fullname.toString();
@@ -276,4 +293,15 @@ class _LoginScreenState extends State<LoginScreen>{
       showToastMessage('your session is expire ');
     }
   }
+
+  void getSharedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userNameController.text = prefs.getString('userName')!;
+    passwordController.text = prefs.getString('password')!;
+    setState(() {
+      //getEventsData(token);
+      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
+    });
+  }
+
 }
