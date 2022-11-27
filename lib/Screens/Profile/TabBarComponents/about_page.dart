@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
+import '../../../Helper/colors_class.dart';
 import '../../../Helper/operations.dart';
 import '../../AllCoursesPage.dart';
 
@@ -377,7 +378,7 @@ class InitState extends State<ProfileAboutPage> {
                               padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                               child: Text("View all",
                                   style: GoogleFonts.comfortaa(
-                                      color: Colors.greenAccent,
+                                      color: SecondaryColor,
                                       fontSize: 12, fontWeight: FontWeight.bold)),
                             ),
                           ),
@@ -391,7 +392,7 @@ class InitState extends State<ProfileAboutPage> {
                         padding: const EdgeInsets.only(left: 50, right: 30, bottom: 5),
                         child: Text(count,
                             style: GoogleFonts.comfortaa(
-                                color: Colors.greenAccent,
+                                color: SecondaryColor,
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
                     ),
@@ -411,7 +412,7 @@ class InitState extends State<ProfileAboutPage> {
               // ),
             ],
           ),
-    )
+        )
 
     );
   }

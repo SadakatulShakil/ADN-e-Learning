@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../Helper/colors_class.dart';
 import 'HomeComponents.dart';
 import '../Message&Notification/MessageComponents.dart';
 import '../Profile/ProfileComponents.dart';
@@ -36,7 +37,7 @@ class _DashBoardState extends State<DashBoard> {
       body: screens[_currentIndex],
       bottomNavigationBar: Container(
         child: ConvexAppBar(
-          backgroundColor: Color(0xFF01974D),
+          backgroundColor: PrimaryColor,
           style: TabStyle.react,
           items: [
             TabItem(icon: SvgPicture.asset("assets/vectors/bottom_profile.svg"), title: 'Profile', isIconBlend: true),

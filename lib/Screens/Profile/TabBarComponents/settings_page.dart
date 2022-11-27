@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
 import '../../../Helper/operations.dart';
 
 class ProfileSettingsPage extends StatefulWidget{
+
 
   @override
   State<StatefulWidget> createState() => InitState();
@@ -612,7 +614,7 @@ class InitState extends State<ProfileSettingsPage> {
                       height: 50,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: const Color(0xFF00BC78)
+                          color: PrimaryColor
                       ),
                       child: Center(
                         child: Text("Save changes", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
@@ -672,6 +674,7 @@ class InitState extends State<ProfileSettingsPage> {
       surName = userDetailsData.lastname.toString();
       firstName = userDetailsData.firstname.toString();
       setState(() {
+        if (!mounted)
         getProfileInfo(token, userid);
       });
 
@@ -806,7 +809,7 @@ class InitState extends State<ProfileSettingsPage> {
                         height: 30,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.greenAccent,
+                          color: SecondaryColor,
                         ),
                         child: Center(
                           child: Text("Ok", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),

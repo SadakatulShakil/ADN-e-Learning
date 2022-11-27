@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../Helper/colors_class.dart';
+
 class WebViewPage extends StatefulWidget {
   String? url;
   String? title;
@@ -32,7 +34,7 @@ class _WebViewPageState extends State<WebViewPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         title: Text(widget.title.toString(),
             style: GoogleFonts.comfortaa(
                 color: const Color(0xFFFFFFFF),

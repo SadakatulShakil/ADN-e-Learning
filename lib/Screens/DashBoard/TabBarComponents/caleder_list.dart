@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
+import '../../../Helper/colors_class.dart';
 import '../../../Helper/operations.dart';
 
 class DashBoardCalederList extends StatefulWidget{
@@ -100,13 +101,13 @@ class InitState extends State<DashBoardCalederList> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(headerText, style: TextStyle(color: Colors.green, fontSize: 15)),
+                      Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 15)),
                       SizedBox(width: 8,),
                       InkWell(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage()));
                         },
-                          child: Text('[Create Events]', style: TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold))),
+                          child: Text('[Create Events]', style: TextStyle(color: PrimaryColor, fontSize: 18, fontWeight: FontWeight.bold))),
                     ],
                   ),
                   IconButton(
@@ -177,7 +178,7 @@ class InitState extends State<DashBoardCalederList> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Upcoming Event', style: TextStyle(fontSize: 12)),
-                        Text('View all', style: TextStyle(color: Colors.greenAccent, fontSize: 12),),
+                        Text('View all', style: TextStyle(color: SecondaryColor, fontSize: 12),),
                       ],
                     ),
                   ),
@@ -330,7 +331,7 @@ class InitState extends State<DashBoardCalederList> {
                       height: 30,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: const Color(0xFF00BC78)
+                          color: PrimaryColor
                       ),
                       child: Center(
                         child: Text("View Details", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
@@ -355,7 +356,7 @@ class InitState extends State<DashBoardCalederList> {
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.blueAccent,
+                        color: SecondaryColor,
                       ),
                       child: Center(
                         child: Text("Create Events", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:radda_moodle_learning/Screens/NotoficationComponents/previousNot
 import 'package:radda_moodle_learning/Screens/NotoficationComponents/recentNotificationPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../ApiCall/HttpNetworkCall.dart';
+import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
 class NotificationPage extends StatefulWidget{
@@ -25,11 +27,12 @@ class InitState extends State<NotificationPage> {
   List<Messages> unReadNotiList = [];
   List<Messages> readNotiList = [];
   List<Messages> allNotification = [];
+  Connectivity connectivity = Connectivity();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getSharedData();
+    checkconnectivity();
   }
 
   @override
@@ -41,7 +44,7 @@ class InitState extends State<NotificationPage> {
   Widget inItWidget() {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -54,7 +57,7 @@ class InitState extends State<NotificationPage> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF01974D),
+      backgroundColor: PrimaryColor,
       body: DefaultTabController(
         length: 2,
         child: Container(
@@ -87,8 +90,8 @@ class InitState extends State<NotificationPage> {
               Expanded(
                   child: TabBarView(
                     children:  [
-                      RecentNotificationPage(unReadNotiList),
-                      PreviousNotificationPage(readNotiList),
+                      RefreshIndicator( onRefresh: checkconnectivity,child: RecentNotificationPage(unReadNotiList)),
+                      RefreshIndicator( onRefresh: checkconnectivity,child: PreviousNotificationPage(readNotiList)),
                     ],
                   )
               )
@@ -99,7 +102,7 @@ class InitState extends State<NotificationPage> {
     );
   }
 
-  void getSharedData() async{
+  Future getSharedData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
@@ -108,7 +111,7 @@ class InitState extends State<NotificationPage> {
     });
   }
 
-  void getURNotification(String token, String userId) async{
+  Future getURNotification(String token, String userId) async{
     CommonOperation.showProgressDialog(
         context, "loading", true);
     final uRNotificationData = await networkCall.UserUnReadNotificationCall(token, userId);
@@ -163,5 +166,75 @@ class InitState extends State<NotificationPage> {
         textColor: Colors.white,
         fontSize: 16.0 //message font size
     );
+  }
+
+  Future checkconnectivity() async{
+    var connectivityResult = await connectivity.checkConnectivity();
+    if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+      getSharedData();
+    }else{
+      openNetworkDialog();
+      setState(() {
+
+      });
+    }
+  }
+  openNetworkDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+                  fontSize: 12
+              )),
+            )),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/5,
+              width: MediaQuery.of(context).size.width/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('Please check your internet connectivity and try again.')
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  checkconnectivity();
+                  setState(() {
+
+                  });
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width:150,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
+                    ),
+                    child: Center(
+                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

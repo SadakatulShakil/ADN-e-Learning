@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,6 +6,7 @@ import 'package:getwidget/components/badge/gf_badge.dart';
 import 'package:getwidget/components/badge/gf_button_badge.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:radda_moodle_learning/ApiModel/allChatsHolderResponse.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:radda_moodle_learning/Screens/Message&Notification/contact_components.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,12 +39,13 @@ class InitState extends State<MessageComponents> {
   int fieldVisible = 1;
   String token ='';
   String userid ='';
+  Connectivity connectivity = Connectivity();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
-      getSharedData();
+      checkconnectivity();
     });
   }
 
@@ -52,215 +55,288 @@ class InitState extends State<MessageComponents> {
   }
 
   Widget initWidget(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF00984D),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height -
-            MediaQuery.of(context).size.height / 9,
-        transform: Matrix4.translationValues(0, 10, 1),
-        decoration: BoxDecoration(
-            color: Color(0xFFFAFAFA),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25))),
-        child: Column(
-          children: <Widget>[
-            Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/rectangle_bg.png"),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25))),
-                height: 60,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8,top: 5.0),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("Messages", style: GoogleFonts.comfortaa(
-                        fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white
-                    ),),
-                  ),
-                )
-            ),
-            Container(
-              height: 120,
-              color: Colors.blue.shade100,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 15.0, top: 8, right: 10),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Container(
-                            child: GFButtonBadge(
-                              color: fieldVisible == 1?Color(0xFF00984D):Color(0xFFE7EAEC),
-                              onPressed: () {
-                                fieldVisible = 1;
-                                setState(() {
-
-                                });
-                              },
-                              text: 'All chat',textStyle: GoogleFonts.comfortaa(
-                                color: fieldVisible == 1?Colors.white:Color(0xFF01A9B8)),
-                              icon: GFBadge(
-                                child: Text(chatHolderList.length.toString()),
-                              ),
-                            ),),
-                          SizedBox(width: 5,),
-                          Container(
-                            child: GFButtonBadge(
-                              color: fieldVisible == 2?Color(0xFF00984D):Color(0xFFE7EAEC),
-                              onPressed: () {
-                                fieldVisible = 2;
-                                setState(() {
-
-                                });
-                              },
-                              text: 'Group',textStyle: GoogleFonts.comfortaa(
-                                color: fieldVisible == 2?Colors.white:Color(0xFF01A9B8)),
-                              icon: GFBadge(
-                                child: Text(groupChatHolderList.length.toString()),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5,),
-                          Container(
-                            child: GFButtonBadge(
-                              color: fieldVisible == 3?Color(0xFF00984D):Color(0xFFE7EAEC),
-                              onPressed: () {
-                                fieldVisible = 3;
-                                setState(() {
-
-                                });
-                              },
-                              text: 'Private',textStyle: GoogleFonts.comfortaa(
-                                color: fieldVisible == 3?Colors.white:Color(0xFF01A9B8)),
-                              icon: GFBadge(
-                                child: Text(privateChatHolderList.length.toString()),
-                              ),
-                            ),),
-                          SizedBox(width: 5,),
-                          Container(
-                            child: GFButtonBadge(
-                              color: fieldVisible == 4?Color(0xFF00984D):Color(0xFFE7EAEC),
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList, userid)));
-                                setState(() {
-
-                                });
-                              },
-                              text: 'Contact',textStyle: GoogleFonts.comfortaa(
-                                color: fieldVisible == 4?Colors.white:Color(0xFF01A9B8)),
-                              icon: GFBadge(
-                                child: Text((contactsList.length+contactRequestList.length).toString()),
-                              ),
-                            ),
-                          ),
-                        ],
-                        // children: List.generate(categoryList.length,
-                        //         (index) => CategoryCard(
-                        //         text: categoryList[index]['name'],
-                        //         press: () {
-                        //           selectedCat = true;
-                        //           Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList)));
-                        //           debugPrint('>>>>>>>>>>  '+categoryList[index]['name']+ ' is clicked !');
-                        //         }
-                        //     )
-                        // )
+    return RefreshIndicator(
+      onRefresh: getSharedData,
+      child: Scaffold(
+        backgroundColor: PrimaryColor,
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).size.height / 9,
+          transform: Matrix4.translationValues(0, 10, 1),
+          decoration: BoxDecoration(
+              color: Color(0xFFFAFAFA),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25))),
+          child: Column(
+            children: <Widget>[
+              Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/rectangle_bg.png"),
+                        fit: BoxFit.cover,
                       ),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25))),
+                  height: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8,top: 5.0),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text("Messages", style: GoogleFonts.comfortaa(
+                          fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white
+                      ),),
                     ),
-                  ),
-                  SizedBox(height: 8,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 8, right: 18),
-                    child: SizedBox(
-                      height: 40,
-                      child: TextField(
-                        controller: searchCtrl,
-                        textInputAction: TextInputAction.go,
-                        onSubmitted: (val) => val != ''?searchUser(token, searchCtrl.text): showToastMessage('please enter valid user'),
-                        maxLines: 1,
-                        minLines: 1,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search, color: Colors.greenAccent,),
-                          contentPadding: EdgeInsets.all(8),
-                          hintText: 'search',
-                          hintStyle: TextStyle(fontSize: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
+                  )
+              ),
+              Container(
+                height: 120,
+                color: Colors.blue.shade100,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.0, top: 8, right: 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Container(
+                              child: GFButtonBadge(
+                                color: fieldVisible == 1?PrimaryColor:Color(0xFFE7EAEC),
+                                onPressed: () {
+                                  fieldVisible = 1;
+                                  setState(() {
+
+                                  });
+                                },
+                                text: 'All chat',textStyle: GoogleFonts.comfortaa(
+                                  color: fieldVisible == 1?Colors.white:PrimaryColor),
+                                icon: GFBadge(
+                                  child: Text(chatHolderList.length.toString()),
+                                ),
+                              ),),
+                            SizedBox(width: 5,),
+                            Container(
+                              child: GFButtonBadge(
+                                color: fieldVisible == 2?PrimaryColor:Color(0xFFE7EAEC),
+                                onPressed: () {
+                                  fieldVisible = 2;
+                                  setState(() {
+
+                                  });
+                                },
+                                text: 'Group',textStyle: GoogleFonts.comfortaa(
+                                  color: fieldVisible == 2?Colors.white:PrimaryColor),
+                                icon: GFBadge(
+                                  child: Text(groupChatHolderList.length.toString()),
+                                ),
+                              ),
                             ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
+                            SizedBox(width: 5,),
+                            Container(
+                              child: GFButtonBadge(
+                                color: fieldVisible == 3?PrimaryColor:Color(0xFFE7EAEC),
+                                onPressed: () {
+                                  fieldVisible = 3;
+                                  setState(() {
+
+                                  });
+                                },
+                                text: 'Private',textStyle: GoogleFonts.comfortaa(
+                                  color: fieldVisible == 3?Colors.white:PrimaryColor),
+                                icon: GFBadge(
+                                  child: Text(privateChatHolderList.length.toString()),
+                                ),
+                              ),),
+                            SizedBox(width: 5,),
+                            Container(
+                              child: GFButtonBadge(
+                                color: fieldVisible == 4?PrimaryColor:Color(0xFFE7EAEC),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList, userid)));
+                                  setState(() {
+
+                                  });
+                                },
+                                text: 'Contact',textStyle: GoogleFonts.comfortaa(
+                                  color: fieldVisible == 4?Colors.white:PrimaryColor),
+                                icon: GFBadge(
+                                  child: Text((contactsList.length+contactRequestList.length).toString()),
+                                ),
+                              ),
+                            ),
+                          ],
+                          // children: List.generate(categoryList.length,
+                          //         (index) => CategoryCard(
+                          //         text: categoryList[index]['name'],
+                          //         press: () {
+                          //           selectedCat = true;
+                          //           Navigator.push(context, MaterialPageRoute(builder: (context) => ContactComponents(contactsList, contactRequestList)));
+                          //           debugPrint('>>>>>>>>>>  '+categoryList[index]['name']+ ' is clicked !');
+                          //         }
+                          //     )
+                          // )
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 8,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18.0, top: 8, right: 18),
+                      child: SizedBox(
+                        height: 40,
+                        child: TextField(
+                          controller: searchCtrl,
+                          textInputAction: TextInputAction.go,
+                          onSubmitted: (val) => val != ''?searchUser(token, searchCtrl.text): showToastMessage('please enter valid user'),
+                          maxLines: 1,
+                          minLines: 1,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.search, color: SecondaryColor,),
+                            contentPadding: EdgeInsets.all(8),
+                            hintText: 'search',
+                            hintStyle: TextStyle(fontSize: 16),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Visibility(
-              visible: fieldVisible == 1?true:false,
-              child: Expanded(
-                child: Padding(
-                    padding:
-                    const EdgeInsets.only(left: 12.0, right: 12.0),
-                    child: ListView.builder(
-                        itemCount: chatHolderList.length,
-                        itemBuilder: (context, index) {
-                          final mChatData = chatHolderList[index];
+              Visibility(
+                visible: fieldVisible == 1?true:false,
+                child: Expanded(
+                  child: Padding(
+                      padding:
+                      const EdgeInsets.only(left: 12.0, right: 12.0),
+                      child: ListView.builder(
+                          itemCount: chatHolderList.length,
+                          itemBuilder: (context, index) {
+                            final mChatData = chatHolderList[index];
 
-                          return buildChatHolderList(mChatData);
-                        })),
+                            return buildChatHolderList(mChatData);
+                          })),
+                ),
               ),
-            ),
-            Visibility(
-              visible: fieldVisible == 2?true:false,
-              child: Expanded(
-                child: Padding(
-                    padding:
-                    const EdgeInsets.only(left: 12.0, right: 12.0),
-                    child: ListView.builder(
-                        itemCount: groupChatHolderList.length,
-                        itemBuilder: (context, index) {
-                          final mGroupChatData = groupChatHolderList[index];
+              Visibility(
+                visible: fieldVisible == 2?true:false,
+                child: Expanded(
+                  child: Padding(
+                      padding:
+                      const EdgeInsets.only(left: 12.0, right: 12.0),
+                      child: ListView.builder(
+                          itemCount: groupChatHolderList.length,
+                          itemBuilder: (context, index) {
+                            final mGroupChatData = groupChatHolderList[index];
 
-                          return buildGroupHolderList(mGroupChatData);
-                        })),
+                            return buildGroupHolderList(mGroupChatData);
+                          })),
+                ),
               ),
-            ),
-            Visibility(
-              visible: fieldVisible == 3?true:false,
-              child: Expanded(
-                child: Padding(
-                    padding:
-                    const EdgeInsets.only(left: 12.0, right: 12.0),
-                    child: ListView.builder(
-                        itemCount: privateChatHolderList.length,
-                        itemBuilder: (context, index) {
-                          final mPrivateChatData = privateChatHolderList[index];
+              Visibility(
+                visible: fieldVisible == 3?true:false,
+                child: Expanded(
+                  child: Padding(
+                      padding:
+                      const EdgeInsets.only(left: 12.0, right: 12.0),
+                      child: ListView.builder(
+                          itemCount: privateChatHolderList.length,
+                          itemBuilder: (context, index) {
+                            final mPrivateChatData = privateChatHolderList[index];
 
-                          return buildPrivateHolderList(mPrivateChatData);
-                        })),
+                            return buildPrivateHolderList(mPrivateChatData);
+                          })),
+                ),
               ),
-            ),
-            SizedBox(height: 12,)
-          ],
+              SizedBox(height: 12,)
+            ],
+          ),
         ),
       ),
     );
   }
-  void getSharedData() async {
+  Future checkconnectivity() async{
+    var connectivityResult = await connectivity.checkConnectivity();
+    if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+      getSharedData();
+    }else{
+      openNetworkDialog();
+      setState(() {
+
+      });
+    }
+  }
+  openNetworkDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+                  fontSize: 12
+              )),
+            )),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/5,
+              width: MediaQuery.of(context).size.width/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('Please check your internet connectivity and try again.')
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  checkconnectivity();
+                  setState(() {
+
+                  });
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width:150,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
+                    ),
+                    child: Center(
+                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future getSharedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userid = prefs.getString('userId')!;
@@ -359,14 +435,14 @@ class InitState extends State<MessageComponents> {
                             child: Text(mChatData.name.toString()==''?mChatData.members.first.fullname.toString():mChatData.name.toString(),
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.comfortaa(
-                                    color: mChatData.isread?Colors.black:Colors.blueAccent,
+                                    color: mChatData.isread?Colors.black:SecondaryColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold)),
                           ),
                         ),
                         Visibility(
                             visible: !mChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
+                            child: Icon(Icons.info_rounded, color: SecondaryColor,))
                       ],
                     ),
                     // Row(
@@ -387,7 +463,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mChatData.members.length>0?mChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mChatData.isread?Colors.black:Colors.blueAccent),),
+                            child: Text(mChatData.members.length>0?mChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mChatData.isread?Colors.black:SecondaryColor),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -454,7 +530,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mGroupChatData.name.toString()==''?'--':mGroupChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mGroupChatData.isread?Colors.black:Colors.blueAccent,
+                                color: mGroupChatData.isread?Colors.black:SecondaryColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -471,7 +547,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mGroupChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
+                            child: Icon(Icons.info_rounded, color: SecondaryColor,))
                       ],
                     ),
                     Container(
@@ -480,7 +556,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mGroupChatData.members.length>0?mGroupChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mGroupChatData.isread?Colors.black:Colors.blueAccent),),
+                            child: Text(mGroupChatData.members.length>0?mGroupChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mGroupChatData.isread?Colors.black:SecondaryColor),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -547,7 +623,7 @@ class InitState extends State<MessageComponents> {
                         child: Text(mPrivateChatData.name.toString()==''?'--':mPrivateChatData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.comfortaa(
-                                color: mPrivateChatData.isread?Colors.black:Colors.blueAccent,
+                                color: mPrivateChatData.isread?Colors.black:SecondaryColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -564,7 +640,7 @@ class InitState extends State<MessageComponents> {
                         ),
                         Visibility(
                             visible: !mPrivateChatData.isread?true:false,
-                            child: Icon(Icons.info_rounded, color: Colors.blueAccent,))
+                            child: Icon(Icons.info_rounded, color: SecondaryColor,))
                       ],
                     ),
                     Container(
@@ -573,7 +649,7 @@ class InitState extends State<MessageComponents> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(mPrivateChatData.members.length>0?mPrivateChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mPrivateChatData.isread?Colors.black:Colors.blueAccent),),
+                            child: Text(mPrivateChatData.members.length>0?mPrivateChatData.members.first.fullname.toString()+':':'', style: TextStyle(color: mPrivateChatData.isread?Colors.black:SecondaryColor),),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 2.8,
@@ -747,7 +823,7 @@ class CategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child:  Text(text!, textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
-                  color: const Color(0xFF01A9B8)) ),
+                  color: AccentColor) ),
             ),
           ],
         ),

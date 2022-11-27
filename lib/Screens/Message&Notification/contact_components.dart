@@ -8,6 +8,7 @@ import 'package:radda_moodle_learning/Screens/Profile/other_user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
+import '../../Helper/colors_class.dart';
 
 class ContactComponents extends StatefulWidget {
   List<Conversations> chatHolderList;
@@ -47,7 +48,7 @@ class InitState extends State<ContactComponents> {
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF00984D),
+          backgroundColor: PrimaryColor,
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -60,7 +61,7 @@ class InitState extends State<ContactComponents> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF00984D),
+        backgroundColor: PrimaryColor,
         body: Column(
           children: <Widget>[
             Container(
@@ -96,7 +97,7 @@ class InitState extends State<ContactComponents> {
                           children: [
                             Container(
                               child: GFButtonBadge(
-                                color: fieldVisible == 1?Color(0xFF00984D):Color(0xFFE7EAEC),
+                                color: fieldVisible == 1?PrimaryColor:Color(0xFFE7EAEC),
                                 onPressed: () {
                                   fieldVisible = 1;
                                       setState(() {
@@ -104,14 +105,14 @@ class InitState extends State<ContactComponents> {
                                       });
                                 },
                                 text: 'My contacts',textStyle: GoogleFonts.comfortaa(
-                                  color: fieldVisible == 1?Colors.white:Color(0xFF01A9B8)),
+                                  color: fieldVisible == 1?Colors.white:PrimaryColor),
                                 icon: GFBadge(
                                   child: Text(widget.chatHolderList.length.toString()),
                                 ),
                               ),),
                             Container(
                               child: GFButtonBadge(
-                                color: fieldVisible == 2?Color(0xFF00984D):Color(0xFFE7EAEC),
+                                color: fieldVisible == 2?PrimaryColor:Color(0xFFE7EAEC),
                                 onPressed: () {
                                   fieldVisible = 2;
                                       setState(() {
@@ -119,7 +120,7 @@ class InitState extends State<ContactComponents> {
                                       });
                                 },
                                 text: 'Request',textStyle: GoogleFonts.comfortaa(
-                                              color: fieldVisible == 2?Colors.white:Color(0xFF01A9B8)),
+                                              color: fieldVisible == 2?Colors.white:PrimaryColor),
                                 icon: GFBadge(
                                   child: Text(widget.contactRequestList.length.toString()),
                                 ),
@@ -141,7 +142,7 @@ class InitState extends State<ContactComponents> {
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.search,
-                                  color: Colors.greenAccent,
+                                  color: SecondaryColor,
                                 ),
                                 contentPadding: EdgeInsets.all(8),
                                 hintText: 'search',
@@ -281,7 +282,7 @@ class InitState extends State<ContactComponents> {
                                   style: GoogleFonts.comfortaa(
                                       color: mChatData.isread
                                           ? Colors.black
-                                          : Colors.greenAccent,
+                                          : SecondaryColor,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),
                             ),
@@ -460,7 +461,7 @@ class InitState extends State<ContactComponents> {
                         margin: EdgeInsets.only(top: 5.0, bottom: 5.0,),
                         padding: EdgeInsets.only(left: 8.0,  top: 8.0, bottom: 8.0),
                         decoration: BoxDecoration(
-                          color: Color(0xFF01A9B8),
+                          color: AccentColor,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -531,7 +532,7 @@ class InitState extends State<ContactComponents> {
                       margin: EdgeInsets.only(top: 5.0, bottom: 5.0,),
                       padding: EdgeInsets.only(left: 8.0,  top: 8.0, bottom: 8.0),
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: PrimaryColor,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(

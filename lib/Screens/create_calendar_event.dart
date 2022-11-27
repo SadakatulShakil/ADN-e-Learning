@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 
 class CreateCalenderEventPage extends StatefulWidget {
 
@@ -30,7 +31,7 @@ class InitState extends State<CreateCalenderEventPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -43,7 +44,7 @@ class InitState extends State<CreateCalenderEventPage> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF01974D),
+      backgroundColor: PrimaryColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -308,7 +309,7 @@ class InitState extends State<CreateCalenderEventPage> {
                               height: 50,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: const Color(0xFF00BC78)
+                                  color: PrimaryColor
                               ),
                               child: Center(
                                 child: Text("Create now", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),

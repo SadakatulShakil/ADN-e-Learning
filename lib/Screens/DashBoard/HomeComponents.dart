@@ -12,6 +12,7 @@ import 'package:radda_moodle_learning/ApiModel/calendar_events_response.dart' as
 import 'package:radda_moodle_learning/ApiModel/monthly_calendar_response.dart' as monthly;
 import '../../ApiCall/HttpNetworkCall.dart';
 import '../../ApiModel/gradeResponse.dart';
+import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
 class HomeComponents extends StatefulWidget {
@@ -56,7 +57,7 @@ class InitState extends State<HomeComponents> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         body: Column(
           children: <Widget>[
             Container(
@@ -130,10 +131,18 @@ class InitState extends State<HomeComponents> {
             Expanded(
               child: TabBarView(
                 children: [
-                  DashBoardCoursesList(recentCourseList, courseList),
-                  DashBoardGradesList(courseList, gradeList),
-                  DashBoardActivityList(badgesDataList,token, courseList),
-                  DashBoardCalederList(firstUpcomingEvent, firstUpcomingEventDate, dateList, eventList, weekList, daysList, monthlyEventList)
+                  RefreshIndicator(
+                    onRefresh: checkconnectivity,
+                      child: DashBoardCoursesList(recentCourseList, courseList)),
+                  RefreshIndicator(
+                      onRefresh: checkconnectivity,
+                      child: DashBoardGradesList(courseList, gradeList)),
+                  RefreshIndicator(
+                      onRefresh: checkconnectivity,
+                      child: DashBoardActivityList(badgesDataList,token, courseList)),
+                  RefreshIndicator(
+                      onRefresh: checkconnectivity,
+                      child: DashBoardCalederList(firstUpcomingEvent, firstUpcomingEventDate, dateList, eventList, weekList, daysList, monthlyEventList))
                 ],
               ),
             ),
@@ -143,7 +152,7 @@ class InitState extends State<HomeComponents> {
     );
   }
 
-  void getSharedData() async{
+  Future getSharedData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name')!;
     imageurl = prefs.getString('imageUrl')!;
@@ -203,7 +212,7 @@ class InitState extends State<HomeComponents> {
       String message = 'Success';
       recentCourseList = recentCoursesData;
       //print('data_count1 ' + recentCourseList.first.toString());
-      CommonOperation.hideProgressDialog(context);
+      //CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
       setState(() {
         getAllCourses(token, userId);
@@ -215,7 +224,7 @@ class InitState extends State<HomeComponents> {
     }
   }
   Future<void> getAllCourses(String token, String userId) async {
-    CommonOperation.showProgressDialog(context, "loading", true);
+    //CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
     await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
@@ -225,7 +234,7 @@ class InitState extends State<HomeComponents> {
       //count = courseList.length.toString();
       //print('data_count1 ' + courseList.first.toString());
       //showToastMessage(message);
-      CommonOperation.hideProgressDialog(context);
+      //CommonOperation.hideProgressDialog(context);
       setState(() {
         getCoursesGrade(token);
       });
@@ -269,7 +278,7 @@ class InitState extends State<HomeComponents> {
         dateList.containsKey(dateListIndex) ? dateList[dateListIndex].add(eventList[i].timesort) : dateList[dateListIndex] = eventList[i].timesort;
       }
       print('date list '+ dateList.toString());
-      //CommonOperation.hideProgressDialog(context);
+      CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
       setState(() {
         //getMonthlyEventsData(token, _focusedDay.year.toString(),_focusedDay.month.toString());
@@ -330,7 +339,7 @@ class InitState extends State<HomeComponents> {
     );
   }
 
-  void checkconnectivity() async{
+  Future checkconnectivity() async{
     var connectivityResult = await connectivity.checkConnectivity();
     if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
       getSharedData();
@@ -344,32 +353,23 @@ class InitState extends State<HomeComponents> {
   openNetworkDialog() {
     print(',,,,,,,,,,,,,,,,,,,,,');
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            title:Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Align(
-                    alignment: Alignment.center,
-                    child: Text('Network Issue !',style: GoogleFonts.comfortaa(
-                        fontSize: 12
-                    )),
-                  )),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                          onTap: (){
-                            Navigator.pop(context, false);
-                          },
-                          child: Icon(Icons.cancel_outlined))),
-                ]),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+                  fontSize: 12
+              )),
+            )),
 
             content: Container(
-              height: MediaQuery.of(context).size.height/2,
+              height: MediaQuery.of(context).size.height/5,
+              width: MediaQuery.of(context).size.width/2,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -396,7 +396,7 @@ class InitState extends State<HomeComponents> {
                     height: 35,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.blueAccent,
+                      color: SecondaryColor,
                     ),
                     child: Center(
                       child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),

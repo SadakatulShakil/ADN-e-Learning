@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
 import '../../ApiModel/userCoursesList.dart';
+import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
 class OtherProfileBody extends StatefulWidget {
@@ -45,7 +46,7 @@ class InitState extends State<OtherProfileBody> {
   Widget inItWidget() {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00984D),
+        backgroundColor: PrimaryColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -58,7 +59,7 @@ class InitState extends State<OtherProfileBody> {
                 fontSize: 18)),
         centerTitle: false,
       ),
-      backgroundColor: const Color(0xFF00984D),
+      backgroundColor: PrimaryColor,
       body: Column(
         children: <Widget>[
           Container(
@@ -130,7 +131,7 @@ class InitState extends State<OtherProfileBody> {
                         alignment: Alignment.centerRight,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: PrimaryColor,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Padding(

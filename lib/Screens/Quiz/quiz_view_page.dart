@@ -8,6 +8,7 @@ import 'package:radda_moodle_learning/Screens/category_wise_course.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
+import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
 class QuizViewPage extends StatefulWidget {
@@ -51,7 +52,7 @@ class InitState extends State<QuizViewPage> {
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF01974D),
+          backgroundColor: PrimaryColor,
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -64,7 +65,7 @@ class InitState extends State<QuizViewPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         body: Column(
           children: <Widget>[
             Container(
@@ -189,7 +190,7 @@ class InitState extends State<QuizViewPage> {
                             height: 50,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                color: const Color(0xFF00BC78)
+                                color: PrimaryColor
                             ),
                             child: Center(
                               child: Text("Attempt now", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
@@ -215,7 +216,7 @@ class InitState extends State<QuizViewPage> {
       DataCell(Text(item.attempt.toString())),
       DataCell(Text(item.state.toString())),
       DataCell(Text(item.sumgrades.toString())),
-      DataCell(Text('Review', style: TextStyle(color: Colors.greenAccent),))
+      DataCell(Text('Review', style: TextStyle(color: SecondaryColor),))
     ]))
         .toList();
   }
@@ -242,7 +243,7 @@ class InitState extends State<QuizViewPage> {
                    },
                    child: Container(
                      width: MediaQuery.of(context).size.width,
-                     color: const Color(0xFF00BC78),
+                     color: PrimaryColor,
                        child: Padding(
                          padding: const EdgeInsets.all(8.0),
                          child: Align(

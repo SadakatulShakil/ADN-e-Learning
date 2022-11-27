@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeDetailsResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeResponse.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ApiCall/HttpNetworkCall.dart';
 import '../Helper/operations.dart';
@@ -39,7 +40,7 @@ class InitState extends State<GradesDetailsPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF01974D),
+          backgroundColor: PrimaryColor,
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -52,7 +53,7 @@ class InitState extends State<GradesDetailsPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         body: SafeArea(
           child: Column(
             children: <Widget>[

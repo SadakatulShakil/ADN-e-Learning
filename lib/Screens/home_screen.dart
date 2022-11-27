@@ -8,6 +8,7 @@ import 'package:getwidget/components/badge/gf_icon_badge.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:radda_moodle_learning/ApiModel/notificationResponse.dart';
 import 'package:radda_moodle_learning/Helper/CustomScaffold.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:radda_moodle_learning/Screens/site_home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,12 +60,12 @@ class InitState extends State<HomeScreen> {
         appBar: AppBar(
             bottom: PreferredSize(
                 child: Container(
-                  color: Color(0xFF01974D),
+                  color: PrimaryColor,
                   height: 4.0,
                 ),
                 preferredSize: Size.fromHeight(4.0)),
             elevation: 0,
-            backgroundColor: Color(0xFF01974D),
+            backgroundColor: PrimaryColor,
             title: Text('DigiNet SkillUP',
                 style: GoogleFonts.comfortaa(
                     color: const Color(0xFFFFFFFF),

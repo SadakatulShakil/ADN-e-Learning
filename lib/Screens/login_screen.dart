@@ -5,6 +5,7 @@ import 'package:radda_moodle_learning/Screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ApiCall/HttpNetworkCall.dart';
+import '../Helper/colors_class.dart';
 import '../Helper/operations.dart';
 
 class LoginScreen extends StatefulWidget{
@@ -67,8 +68,7 @@ class _LoginScreenState extends State<LoginScreen>{
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0),
                           child: Text("Log in to DigiNet SkillUP",
-                              style: GoogleFonts.comfortaa(color: const Color(
-                                  0xFF01974D),
+                              style: GoogleFonts.comfortaa(color: PrimaryColor,
                                   fontSize: 20, fontWeight: FontWeight.w900)),
                         ),
                         Padding(
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen>{
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text("Forget password?",
-                                    style: GoogleFonts.comfortaa(color: Color(0xFF01974D))),
+                                    style: GoogleFonts.comfortaa(color: PrimaryColor)),
                               ),
                             ],
                           ),
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen>{
                                 height: 50,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
-                                    color: const Color(0xFF00BC78)
+                                    color: PrimaryColor
                                 ),
                                 child: Center(
                                   child: Text("Log In", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),

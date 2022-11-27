@@ -5,6 +5,7 @@ import 'package:radda_moodle_learning/ApiModel/group_message_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
+import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
 class ChatDashBoardScreen extends StatefulWidget {
@@ -49,12 +50,12 @@ class InitState extends State<ChatDashBoardScreen> {
 
   Widget inItWidget() {
     return Scaffold(
-      backgroundColor: Color(0xFF00984D),
+      backgroundColor: PrimaryColor,
       appBar: AppBar(leading: IconButton(
         icon: Icon(Icons.arrow_back_ios, color: Colors.white),
         onPressed: () => Navigator.of(context).pop(),
       ),
-        backgroundColor: Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         title: Text(
           widget.mChatData.name.toString(),
           style: TextStyle(
@@ -224,7 +225,7 @@ class InitState extends State<ChatDashBoardScreen> {
             margin: EdgeInsets.only(right: 8, bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Color(0xFF01974D),
+              color: PrimaryColor,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

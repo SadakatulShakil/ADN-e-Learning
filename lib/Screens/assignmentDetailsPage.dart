@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:radda_moodle_learning/ApiModel/assignmentResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeDetailsResponse.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ApiCall/HttpNetworkCall.dart';
 import '../Helper/operations.dart';
@@ -54,7 +55,7 @@ class InitState extends State<AssignmentDetailsPage> {
   Widget initWidget(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF01974D),
+          backgroundColor: PrimaryColor,
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -67,7 +68,7 @@ class InitState extends State<AssignmentDetailsPage> {
                   fontSize: 18)),
           centerTitle: false,
         ),
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         body: SafeArea(
           child: Column(
             children: <Widget>[
@@ -287,7 +288,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                             padding: const EdgeInsets.only(left: 8.0),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(subFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.greenAccent),)),
+                                                child: Text(subFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SecondaryColor),)),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -410,7 +411,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(feedBackFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.greenAccent),)),
+                                                child: Text(feedBackFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SecondaryColor),)),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -439,7 +440,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                       height: 50,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(15),
-                                          color: const Color(0xFF00BC78)
+                                          color: PrimaryColor
                                       ),
                                       child: Center(
                                         child: Text("Submit", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),

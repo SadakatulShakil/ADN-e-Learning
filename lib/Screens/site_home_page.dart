@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +8,7 @@ import 'package:radda_moodle_learning/Screens/category_details_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ApiCall/HttpNetworkCall.dart';
+import '../Helper/colors_class.dart';
 import '../Helper/operations.dart';
 import '../language/Languages .dart';
 import '../language/LocalConstant.dart';
@@ -19,23 +21,23 @@ class SiteHomePage extends StatefulWidget {
 }
 
 class InitState extends State<SiteHomePage> {
+  List<String> courseImageList = [
+    'assets/images/sub1.png',
+    'assets/images/sub2.png',
+    'assets/images/sub3.png',
+    'assets/images/sub4.png'
+  ];
   List<dynamic> categoryList = [];
   List<dynamic> subCategoryList = [];
   String token = '';
   double value = 0;
   NetworkCall networkCall = NetworkCall();
-  List<String> courseImageList = [
-    'assets/images/banner.jpg',
-    'assets/images/papers.png',
-    'assets/images/banner.jpg',
-    'assets/images/papers.jpg'
-  ];
-
+  Connectivity connectivity = Connectivity();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getSharedData();
+    checkconnectivity();
     setState(() {});
   }
 
@@ -51,7 +53,7 @@ class InitState extends State<SiteHomePage> {
         transform: Matrix4.translationValues(0, 5, 1),
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFF01974D),
+            backgroundColor: PrimaryColor,
             elevation: 0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -77,7 +79,7 @@ class InitState extends State<SiteHomePage> {
               )
             ],
           ),
-          backgroundColor: const Color(0xFF01974D),
+          backgroundColor: PrimaryColor,
           body: Column(
             children: <Widget>[
               Container(
@@ -110,10 +112,10 @@ class InitState extends State<SiteHomePage> {
                             child: Text('Learn from anywhere', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            padding: const EdgeInsets.only(left: 10.0, right: 10),
                             child: Align(
                               alignment: Alignment.center,
-                                child: Text('Where you are at home, in a bus or commuting in a train or while you phycally are in the class, your daily notes, notifications and assignment are just one click', style: TextStyle(color: Colors.white),)),
+                                child: Text('The training courses and material offered at ADN DigiNet via the e-Learning platform caters to general knowledge transfer and professional skills development for ADN DigiNet personals', style: TextStyle(color: Colors.white),)),
                           ),
                         ],
                       ),
@@ -121,7 +123,7 @@ class InitState extends State<SiteHomePage> {
                     Align(alignment: Alignment.centerLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 15.0,right: 15, top: 8, bottom: 8),
-                        child: Text('Our Courses', style: TextStyle(color: Colors.greenAccent, fontSize: 18, fontWeight: FontWeight.bold),),
+                        child: Text('Our Courses', style: TextStyle(color: SecondaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
                       ),
                     ),
                     SizedBox(height: 10,),
@@ -129,13 +131,16 @@ class InitState extends State<SiteHomePage> {
                       child: Padding(
                           padding:
                           const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: ListView.builder(
-                              itemCount: categoryList.length,
-                              itemBuilder: (context, index) {
-                                final mCategoryData = categoryList[index];
-
-                                return buildCategoryCourse(mCategoryData);
-                              })),
+                          child: RefreshIndicator(
+                            onRefresh: checkconnectivity,
+                            child: ListView.builder(
+                                itemCount: categoryList.length,
+                                itemBuilder: (context, index) {
+                                  final mCategoryData = categoryList[index];
+                                  final mImageData = courseImageList[index];
+                                  return buildCategoryCourse(mCategoryData, mImageData);
+                                }),
+                          )),
                     ),
                   ],
                 ),
@@ -145,14 +150,14 @@ class InitState extends State<SiteHomePage> {
         ),
       );
   }
-  void getSharedData() async{
+  Future getSharedData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     setState(() {
       getCategories(token);
     });
   }
-  void getCategories(String token) async{
+  Future getCategories(String token) async{
     CommonOperation.showProgressDialog(
         context, "loading", true);
     final categoryListCallData = await networkCall.CategoryListCall(token);
@@ -184,7 +189,7 @@ class InitState extends State<SiteHomePage> {
     );
   }
 
-  Widget buildCategoryCourse(mCategoryData) =>
+  Widget buildCategoryCourse(mCategoryData, String mImageData) =>
       Visibility(
         visible: mCategoryData.parent == 0,
         child: GestureDetector(
@@ -229,7 +234,7 @@ class InitState extends State<SiteHomePage> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                          image: AssetImage("assets/images/banner.png"),
+                          image: AssetImage(mImageData),
 
                         ),
                       ),),
@@ -290,4 +295,74 @@ class InitState extends State<SiteHomePage> {
           ),
         ),
       );
+
+  Future checkconnectivity() async{
+    var connectivityResult = await connectivity.checkConnectivity();
+    if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+      getSharedData();
+    }else{
+      openNetworkDialog();
+      setState(() {
+
+      });
+    }
+  }
+  openNetworkDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+                  fontSize: 12
+              )),
+            )),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/5,
+              width: MediaQuery.of(context).size.width/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('Please check your internet connectivity and try again.')
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  checkconnectivity();
+                  setState(() {
+
+                  });
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width:150,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
+                    ),
+                    child: Center(
+                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
 }

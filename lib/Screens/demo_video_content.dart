@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../Helper/colors_class.dart';
+
 
 class VideoContentStanding extends StatefulWidget {
   String url, name;
@@ -80,7 +82,7 @@ class InitState extends State<VideoContentStanding> {
       player: YoutubePlayer(
         controller: _controller,
         showVideoProgressIndicator: true,
-        progressIndicatorColor: Colors.blueAccent,
+        progressIndicatorColor: SecondaryColor,
         topActions: <Widget>[
           const SizedBox(width: 8.0),
           Expanded(
@@ -120,7 +122,7 @@ class InitState extends State<VideoContentStanding> {
       ),
       builder: (context, player) => Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF01974D),
+          backgroundColor: PrimaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),

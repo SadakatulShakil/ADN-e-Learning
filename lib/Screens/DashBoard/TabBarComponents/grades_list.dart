@@ -6,6 +6,7 @@ import 'package:radda_moodle_learning/ApiModel/gradeResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
+import '../../../Helper/colors_class.dart';
 import '../../../Helper/operations.dart';
 import '../../gradeDetailsPage.dart';
 
@@ -198,7 +199,7 @@ class InitState extends State<DashBoardGradesList> {
                                 ' % complete'
                             : '0 % complete',
                         style: GoogleFonts.comfortaa(
-                            color: Colors.greenAccent,
+                            color: SecondaryColor,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),
                   ),

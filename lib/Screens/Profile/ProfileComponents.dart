@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,6 +10,8 @@ import 'package:radda_moodle_learning/Screens/Profile/profile_update_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
+import '../../Helper/colors_class.dart';
+import '../../Helper/operations.dart';
 
 class ProfileComponents extends StatefulWidget {
   @override
@@ -18,18 +21,19 @@ class ProfileComponents extends StatefulWidget {
 class InitState extends State<ProfileComponents> {
   NetworkCall networkCall = NetworkCall();
   List<dynamic> profileInfoList = [];
+  List<dynamic> courseList = [];
   String imageurl ='';
   String name ='';
   String firstName ='';
   String surName ='';
   String email ='';
-
+  Connectivity connectivity = Connectivity();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
-      getSharedData();
+      checkconnectivity();
     });
   }
 
@@ -43,7 +47,7 @@ class InitState extends State<ProfileComponents> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: const Color(0xFF01974D),
+        backgroundColor: PrimaryColor,
         body: Column(
           children: <Widget>[
             Container(
@@ -141,8 +145,10 @@ class InitState extends State<ProfileComponents> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ProfileAboutPage(),
-                  ProfileSettingsPage()
+                  RefreshIndicator(
+                      onRefresh: checkconnectivity,
+                      child: ProfileAboutPage()),
+                  RefreshIndicator( onRefresh: checkconnectivity,child: ProfileSettingsPage())
                 ],
               ),
             ),
@@ -152,7 +158,7 @@ class InitState extends State<ProfileComponents> {
     );
   }
 
-  void getSharedData() async{
+  Future getSharedData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name')!;
     imageurl = prefs.getString('imageUrl')!;
@@ -162,9 +168,9 @@ class InitState extends State<ProfileComponents> {
       getSiteInfo(token, userid);
     });
   }
-  void getSiteInfo(String token, String userid) async{
+  Future getSiteInfo(String token, String userid) async{
 
-    //CommonOperation.showProgressDialog(context, "loading", true);
+    CommonOperation.showProgressDialog(context, "loading", true);
     final userDetailsData = await networkCall.UserDetailsCall(token);
     if(userDetailsData != null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -185,7 +191,7 @@ class InitState extends State<ProfileComponents> {
   }
 
 
-  void getProfileInfo(String token, String userId) async {
+  Future getProfileInfo(String token, String userId) async {
     //CommonOperation.showProgressDialog(context, "loading", true);
     final profileInfoData =
     await networkCall.ProfileInfoCall(token, userId);
@@ -196,7 +202,7 @@ class InitState extends State<ProfileComponents> {
       email = profileInfoList[0].email.toString();
       //userName = profileInfoList[0].username.toString();
       print('data_count1 ' + profileInfoList.first.toString());
-      //CommonOperation.hideProgressDialog(context);
+      CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
       setState(() {
         //getAllCourses(token, userId);
@@ -217,5 +223,76 @@ class InitState extends State<ProfileComponents> {
         textColor: Colors.white,
         fontSize: 16.0 //message font size
     );
+  }
+
+  Future checkconnectivity() async{
+    var connectivityResult = await connectivity.checkConnectivity();
+    if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+      getSharedData();
+    }else{
+      openNetworkDialog();
+      setState(() {
+
+      });
+    }
+  }
+
+  openNetworkDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+                  fontSize: 12
+              )),
+            )),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/5,
+              width: MediaQuery.of(context).size.width/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('Please check your internet connectivity and try again.')
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  checkconnectivity();
+                  setState(() {
+
+                  });
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width:150,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
+                    ),
+                    child: Center(
+                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

@@ -9,6 +9,7 @@ import 'package:radda_moodle_learning/Screens/recentAccessCourses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
+import '../../../Helper/colors_class.dart';
 import '../../../Helper/operations.dart';
 import '../../courseDetailsPage.dart';
 
@@ -195,7 +196,7 @@ class InitState extends State<DashBoardCoursesList> {
                                           child: Center(
                                             child: Text('See All',
                                                 style: GoogleFonts.comfortaa(
-                                                    color: Colors.greenAccent,
+                                                    color: SecondaryColor,
                                                     fontSize: 13,
                                                     fontWeight: FontWeight.bold)),
                                           ),
@@ -248,7 +249,7 @@ class InitState extends State<DashBoardCoursesList> {
                                         color: (Theme.of(context).brightness ==
                                                     Brightness.dark
                                                 ? Colors.white
-                                                : Color(0xFF01974D))
+                                                : PrimaryColor)
                                             .withOpacity(current == entry.key
                                                 ? 0.9
                                                 : 0.4)),
@@ -294,7 +295,7 @@ class InitState extends State<DashBoardCoursesList> {
                                   child: Center(
                                     child: Text('See All',
                                         style: GoogleFonts.comfortaa(
-                                            color: Colors.greenAccent,
+                                            color: SecondaryColor,
                                             fontSize: 13,
                                             fontWeight: FontWeight.bold)),
                                   ),
@@ -473,7 +474,7 @@ class InitState extends State<DashBoardCoursesList> {
                                   ' % complete'
                               : '0 % complete',
                           style: GoogleFonts.comfortaa(
-                              color: Colors.greenAccent,
+                              color: SecondaryColor,
                               fontSize: 13,
                               fontWeight: FontWeight.bold)),
                     ),
