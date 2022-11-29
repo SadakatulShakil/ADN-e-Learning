@@ -270,6 +270,7 @@ class InitState extends State<ContactComponents> {
                       Row(
                         children: [
                           Container(
+                            color:Colors.red,
                             width: MediaQuery.of(context).size.width / 1.5,
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 5.0),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:radda_moodle_learning/Screens/courseDetailsPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ApiCall/HttpNetworkCall.dart';
+import '../Helper/colors_class.dart';
 import '../Helper/operations.dart';
 
 class CategoryWiseCoursesPage extends StatefulWidget {
@@ -75,32 +75,32 @@ class InitState extends State<CategoryWiseCoursesPage> {
                   ),
                   categoryWiseCourseList.length > 0
                       ? Expanded(
-                          child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 12.0, right: 12.0),
-                              child: ListView.builder(
-                                  itemCount: categoryWiseCourseList.length,
-                                  itemBuilder: (context, index) {
-                                    final mCourseData =
-                                        categoryWiseCourseList[index];
+                    child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, right: 12.0),
+                        child: ListView.builder(
+                            itemCount: categoryWiseCourseList.length,
+                            itemBuilder: (context, index) {
+                              final mCourseData =
+                              categoryWiseCourseList[index];
 
-                                    return buildRecentCourse(mCourseData);
-                                  })),
-                        )
+                              return buildRecentCourse(mCourseData);
+                            })),
+                  )
                       : Center(
-                          child: SizedBox(
-                            height: 100,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.warning_amber,
-                                  size: 30,
-                                ),
-                                Text('No Data Found!'),
-                              ],
-                            ),
+                    child: SizedBox(
+                      height: 100,
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.warning_amber,
+                            size: 30,
                           ),
-                        ),
+                          Text('No Data Found!'),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               )),
         ],
@@ -132,8 +132,8 @@ class InitState extends State<CategoryWiseCoursesPage> {
                 placeholder: 'assets/images/course_image.png',
                 image: mCourseData.overviewfiles.length != 0
                     ? mCourseData.overviewfiles.first.fileurl
-                        .replaceAll("/webservice", "")
-                        .toString()
+                    .replaceAll("/webservice", "")
+                    .toString()
                     : 'https://image.shutterstock.com/image-photo/online-courses-text-man-using-260nw-600126515.jpg',
                 height: 120,
                 width: 130,
@@ -144,7 +144,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 2.2,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(mCourseData.displayname.toString(),
@@ -185,27 +185,27 @@ class InitState extends State<CategoryWiseCoursesPage> {
                                 ]),
                           ),
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(
-                            width: 100,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: const Color(0xFFFFFFFF)),
-                            child: Center(
-                              child: Text(
-                                "View details",
-                                style: GoogleFonts.comfortaa(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Card(
+                        //   shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(8),
+                        //   ),
+                        //   child: Container(
+                        //     width: 100,
+                        //     height: 30,
+                        //     decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(8),
+                        //         color: const Color(0xFFFFFFFF)),
+                        //     child: Center(
+                        //       child: Text(
+                        //         "View details",
+                        //         style: GoogleFonts.comfortaa(
+                        //             color: Colors.black,
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 12),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   )
@@ -233,14 +233,14 @@ class InitState extends State<CategoryWiseCoursesPage> {
   void getAllCourses(String token, String userId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
-        await networkCall.UserCoursesListCall(token, userId);
+    await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success2';
       courseList = userCoursesData;
       categoryWiseCourseList = courseList
           .where((element) =>
-              element.category.toString() == widget.catId.toString())
+      element.category.toString() == widget.catId.toString())
           .toList();
       //count = courseList.length.toString();
       print('data_count1 ' + courseList.first.toString());
@@ -262,6 +262,6 @@ class InitState extends State<CategoryWiseCoursesPage> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 }

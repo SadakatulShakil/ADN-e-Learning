@@ -31,6 +31,7 @@ class InitState extends State<SiteHomePage> {
   List<dynamic> subCategoryList = [];
   String token = '';
   double value = 0;
+  int countSubCat = 0;
   NetworkCall networkCall = NetworkCall();
   Connectivity connectivity = Connectivity();
   @override
@@ -194,6 +195,7 @@ class InitState extends State<SiteHomePage> {
         visible: mCategoryData.parent == 0,
         child: GestureDetector(
           onTap: (){
+            getSubCat(mCategoryData.id.toString(),mCategoryData);
             mCategoryData.parent != 0?Navigator.push(context, MaterialPageRoute(builder: (context) =>
                 CategoryDetailsPage(mCategoryData.name.toString(), categoryList, mCategoryData.id.toString()))):
             Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWiseCoursesPage(mCategoryData.id.toString())));
@@ -364,5 +366,19 @@ class InitState extends State<SiteHomePage> {
             ],
           );
         });
+  }
+
+  void getSubCat(String catId, mCategoryData) {
+    subCategoryList = categoryList.where((element) => element.parent.toString() == catId).toList();
+    countSubCat = subCategoryList.length;
+    setState(() {
+      if(countSubCat>0){
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>
+            CategoryDetailsPage(mCategoryData.name.toString(), categoryList, mCategoryData.id.toString())));
+      }else{
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWiseCoursesPage(mCategoryData.id.toString())));
+      }
+    });
+    print('???? '+ countSubCat.toString());
   }
 }

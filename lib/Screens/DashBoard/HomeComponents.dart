@@ -61,52 +61,52 @@ class InitState extends State<HomeComponents> {
         body: Column(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/rectangle_bg.png"),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25))),
-              height: 100,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(imageurl.toString()),
-                      radius: 50,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/rectangle_bg.png"),
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(name.toString(), style: GoogleFonts.comfortaa(
-                            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white
-                        ),),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                height: 100,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(imageurl.toString()),
+                        radius: 50,
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.email_outlined, size: 12, color: Colors.white,),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0, bottom: 2),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(email.toString(), style: GoogleFonts.comfortaa(
-                                  fontSize: 12, color: Colors.white
-                              ),),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(name.toString(), style: GoogleFonts.comfortaa(
+                              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white
+                          ),),
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.email_outlined, size: 12, color: Colors.white,),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5.0, bottom: 2),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(email.toString(), style: GoogleFonts.comfortaa(
+                                    fontSize: 12, color: Colors.white
+                                ),),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              )
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                )
             ),
 
             // the tab bar with two items
@@ -132,7 +132,7 @@ class InitState extends State<HomeComponents> {
               child: TabBarView(
                 children: [
                   RefreshIndicator(
-                    onRefresh: checkconnectivity,
+                      onRefresh: checkconnectivity,
                       child: DashBoardCoursesList(recentCourseList, courseList)),
                   RefreshIndicator(
                       onRefresh: checkconnectivity,
@@ -142,7 +142,7 @@ class InitState extends State<HomeComponents> {
                       child: DashBoardActivityList(badgesDataList,token, courseList)),
                   RefreshIndicator(
                       onRefresh: checkconnectivity,
-                      child: DashBoardCalederList(firstUpcomingEvent, firstUpcomingEventDate, dateList, eventList, weekList, daysList, monthlyEventList))
+                      child: DashBoardCalederList(firstUpcomingEvent, firstUpcomingEventDate, dateList, eventList))
                 ],
               ),
             ),
@@ -275,7 +275,7 @@ class InitState extends State<HomeComponents> {
       firstUpcomingEventDate =  eventList.length>0?eventList.first.timestart.toString():'';
       for(int i =0; i<eventList.length;i++){
         var dateListIndex = DateTime.parse(getDateStump(eventList[i].timesort.toString())).toString();
-        dateList.containsKey(dateListIndex) ? dateList[dateListIndex].add(eventList[i].timesort) : dateList[dateListIndex] = eventList[i].timesort;
+        dateList.containsKey(dateListIndex) ? dateList[dateListIndex].add(eventList[i].timesort) : dateList[dateListIndex] = [eventList[i].timesort];
       }
       print('date list '+ dateList.toString());
       CommonOperation.hideProgressDialog(context);
@@ -340,6 +340,7 @@ class InitState extends State<HomeComponents> {
   }
 
   Future checkconnectivity() async{
+    dateList.clear();
     var connectivityResult = await connectivity.checkConnectivity();
     if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
       getSharedData();
