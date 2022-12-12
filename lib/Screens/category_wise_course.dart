@@ -47,7 +47,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Our Courses',
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -150,7 +150,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
                       child: Text(mCourseData.displayname.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 4,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
                               fontSize: 13,
                               fontWeight: FontWeight.bold)),
@@ -176,7 +176,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
                                     child: Text(
                                       mCourseData.enrolledusercount.toString() +
                                           ' users',
-                                      style: GoogleFonts.comfortaa(
+                                      style: GoogleFonts.nanumGothic(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w900,
                                       ),

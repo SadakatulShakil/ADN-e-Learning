@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
@@ -43,15 +44,24 @@ class InitState extends State<CourseDetailsPage> {
   int showSub = -1;
   int showContact = -1;
   int showMap = -1;
+  String content1 ='';
+  String content2 ='';
   final audioPlayer = AudioPlayer();
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
-
+  Connectivity connectivity = Connectivity();
   @override
   void initState() {
     // TODO: implement initState
-    getSharedData();
+    checkconnectivity();
+    print('--------->  '+widget.mCourseData.summary.toString());
+    dom.Document document2 = parse(HtmlUnescape().convert(widget.mCourseData.summary.toString()));
+    content1 = document2.getElementsByTagName('span')[0].innerHtml.toString();
+    content2 = document2.getElementsByTagName('strong')[1].innerHtml.toString();
+    print('data_content_html ' + content1.toString());
+    print('data_content_html ' + content2.toString());
+    //getSharedData();
     //setAudio();
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
@@ -83,7 +93,7 @@ class InitState extends State<CourseDetailsPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Course Details',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -138,7 +148,7 @@ class InitState extends State<CourseDetailsPage> {
                                         .mCourseData.displayname.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -149,9 +159,8 @@ class InitState extends State<CourseDetailsPage> {
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 10.0, top: 5, bottom: 5),
-                                    child: Html(data: widget.mCourseData.summary
-                                        .toString(),),
+                                        left: 18.0, top: 10, bottom: 5),
+                                    child: Text(content1+'\n'+content2, style: GoogleFonts.nanumGothic(color: Colors.white, fontSize: 15),),
                                   )),
                             ],
                           )),
@@ -161,29 +170,94 @@ class InitState extends State<CourseDetailsPage> {
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             "Course Content",
-                            style: GoogleFonts.comfortaa(fontSize: 13),
+                            style: GoogleFonts.nanumGothic(fontSize: 13),
                           ),
                         ),
                       ),
                       Expanded(
-                          child: SingleChildScrollView(
-                            controller: scrollController,
-                            physics: NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              key: GlobalKey(),
-                              children: [
-                                Container(
-                                    width: ScreenRF.width(context),
-                                    child: list())
-                              ],
-                            ),
-                          )),
+                        child: RefreshIndicator(
+                          onRefresh: checkconnectivity,
+                          child: Container(
+                              width: ScreenRF.width(context),
+                              child: list()),
+                        ),
+                      ),
                     ],
                   )),
             ],
           ),
         ));
+  }
+
+  Future checkconnectivity() async{
+    var connectivityResult = await connectivity.checkConnectivity();
+    if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+      getSharedData();
+    }else{
+      openNetworkDialog();
+      setState(() {
+
+      });
+    }
+  }
+
+  openNetworkDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Network Issue !',style: GoogleFonts.nanumGothic(
+                  fontSize: 12
+              )),
+            )),
+
+            content: Container(
+              height: MediaQuery.of(context).size.height/5,
+              width: MediaQuery.of(context).size.width/2,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('Please check your internet connectivity and try again.')
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  checkconnectivity();
+                  setState(() {
+
+                  });
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width:150,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
+                    ),
+                    child: Center(
+                      child: Text("Try again", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   String getDateStump(String sTime) {
@@ -305,6 +379,10 @@ class InitState extends State<CourseDetailsPage> {
                                         SizedBox(
                                           height: 30,
                                         ),
+                                        courseContentList[index].summary.toString() != ""?Container(
+                                         width: ScreenRF.width(context),
+                                         child: Html(data: courseContentList[index].summary.toString())):
+                                        Container(),
                                         Container(
                                             width: ScreenRF.width(context),
                                             child: sublist(index))
@@ -382,11 +460,15 @@ class InitState extends State<CourseDetailsPage> {
                                           courseContentList[sub_index]
                                               .modules[index]
                                               .modname
-                                              .toString() == 'hvp'?Image.asset("assets/images/video_icon.png", height:40,width: 40,)
+                                              .toString() == 'hvp'?Image.asset("assets/images/h5p.png", height:40,width: 40,)
                                               :courseContentList[sub_index]
                                               .modules[index]
                                               .modname
                                               .toString() == 'quiz'?Image.asset("assets/images/quiz_icon.png", height:40,width: 40,):
+                                          courseContentList[sub_index]
+                                              .modules[index]
+                                              .modname
+                                              .toString() == 'page'?Image.asset("assets/images/video_icon.png", height:40,width: 40,):
                                           Image.asset("assets/images/course_icon.png", height:40,width: 40,),
 
                                           Column(
@@ -403,7 +485,7 @@ class InitState extends State<CourseDetailsPage> {
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
-                                                        fontSize: 18, fontWeight: FontWeight.bold),
+                                                        fontSize: 15),
                                                   ),
                                                 ),
                                               ),
@@ -426,7 +508,7 @@ class InitState extends State<CourseDetailsPage> {
                                                           courseContentList[sub_index]
                                                               .modules[index]
                                                               .completiondata
-                                                              .state.toString() == '1')? PrimaryColor:Colors.redAccent,
+                                                              .state.toString() == '1')? AccentColor:Colors.redAccent,
                                                       borderRadius: BorderRadius.all(Radius.circular(5)),
                                                     ),
                                                     width: MediaQuery.of(context).size.width/1.8,
@@ -444,7 +526,7 @@ class InitState extends State<CourseDetailsPage> {
                                                         maxLines: 2,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
-                                                            fontSize: 15, fontWeight: FontWeight.bold),
+                                                            fontSize: 15, color: Colors.white),
                                                       ),
                                                     ),
                                                   ),
@@ -594,7 +676,7 @@ class InitState extends State<CourseDetailsPage> {
                                          "forum" ? OpenDialog(courseContentList[sub_index].modules[index]
                                          .name.toString(), 'No description Yet!'):courseContentList[sub_index].modules[index]
                                          .modname ==
-                                         "page" ? findVideoUrl(token, courseContentList[sub_index].modules[index].contents[0].fileurl.toString(), courseContentList[sub_index].modules[index].name.toString()):
+                                         "page" ? findVideoUrl(token, courseContentList[sub_index].modules[index].contents[0].fileurl.toString(), courseContentList[sub_index].modules[index].name.toString(), courseContentList[sub_index].modules[index].instance.toString()):
                                                       print("Not assignment clicked !");
                                      // Navigator.push(
                                      //     context,
@@ -892,7 +974,7 @@ class InitState extends State<CourseDetailsPage> {
                 children: [
                   Flexible(child: Align(
                     alignment: Alignment.center,
-                    child: Text(name,style: GoogleFonts.comfortaa(
+                    child: Text(name,style: GoogleFonts.nanumGothic(
                         fontSize: 12
                     )),
                   )),
@@ -932,7 +1014,7 @@ class InitState extends State<CourseDetailsPage> {
                 children: [
                   Flexible(child: Align(
                     alignment: Alignment.center,
-                    child: Text(name,style: GoogleFonts.comfortaa(
+                    child: Text(name,style: GoogleFonts.nanumGothic(
                         fontSize: 12
                     )),
                   )),
@@ -959,7 +1041,7 @@ class InitState extends State<CourseDetailsPage> {
         });
   }
 
-  findVideoUrl(String token, String url, String name) async{
+  findVideoUrl(String token, String url, String name, String pageid) async{
     CommonOperation.showProgressDialog(context, "loading", true);
     dynamic contentdata =
     await networkCall.VideoUrlCall(token, url);
@@ -968,11 +1050,11 @@ class InitState extends State<CourseDetailsPage> {
       print('data_content_html ' + HtmlUnescape().convert(contentdata).toString());
       CommonOperation.hideProgressDialog(context);
       dom.Document document = parse(HtmlUnescape().convert(contentdata));
-      var mainUrl = document
-          .getElementsByClassName('mediafallbacklink')[0].attributes["href"].toString();
+      var mainUrl = widget.mCourseData.id.toString() == '82'?document.getElementsByClassName('no-overflow')[0].attributes["href"].toString():document.getElementsByClassName('mediafallbacklink')[0].attributes["href"].toString();
       String vidUrl = mainUrl; //|| 'https://www.youtube.com/watch?v=1gDhl4leEzA&t=2s';
 
       setState(() {
+        activityView(pageid);
          Navigator.push(
             context,
             MaterialPageRoute(
@@ -986,4 +1068,18 @@ class InitState extends State<CourseDetailsPage> {
     }
   }
 
+  activityView(String pageid) async{
+    dynamic activityViewData =
+    await networkCall.activityViewCall(token, pageid);
+    if (activityViewData != null) {
+      print("View succesfully");
+      setState(() {
+
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
 }

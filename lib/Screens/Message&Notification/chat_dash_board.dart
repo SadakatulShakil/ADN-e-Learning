@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:radda_moodle_learning/ApiModel/group_message_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,10 +11,12 @@ import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
 class ChatDashBoardScreen extends StatefulWidget {
-  String currentUserId;
+  String from;
+  String currentId;
   dynamic mChatData;
+  ChatDashBoardScreen(this.from, this.currentId, this.mChatData);
 
-  ChatDashBoardScreen(this.currentUserId, this.mChatData);
+
 
   @override
   State<StatefulWidget> createState() => InitState();
@@ -22,13 +26,18 @@ class ChatDashBoardScreen extends StatefulWidget {
 
 class InitState extends State<ChatDashBoardScreen> {
   final textController = TextEditingController();
+  final messageController = TextEditingController();
   final _scrollController = ScrollController();
 
   NetworkCall networkCall = NetworkCall();
   List<dynamic> courseList = [];
   List<Messages> groupMessagesList = [];
+  List<Members> groupMembersList = [];
   String token = '';
+  String userId = '';
   String name = '';
+  String message = '';
+  String memberName = '';
   String imageUrl =
       'https://3rdpartyservicesofflorida.com/wp-content/uploads/2015/03/blank-profile.jpg';
   String lastAccess = '';
@@ -57,7 +66,7 @@ class InitState extends State<ChatDashBoardScreen> {
       ),
         backgroundColor: PrimaryColor,
         title: Text(
-          widget.mChatData.name.toString(),
+          widget.from=='private'?widget.mChatData.members.first.fullname.toString():widget.mChatData.name.toString(),
           style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold
@@ -112,19 +121,16 @@ class InitState extends State<ChatDashBoardScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       height: 70.0,
-      color: Colors.white,
+      color: Colors.grey.shade300,
       child: Row(
         children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.photo),
-            iconSize: 25.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {},
-          ),
           Expanded(
             child: TextField(
+              controller: messageController,
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (value) {},
+              onChanged: (value) {
+                message = value;
+              },
               decoration: InputDecoration(
                   hintText: 'Send a message..'
               ),
@@ -134,7 +140,12 @@ class InitState extends State<ChatDashBoardScreen> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {},
+            onPressed: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+              messageController.clear();
+              widget.from == 'private'?sendMessage(token, message, widget.mChatData.members.first.id.toString())
+                  :sendGroupMessage(token, message, widget.mChatData.id.toString());
+            },
           ),
         ],
       ),
@@ -144,20 +155,22 @@ class InitState extends State<ChatDashBoardScreen> {
   void getSharedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
+    userId = prefs.getString('userId')!;
     setState(() {
       getGroupMessage(
-          token, widget.currentUserId, widget.mChatData.id.toString());
+          token, widget.currentId, widget.mChatData.id.toString());
     });
   }
 
   void getGroupMessage(String token, String userId, String convId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final groupMessageData =
-        await networkCall.GroupMessageCall(token, userId, convId);
+    await networkCall.GroupMessageCall(token, userId, convId);
     if (groupMessageData != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
       groupMessagesList = groupMessageData.messages!;
+      groupMembersList = groupMessageData.members!;
       //print('hospital data' + groupMessageData.messages!.first.text.toString());
       CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
@@ -187,7 +200,7 @@ class InitState extends State<ChatDashBoardScreen> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 
   String getDateStump(String sTime) {
@@ -215,7 +228,7 @@ class InitState extends State<ChatDashBoardScreen> {
   }
 
   Widget MessageWidget(Messages mContactData) {
-    if(mContactData.useridfrom.toString() == '60'){
+    if(mContactData.useridfrom.toString() == userId){
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -225,24 +238,33 @@ class InitState extends State<ChatDashBoardScreen> {
             margin: EdgeInsets.only(right: 8, bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: PrimaryColor,
+              color: SecondaryColor,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(mContactData.text!,
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(mContactData.timecreated.toString(),
-                    style: TextStyle(color: Colors.black)),
+                Html(data: mContactData.text!),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                      DateFormat.yMMMEd().format(DateTime.parse(
+                          getDateStump(mContactData.timecreated.toString()))),
+                      style: GoogleFonts.nanumGothic(
+                          color: Colors.black54,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold)),
+                )
               ],
             ),
           ),
         ],
       );
     }else{
+      for(int i = 0;i<groupMembersList.length;i++){
+        if(groupMembersList[i].id.toString() == mContactData.useridfrom.toString()){
+          memberName = groupMembersList[i].fullname.toString();
+        }
+      }
       return Row(
         children: [
           Container(
@@ -258,9 +280,21 @@ class InitState extends State<ChatDashBoardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(mContactData.text!, style: TextStyle(color: Colors.black)),
-                SizedBox(height: 4,),
-                Text(mContactData.timecreated.toString(), style: TextStyle(color: Colors.black)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(memberName),
+                ),
+                Html(data: mContactData.text!),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                      DateFormat.yMMMEd().format(DateTime.parse(
+                          getDateStump(mContactData.timecreated.toString()))),
+                      style: GoogleFonts.nanumGothic(
+                          color: Colors.black54,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold)),
+                )
               ],
             ),
           ),
@@ -268,5 +302,29 @@ class InitState extends State<ChatDashBoardScreen> {
       );
     }
   }
+
+  Future sendMessage(String token, String message, String receiverId) async{
+    CommonOperation.showProgressDialog(context, "loading", true);
+    final sendMessageResponse =
+    await networkCall.SendMessageCall(token, message, receiverId);
+    CommonOperation.hideProgressDialog(context);
+    if(sendMessageResponse != null){
+      getSharedData();
+      setState(() {
+      });
+    }
+  }
+  Future sendGroupMessage(String token, String message, String conversationId) async{
+    CommonOperation.showProgressDialog(context, "loading", true);
+    final sendMessageResponse =
+    await networkCall.SendGroupMessageCall(token, message, conversationId);
+    CommonOperation.hideProgressDialog(context);
+    if(sendMessageResponse != null){
+      getSharedData();
+      setState(() {
+      });
+    }
+  }
+
 
 }

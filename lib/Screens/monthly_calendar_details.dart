@@ -29,7 +29,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Calendar',
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -74,7 +74,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                                   'Event Details',
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -131,7 +131,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(mCourseData.name.toString(),
                       maxLines: 5,
-                      style: GoogleFonts.comfortaa(
+                      style: GoogleFonts.nanumGothic(
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold)),
@@ -147,7 +147,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                         getDateStump(mCourseData
                             .timestart
                             .toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
@@ -173,7 +173,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                           Flexible(
                             child: Text(
                                 mCourseData.course.shortname.toString(),
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     color: Colors.black54,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold)),

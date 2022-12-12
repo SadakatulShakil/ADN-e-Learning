@@ -47,7 +47,7 @@ class InitState extends State<GradesDetailsPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Grade Details',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -91,7 +91,7 @@ class InitState extends State<GradesDetailsPage> {
                                     widget.mGradeData.displayname.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -110,7 +110,7 @@ class InitState extends State<GradesDetailsPage> {
                                                 ? widget.mGradeData.progress.ceil().toString() +
                                                 ' % complete'
                                                 : '0 % complete',
-                                            style: GoogleFonts.comfortaa(
+                                            style: GoogleFonts.nanumGothic(
                                                 fontSize: 11,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
@@ -138,7 +138,7 @@ class InitState extends State<GradesDetailsPage> {
                                         child: Text(
                                             widget.mGradesData.grade.toString() != null && widget.mGradesData.grade.toString() != '-'?
                                             'Total Grade: ' + widget.mGradesData.grade.toString():'Total Grade: ' + "Not evaluated yet",
-                                            style: GoogleFonts.comfortaa(
+                                            style: GoogleFonts.nanumGothic(
                                                 color: Colors.white,
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.bold)),

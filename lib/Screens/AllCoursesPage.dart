@@ -28,7 +28,7 @@ class InitState extends State<AllCoursesPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Enrolled Courses',
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -110,9 +110,9 @@ class InitState extends State<AllCoursesPage> {
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(mCourseData.displayname.toString(),
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -122,10 +122,9 @@ class InitState extends State<AllCoursesPage> {
                         getDateStump(mCourseData
                             .startdate
                             .toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 13,)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
@@ -134,18 +133,18 @@ class InitState extends State<AllCoursesPage> {
                             ? mCourseData.progress.ceil().toString() +
                             ' % complete'
                             : '0 % complete',
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: SecondaryColor,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: Text( 'Total user: '+mCourseData.enrolledusercount.toString(),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            )),
                   ),
                 ],
               ),

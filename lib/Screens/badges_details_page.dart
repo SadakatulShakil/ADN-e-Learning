@@ -52,7 +52,7 @@ class InitState extends State<BadgesDetailsPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Grade Details',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -96,7 +96,7 @@ class InitState extends State<BadgesDetailsPage> {
                                     widget.mCourseData.name.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -109,7 +109,7 @@ class InitState extends State<BadgesDetailsPage> {
                                     padding: const EdgeInsets.only(
                                         left: 10.0, top: 5, bottom: 5),
                                     child: Text(widget.mCourseData.messagesubject.toString(),
-                                        style: GoogleFonts.comfortaa(
+                                        style: GoogleFonts.nanumGothic(
                                             color: Colors.white,
                                             fontSize: 13,
                                             fontWeight: FontWeight.bold)),
@@ -124,7 +124,7 @@ class InitState extends State<BadgesDetailsPage> {
                             Align(
                               alignment:Alignment.centerLeft,
                               child: Text('Recipient details',
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 18)),
                             ),
@@ -135,7 +135,7 @@ class InitState extends State<BadgesDetailsPage> {
                               child: Align(
                                 alignment:Alignment.centerLeft,
                                 child: Text('Name:  '+name.toString(),
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15)),
                               ),
@@ -146,7 +146,7 @@ class InitState extends State<BadgesDetailsPage> {
                             Align(
                               alignment:Alignment.centerLeft,
                               child: Text('Issuer details',
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 18)),
                             ),
@@ -157,7 +157,7 @@ class InitState extends State<BadgesDetailsPage> {
                               child: Align(
                                 alignment:Alignment.centerLeft,
                                 child: Text('Issuer name:  '+widget.mCourseData.issuername.toString(),
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15)),
                               ),
@@ -167,7 +167,7 @@ class InitState extends State<BadgesDetailsPage> {
                             Align(
                               alignment:Alignment.centerLeft,
                               child: Text('Badge details',
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 18)),
                             ),
@@ -178,7 +178,7 @@ class InitState extends State<BadgesDetailsPage> {
                               child: Align(
                                 alignment:Alignment.centerLeft,
                                 child: Text('Name:  '+widget.mCourseData.name.toString(),
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15)),
                               ),
@@ -190,7 +190,7 @@ class InitState extends State<BadgesDetailsPage> {
                               child: Align (
                                 alignment:Alignment.centerLeft,
                                 child: Text(widget.mCourseData.language.toString()== 'en'?'Language:  '+'English':'Bangla',
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15)),
                               ),
@@ -202,7 +202,7 @@ class InitState extends State<BadgesDetailsPage> {
                               child: Align(
                                 alignment:Alignment.centerLeft,
                                 child: Text('Description:  '+widget.mCourseData.description.toString(),
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15)),
                               ),
@@ -214,7 +214,7 @@ class InitState extends State<BadgesDetailsPage> {
                               child: Align(
                                 alignment:Alignment.centerLeft,
                                 child: Text('Course:  '+courseName.toString(),
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15)),
                               ),
@@ -224,7 +224,7 @@ class InitState extends State<BadgesDetailsPage> {
                             Align(
                               alignment:Alignment.centerLeft,
                               child: Text('Badge expiry',
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 18)),
                             ),
@@ -241,7 +241,7 @@ class InitState extends State<BadgesDetailsPage> {
                                             DateFormat.yMMMEd().format(DateTime.parse(
                                                 getDateStump(
                                                     widget.mCourseData.dateissued.toString()))),
-                                        style: GoogleFonts.comfortaa(
+                                        style: GoogleFonts.nanumGothic(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold)),
                                   )),

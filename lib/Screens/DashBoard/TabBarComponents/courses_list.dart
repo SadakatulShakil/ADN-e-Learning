@@ -93,7 +93,7 @@ class InitState extends State<DashBoardCoursesList> {
                                       ? item.coursecategory.toString()
                                       : "",
                                   textAlign: TextAlign.left,
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                     color: Colors.black54,
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class InitState extends State<DashBoardCoursesList> {
                                         : "",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         color: Colors.black,
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold)),
@@ -123,7 +123,7 @@ class InitState extends State<DashBoardCoursesList> {
                                           DateTime.parse(getDateStump(
                                               item.startdate.toString())))
                                       : "",
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       color: Colors.black54,
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold)),
@@ -169,7 +169,7 @@ class InitState extends State<DashBoardCoursesList> {
                                     padding: const EdgeInsets.only(
                                         left: 12.0, top: 5),
                                     child: Text('Recently accessed courses ',
-                                        style: GoogleFonts.comfortaa(
+                                        style: GoogleFonts.nanumGothic(
                                             color: Colors.black,
                                             fontSize: 13,
                                             fontWeight: FontWeight.bold)),
@@ -195,7 +195,7 @@ class InitState extends State<DashBoardCoursesList> {
                                           width: 60,
                                           child: Center(
                                             child: Text('See All',
-                                                style: GoogleFonts.comfortaa(
+                                                style: GoogleFonts.nanumGothic(
                                                     color: SecondaryColor,
                                                     fontSize: 13,
                                                     fontWeight: FontWeight.bold)),
@@ -269,7 +269,7 @@ class InitState extends State<DashBoardCoursesList> {
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0, top: 5),
                             child: Text('All courses ',
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     color: Colors.black,
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold)),
@@ -294,7 +294,7 @@ class InitState extends State<DashBoardCoursesList> {
                                   width: 60,
                                   child: Center(
                                     child: Text('See All',
-                                        style: GoogleFonts.comfortaa(
+                                        style: GoogleFonts.nanumGothic(
                                             color: SecondaryColor,
                                             fontSize: 13,
                                             fontWeight: FontWeight.bold)),
@@ -410,89 +410,84 @@ class InitState extends State<DashBoardCoursesList> {
             MaterialPageRoute(
                 builder: (context) => CourseDetailsPage('all', mCourseData)));
       },
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Container(
-          margin: const EdgeInsets.only(left: 5.0, right: 5, top: 5, bottom: 5),
-          padding: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
+      child: Container(
+        margin: const EdgeInsets.only(left: 5.0, right: 5 , top: 5, bottom: 5),
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          children: [
+            PhysicalModel(
+              color: Colors.black,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.black12)),
-          child: Row(
-            children: [
-              PhysicalModel(
-                color: Colors.black,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(10),
-                child: FadeInImage.assetNetwork(
-                    placeholder: 'assets/images/course_image.png',
-                    image: mCourseData.overviewfiles.length != 0
-                        ? mCourseData.overviewfiles.first.fileurl
-                            .replaceAll("/webservice", "")
-                            .toString()
-                        : 'https://image.shutterstock.com/image-photo/online-courses-text-man-using-260nw-600126515.jpg',
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.fill),
+              child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/course_image.png',
+                  image: mCourseData.overviewfiles.length != 0
+                      ? mCourseData.overviewfiles.first.fileurl
+                          .replaceAll("/webservice", "")
+                          .toString()
+                      : 'https://image.shutterstock.com/image-photo/online-courses-text-man-using-260nw-600126515.jpg',
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.fill),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(mCourseData.displayname.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.nanumGothic(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600
+                          )),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: Text(
+                        DateFormat.yMMMEd().format(DateTime.parse(
+                            getDateStump(mCourseData.startdate.toString()))),
+                        style: GoogleFonts.nanumGothic(
+                            color: Colors.black54,
+                            fontSize: 13,
+                            )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: Text(
+                        mCourseData.progress != null
+                            ? mCourseData.progress.ceil().toString() +
+                                ' % complete'
+                            : '0 % complete',
+                        style: GoogleFonts.nanumGothic(
+                            color: SecondaryColor,
+                            fontSize: 13,
+                            )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: Text(
+                        'Total user: ' +
+                            mCourseData.enrolledusercount.toString(),
+                        style: GoogleFonts.nanumGothic(
+                            color: Colors.black54,
+                            fontSize: 13,
+                            )),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(mCourseData.displayname.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.comfortaa(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(
-                          DateFormat.yMMMEd().format(DateTime.parse(
-                              getDateStump(mCourseData.startdate.toString()))),
-                          style: GoogleFonts.comfortaa(
-                              color: Colors.black54,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(
-                          mCourseData.progress != null
-                              ? mCourseData.progress.ceil().toString() +
-                                  ' % complete'
-                              : '0 % complete',
-                          style: GoogleFonts.comfortaa(
-                              color: SecondaryColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(
-                          'Total user: ' +
-                              mCourseData.enrolledusercount.toString(),
-                          style: GoogleFonts.comfortaa(
-                              color: Colors.black54,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ));
 }

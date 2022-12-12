@@ -61,7 +61,7 @@ class InitState extends State<SiteHomePage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text('Site Home',
-                style: GoogleFonts.comfortaa(
+                style: GoogleFonts.nanumGothic(
                     color: const Color(0xFFFFFFFF),
                     fontWeight: FontWeight.w700,
                     fontSize: 18)),
@@ -222,7 +222,7 @@ class InitState extends State<SiteHomePage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              mCategoryData.name.toString(), style: GoogleFonts.comfortaa(
+                              mCategoryData.name.toString(), style: GoogleFonts.nanumGothic(
                               color: const Color(0xFF000000),
                               fontSize: 15,
                               fontWeight: FontWeight.w900,
@@ -321,7 +321,7 @@ class InitState extends State<SiteHomePage> {
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             title:Flexible(child: Align(
               alignment: Alignment.center,
-              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+              child: Text('Network Issue !',style: GoogleFonts.nanumGothic(
                   fontSize: 12
               )),
             )),
@@ -358,7 +358,7 @@ class InitState extends State<SiteHomePage> {
                       color: SecondaryColor,
                     ),
                     child: Center(
-                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                      child: Text("Try again", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                     ),
                   ),
                 ),

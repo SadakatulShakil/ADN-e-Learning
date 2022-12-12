@@ -28,6 +28,7 @@ class InitState extends State<QuizViewPage> {
   String attemptCount = '';
   String state = '';
   String grade = '';
+  String timeLimit = '';
   String highestGrade ='';
   List<Attempts> quizSummeryList =[];
   NetworkCall networkCall = NetworkCall();
@@ -59,7 +60,7 @@ class InitState extends State<QuizViewPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Quiz',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -123,7 +124,7 @@ class InitState extends State<QuizViewPage> {
                       Align(alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 15.0,right: 15, top: 5, bottom: 5),
-                          child: Text('Time limit: 10 minutes', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                          child: Text(timeLimit, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                         ),
                       ),
                       Padding(
@@ -193,7 +194,7 @@ class InitState extends State<QuizViewPage> {
                                 color: PrimaryColor
                             ),
                             child: Center(
-                              child: Text("Attempt now", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                              child: Text("Attempt now", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                             ),
                           ),
                         ),
@@ -230,7 +231,7 @@ class InitState extends State<QuizViewPage> {
               height: MediaQuery.of(context).size.height/3,
              child: Column(
                children: [
-                 Text('Your attempt will have a time limit of 10 mins. When you start, t'
+                 Text('Your attempt will have a $timeLimit. When you start, t'
                      'he timer will begin to count down and cannot be paused. '
                      'You must finish your attempt before it expires. Are you sure you wish to start now? '),
 
@@ -269,7 +270,7 @@ class InitState extends State<QuizViewPage> {
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
     setState(() {
-      getQuizSummeryData(token, widget.quizId);
+      getQuizAccessInformation(token, widget.quizId);
       //getGradeContent(token, widget.mGradeData.id.toString(), userId);
     });
   }
@@ -307,7 +308,7 @@ class InitState extends State<QuizViewPage> {
     );
   }
 
-  void getQuizSummeryData(String token, String quizId) async{
+  Future getQuizSummeryData(String token, String quizId) async{
     CommonOperation.showProgressDialog(context, "loading", true);
     final attemptSummeryData =
     await networkCall.QuizAttemptSummeryCall(token, quizId);
@@ -317,14 +318,39 @@ class InitState extends State<QuizViewPage> {
       quizSummeryList = attemptSummeryData.attempts!;
       print('data_content ' + attemptSummeryData.attempts!.length.toString());
       for(int i=0;i<quizSummeryList.length;i++){
-        if(quizSummeryList[i].sumgrades!> quizSummeryList[0].sumgrades!){
-          highestGrade = quizSummeryList[i].sumgrades!.toString();
+        if(quizSummeryList[i].sumgrades != null){
+          if(quizSummeryList[i].sumgrades! > quizSummeryList[0].sumgrades!){
+            highestGrade = quizSummeryList[i].sumgrades!.toString();
+          }
         }
+
       }
 
       CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
       setState(() {
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
+      });
+    } else {
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void getQuizAccessInformation(String token, String quizId) async{
+    //CommonOperation.showProgressDialog(context, "loading", true);
+    final quizAccessData =
+    await networkCall.QuizAccessInformationCall(token, quizId);
+    if (quizAccessData != null) {
+    timeLimit = quizAccessData.accessrules!.first.toString();
+    print('============= '+ timeLimit.toString());
+
+      //CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        getQuizSummeryData(token, widget.quizId);
         //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
       });
     } else {

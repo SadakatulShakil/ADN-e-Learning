@@ -10,6 +10,7 @@ import 'package:radda_moodle_learning/ApiModel/notificationResponse.dart';
 import 'package:radda_moodle_learning/Helper/CustomScaffold.dart';
 import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:radda_moodle_learning/Screens/site_home_page.dart';
+import 'package:radda_moodle_learning/Screens/video_content_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ApiCall/HttpNetworkCall.dart';
@@ -67,7 +68,7 @@ class InitState extends State<HomeScreen> {
             elevation: 0,
             backgroundColor: PrimaryColor,
             title: Text('DigiNet SkillUP',
-                style: GoogleFonts.comfortaa(
+                style: GoogleFonts.nanumGothic(
                     color: const Color(0xFFFFFFFF),
                     fontWeight: FontWeight.w700,
                     fontSize: 18)),
@@ -123,7 +124,7 @@ class InitState extends State<HomeScreen> {
           ),
           Text(
             text,
-            style: GoogleFonts.comfortaa(color: Colors.black),
+            style: GoogleFonts.nanumGothic(color: Colors.black),
           ),
         ]));
   }
@@ -223,7 +224,7 @@ class InitState extends State<HomeScreen> {
                 ),
                 title: Text(
                   "Home",
-                  style: GoogleFonts.comfortaa(fontSize: 15),
+                  style: GoogleFonts.nanumGothic(fontSize: 15),
                 ),
               ),
               ListTile(
@@ -238,17 +239,19 @@ class InitState extends State<HomeScreen> {
                 ),
                 title: Text(
                   "Notification ("+allNotification.length.toString()+")",
-                  style: GoogleFonts.comfortaa(fontSize: 13),
+                  style: GoogleFonts.nanumGothic(fontSize: 13),
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyVideoPlayerPage()));
+                },
                 leading: const Icon(
                   Icons.settings,
                 ),
                 title: Text(
                   "Settings",
-                  style: GoogleFonts.comfortaa(fontSize: 15),
+                  style: GoogleFonts.nanumGothic(fontSize: 15),
                 ),
               ),
               ListTile(
@@ -264,7 +267,7 @@ class InitState extends State<HomeScreen> {
                 ),
                 title: Text(
                   Languages.of(context)!.switchLanguage,
-                  style: GoogleFonts.comfortaa(),
+                  style: GoogleFonts.nanumGothic(),
                 ),
               ),
               ListTile(
@@ -274,7 +277,7 @@ class InitState extends State<HomeScreen> {
                 ),
                 title: Text(
                   Languages.of(context)!.RateApp,
-                  style: GoogleFonts.comfortaa(),
+                  style: GoogleFonts.nanumGothic(),
                 ),
               ),
               Divider(
@@ -283,7 +286,7 @@ class InitState extends State<HomeScreen> {
               ListTile(
                 leading: Icon(Icons.info_outline),
                 title: Text('Privacy And Policy',
-                  style: GoogleFonts.comfortaa(),),
+                  style: GoogleFonts.nanumGothic(),),
 
                 onTap: () {
                   // Navigator.of(context).push(
@@ -307,7 +310,7 @@ class InitState extends State<HomeScreen> {
                 ),
                 title: Text(
                   "Logout",
-                  style: GoogleFonts.comfortaa(fontSize: 15),
+                  style: GoogleFonts.nanumGothic(fontSize: 15),
                 ),
               )
             ],

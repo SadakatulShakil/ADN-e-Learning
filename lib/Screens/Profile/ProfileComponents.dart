@@ -102,7 +102,7 @@ class InitState extends State<ProfileComponents> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(name.toString(), style: GoogleFonts.comfortaa(
+                          Text(name.toString(), style: GoogleFonts.nanumGothic(
                               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white
                           ),),
                           Row(
@@ -110,7 +110,7 @@ class InitState extends State<ProfileComponents> {
                               Icon(Icons.email_outlined, size: 12, color: Colors.white,),
                               Padding(
                                 padding: const EdgeInsets.only(left: 5.0, bottom: 2),
-                                child: Text(email, style: GoogleFonts.comfortaa(
+                                child: Text(email, style: GoogleFonts.nanumGothic(
                                     fontSize: 12, color: Colors.white
                                 ),),
                               ),
@@ -249,7 +249,7 @@ class InitState extends State<ProfileComponents> {
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             title:Flexible(child: Align(
               alignment: Alignment.center,
-              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+              child: Text('Network Issue !',style: GoogleFonts.nanumGothic(
                   fontSize: 12
               )),
             )),
@@ -286,7 +286,7 @@ class InitState extends State<ProfileComponents> {
                       color: SecondaryColor,
                     ),
                     child: Center(
-                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                      child: Text("Try again", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                     ),
                   ),
                 ),

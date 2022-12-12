@@ -38,7 +38,7 @@ class InitState extends State<CreateCalenderEventPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Calendar',
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -84,7 +84,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                     'Create Event',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.comfortaa(
+                                    style: GoogleFonts.nanumGothic(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -99,7 +99,7 @@ class InitState extends State<CreateCalenderEventPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                           child: Text("Event title",
-                              style: GoogleFonts.comfortaa(
+                              style: GoogleFonts.nanumGothic(
                                   color: Colors.black45,
                                   fontSize: 12, fontWeight: FontWeight.bold)),
                         ),),
@@ -117,7 +117,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                 borderSide: BorderSide(color: Colors.black12),
                               ),
                               //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                              hintText: 'Enter event title',hintStyle: GoogleFonts.comfortaa(
+                              hintText: 'Enter event title',hintStyle: GoogleFonts.nanumGothic(
                             color: Colors.black,
                             fontSize: 15,
                           )
@@ -131,7 +131,7 @@ class InitState extends State<CreateCalenderEventPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                           child: Text("Description",
-                              style: GoogleFonts.comfortaa(
+                              style: GoogleFonts.nanumGothic(
                                   color: Colors.black45,
                                   fontSize: 12, fontWeight: FontWeight.bold)),
                         ),),
@@ -149,7 +149,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                 borderSide: BorderSide(color: Colors.black12),
                               ),
                               //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                              hintText: 'Enter event description',hintStyle: GoogleFonts.comfortaa(
+                              hintText: 'Enter event description',hintStyle: GoogleFonts.nanumGothic(
                             color: Colors.black,
                             fontSize: 15,
                           )
@@ -164,7 +164,7 @@ class InitState extends State<CreateCalenderEventPage> {
                             padding: const EdgeInsets.only(left: 18.0, right: 15.0),
                             child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Text('Event date', style: GoogleFonts.comfortaa(
+                              child: Text('Event date', style: GoogleFonts.nanumGothic(
                                 fontSize: 15,
                                 //color: Colors.black,
                                 fontWeight: FontWeight.w700,)),
@@ -212,7 +212,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                         Padding(
                                           padding: const EdgeInsets.only(right: 15.0, left: 5.0),
                                           child: Text(
-                                            initialDateText, style: GoogleFonts.comfortaa(
+                                            initialDateText, style: GoogleFonts.nanumGothic(
                                             color: Colors.black54,
                                             fontSize: 15,
                                           ),
@@ -236,7 +236,7 @@ class InitState extends State<CreateCalenderEventPage> {
                             padding: const EdgeInsets.only(left: 18.0, right: 15.0),
                             child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Text('Event time', style: GoogleFonts.comfortaa(
+                              child: Text('Event time', style: GoogleFonts.nanumGothic(
                                 fontSize: 15,
                                 //color: Colors.black,
                                 fontWeight: FontWeight.w700,)),
@@ -275,7 +275,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                         Padding(
                                           padding: const EdgeInsets.only(right: 15.0, left: 5.0),
                                           child: Text(
-                                            selectedTime != null? '$selectedTime':initialTimeText, style: GoogleFonts.comfortaa(
+                                            selectedTime != null? '$selectedTime':initialTimeText, style: GoogleFonts.nanumGothic(
                                             color: Colors.black54,
                                             fontSize: 15,
                                           ),
@@ -312,7 +312,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                   color: PrimaryColor
                               ),
                               child: Center(
-                                child: Text("Create now", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                                child: Text("Create now", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                               ),
                             ),
                           ),
@@ -337,7 +337,7 @@ class InitState extends State<CreateCalenderEventPage> {
 
                               ),
                               child: Center(
-                                child: Text("Cancel", style: GoogleFonts.comfortaa(color: Colors.black, fontWeight: FontWeight.bold),),
+                                child: Text("Cancel", style: GoogleFonts.nanumGothic(color: Colors.black, fontWeight: FontWeight.bold),),
                               ),
                             ),
                           ),

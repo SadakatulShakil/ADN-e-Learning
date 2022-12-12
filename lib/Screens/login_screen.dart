@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:radda_moodle_learning/Screens/forget_password_page.dart';
 import 'package:radda_moodle_learning/Screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen>{
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0),
                           child: Text("Log in to DigiNet SkillUP",
-                              style: GoogleFonts.comfortaa(color: PrimaryColor,
+                              style: GoogleFonts.nanumGothic(color: PrimaryColor,
                                   fontSize: 20, fontWeight: FontWeight.w900)),
                         ),
                         Padding(
@@ -79,11 +80,11 @@ class _LoginScreenState extends State<LoginScreen>{
                             decoration: InputDecoration(
                               prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
                                 border: OutlineInputBorder(),
-                                labelText: 'User name',labelStyle: GoogleFonts.comfortaa(
+                                labelText: 'User name',labelStyle: GoogleFonts.nanumGothic(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
                             ),
-                                hintText: 'Enter user name',hintStyle: GoogleFonts.comfortaa(
+                                hintText: 'Enter user name',hintStyle: GoogleFonts.nanumGothic(
                               fontSize: 15,
                             )
                             ),
@@ -115,11 +116,11 @@ class _LoginScreenState extends State<LoginScreen>{
                                   },
                                 ),
                                 border: OutlineInputBorder(),
-                                labelText: 'Password',labelStyle: GoogleFonts.comfortaa(
+                                labelText: 'Password',labelStyle: GoogleFonts.nanumGothic(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
                             ),
-                                hintText: 'Enter password',hintStyle: GoogleFonts.comfortaa(
+                                hintText: 'Enter password',hintStyle: GoogleFonts.nanumGothic(
                               fontSize: 15,
                             )
                             ),
@@ -130,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen>{
                         Visibility(
                           visible: error == 1?true:false,
                           child: Text("Warning: "+ 'Invalid credentials',
-                              style: GoogleFonts.comfortaa(color: Colors.red)),
+                              style: GoogleFonts.nanumGothic(color: Colors.red)),
                         ),
                         Container(
                           child: Row(
@@ -159,15 +160,23 @@ class _LoginScreenState extends State<LoginScreen>{
                                     Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Text("Remember me",
-                                          style: GoogleFonts.comfortaa()),
+                                          style: GoogleFonts.nanumGothic()),
                                     ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text("Forget password?",
-                                    style: GoogleFonts.comfortaa(color: PrimaryColor)),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ForgetPasswordPage()));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text("Forget password?",
+                                      style: GoogleFonts.nanumGothic(color: PrimaryColor)),
+                                ),
                               ),
                             ],
                           ),
@@ -197,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen>{
                                     color: PrimaryColor
                                 ),
                                 child: Center(
-                                  child: Text("Log In", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                                  child: Text("Log In", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                                 ),
                               ),
                             ),

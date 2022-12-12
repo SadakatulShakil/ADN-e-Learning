@@ -259,10 +259,10 @@ class InitState extends State<DashBoardCalederList> {
                       child: Text(mCourseData.name.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
                               fontSize: 13,
-                              fontWeight: FontWeight.bold)),
+                              fontWeight: FontWeight.w600)),
                     ),
                   ),
                   Padding(
@@ -271,7 +271,7 @@ class InitState extends State<DashBoardCalederList> {
                         getDateStump(mCourseData
                             .timestart
                             .toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),
@@ -338,7 +338,7 @@ class InitState extends State<DashBoardCalederList> {
                           color: PrimaryColor
                       ),
                       child: Center(
-                        child: Text("View Details", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                        child: Text("View Details", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
@@ -363,7 +363,7 @@ class InitState extends State<DashBoardCalederList> {
                         color: SecondaryColor,
                       ),
                       child: Center(
-                        child: Text("Create Events", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                        child: Text("Create Events", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
@@ -403,7 +403,7 @@ class InitState extends State<DashBoardCalederList> {
                       child: Text(mEventData.name.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
                               fontSize: 10,
                               fontWeight: FontWeight.bold)),
@@ -415,7 +415,7 @@ class InitState extends State<DashBoardCalederList> {
                         getDateStump(mEventData
                             .timesort
                             .toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),

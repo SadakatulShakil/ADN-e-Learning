@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:radda_moodle_learning/ApiModel/assignmentResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeDetailsResponse.dart';
 import 'package:radda_moodle_learning/Helper/colors_class.dart';
@@ -29,7 +30,7 @@ class InitState extends State<AssignmentDetailsPage> {
   bool feedFileShow = false;
   String submissionStatus = '';
   String gradingStatus = '';
-  String lastDateSubmission = '';
+  String lastDateSubmission = '3216216';
   String onlineTextAnswer = '';
   String gradeFromTeacher = '';
   String gradeDate = '';
@@ -62,7 +63,7 @@ class InitState extends State<AssignmentDetailsPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Assignment details',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -112,7 +113,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                         widget.name.toString(),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.comfortaa(
+                                        style: GoogleFonts.nanumGothic(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
@@ -127,7 +128,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                             left: 10.0, top: 5, bottom: 5),
                                         child: Text(
                                             'start date: '+widget.openedTime.toString(),
-                                            style: GoogleFonts.comfortaa(
+                                            style: GoogleFonts.nanumGothic(
                                                 fontSize: 11,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
@@ -139,7 +140,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                             left: 10.0, top: 5, bottom: 5),
                                         child: Text(
                                             'Due date: '+widget.dueTime.toString(),
-                                            style: GoogleFonts.comfortaa(
+                                            style: GoogleFonts.nanumGothic(
                                                 color: Colors.white,
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.bold)),
@@ -193,7 +194,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Align(
                                                   alignment: Alignment.centerLeft,
-                                                  child: Text(submissionStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                  child: Text(submissionStatus == 'new'?'Not Attempt':'Submitted', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                             ),
                                           ],
                                         ),
@@ -217,7 +218,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Align(
                                                   alignment: Alignment.centerLeft,
-                                                  child: Text(gradingStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                  child: Text(gradingStatus == 'notgraded'?'Not Graded':'Graded', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                             ),
                                           ],
                                         ),
@@ -241,7 +242,10 @@ class InitState extends State<AssignmentDetailsPage> {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Align(
                                                   alignment: Alignment.centerLeft,
-                                                  child: Text(lastDateSubmission, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                  child: Text(DateFormat.yMMMEd().format(
+                                                      DateTime.parse(getDateStump(
+                                                          lastDateSubmission
+                                                              .toString()))), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                             ),
                                           ],
                                         ),
@@ -443,7 +447,7 @@ class InitState extends State<AssignmentDetailsPage> {
                                           color: PrimaryColor
                                       ),
                                       child: Center(
-                                        child: Text("Submit", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                                        child: Text("Submit", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                                       ),
                                     ),
                                   ),
@@ -521,7 +525,7 @@ class InitState extends State<AssignmentDetailsPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
       //gradeDetailsList = userGradeDetailsData.usergrades![0].gradeitems!;
-      print('data_content ' + assignmentDetailsData.lastattempt!.submission!.status.toString());
+      //print('data_content ' + assignmentDetailsData.lastattempt!.submission!.status.toString());
       submissionStatus = assignmentDetailsData.lastattempt!.submission!.status.toString();
       gradingStatus = assignmentDetailsData.lastattempt!.gradingstatus.toString();
       lastDateSubmission = assignmentDetailsData.lastattempt!.submission!.timemodified.toString();

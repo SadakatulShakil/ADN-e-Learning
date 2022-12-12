@@ -85,7 +85,7 @@ class InitState extends State<HomeComponents> {
                       children: [
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(name.toString(), style: GoogleFonts.comfortaa(
+                          child: Text(name.toString(), style: GoogleFonts.nanumGothic(
                               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white
                           ),),
                         ),
@@ -96,7 +96,7 @@ class InitState extends State<HomeComponents> {
                               padding: const EdgeInsets.only(left: 5.0, bottom: 2),
                               child: Align(
                                 alignment: Alignment.topLeft,
-                                child: Text(email.toString(), style: GoogleFonts.comfortaa(
+                                child: Text(email.toString(), style: GoogleFonts.nanumGothic(
                                     fontSize: 12, color: Colors.white
                                 ),),
                               ),
@@ -363,7 +363,7 @@ class InitState extends State<HomeComponents> {
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             title:Flexible(child: Align(
               alignment: Alignment.center,
-              child: Text('Network Issue !',style: GoogleFonts.comfortaa(
+              child: Text('Network Issue !',style: GoogleFonts.nanumGothic(
                   fontSize: 12
               )),
             )),
@@ -400,7 +400,7 @@ class InitState extends State<HomeComponents> {
                       color: SecondaryColor,
                     ),
                     child: Center(
-                      child: Text("Try again", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                      child: Text("Try again", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                     ),
                   ),
                 ),

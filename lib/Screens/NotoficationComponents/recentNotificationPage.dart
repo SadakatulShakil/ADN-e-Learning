@@ -38,11 +38,11 @@ class InitState extends State<RecentNotificationPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 10),
-                  child: Text('Total '+widget.unReadNotiList.length.toString(),style: GoogleFonts.comfortaa(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
+                  child: Text('Total '+widget.unReadNotiList.length.toString(),style: GoogleFonts.nanumGothic(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 15.0, top: 10),
-                  child: Text(widget.unReadNotiList.length.toString()=='1'?' Notification':' Notifications',style: GoogleFonts.comfortaa(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
+                  child: Text(widget.unReadNotiList.length.toString()=='1'?' Notification':' Notifications',style: GoogleFonts.nanumGothic(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
                 ),
               ],
             ),
@@ -105,7 +105,7 @@ class InitState extends State<RecentNotificationPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               mNotificationData.subject.toString(),
-                              style: GoogleFonts.comfortaa(
+                              style: GoogleFonts.nanumGothic(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -118,7 +118,7 @@ class InitState extends State<RecentNotificationPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                                 DateFormat.yMMMEd().format(DateTime.parse(DateTime.fromMillisecondsSinceEpoch(mNotificationData.timecreated * 1000).toString())),
-                              style: GoogleFonts.comfortaa(
+                              style: GoogleFonts.nanumGothic(
                               fontSize: 14,
                             ),),
 

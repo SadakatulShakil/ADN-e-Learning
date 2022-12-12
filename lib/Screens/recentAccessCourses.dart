@@ -29,7 +29,7 @@ class InitState extends State<RecentAccessCourses> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Recent Courses',
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -110,7 +110,7 @@ class InitState extends State<RecentAccessCourses> {
                             .coursecategory
                             .toString(),
                         textAlign: TextAlign.left,
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                           color: Colors.black54,
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -125,9 +125,9 @@ class InitState extends State<RecentAccessCourses> {
                           mCourseData.fullname.toString(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -138,10 +138,10 @@ class InitState extends State<RecentAccessCourses> {
                             getDateStump(mCourseData
                                 .startdate
                                 .toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
@@ -152,10 +152,10 @@ class InitState extends State<RecentAccessCourses> {
                               ? mCourseData.progress.ceil().toString() +
                               ' % complete'
                               : '0 % complete',
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: PrimaryColor,
                               fontSize: 13,
-                              fontWeight: FontWeight.bold)),
+                              )),
                     ),
                   )
                 ],

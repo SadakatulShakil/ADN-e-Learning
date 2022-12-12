@@ -55,7 +55,7 @@ class InitState extends State<ContactComponents> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Contacts',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -104,7 +104,7 @@ class InitState extends State<ContactComponents> {
 
                                       });
                                 },
-                                text: 'My contacts',textStyle: GoogleFonts.comfortaa(
+                                text: 'My contacts',textStyle: GoogleFonts.nanumGothic(
                                   color: fieldVisible == 1?Colors.white:PrimaryColor),
                                 icon: GFBadge(
                                   child: Text(widget.chatHolderList.length.toString()),
@@ -119,7 +119,7 @@ class InitState extends State<ContactComponents> {
 
                                       });
                                 },
-                                text: 'Request',textStyle: GoogleFonts.comfortaa(
+                                text: 'Request',textStyle: GoogleFonts.nanumGothic(
                                               color: fieldVisible == 2?Colors.white:PrimaryColor),
                                 icon: GFBadge(
                                   child: Text(widget.contactRequestList.length.toString()),
@@ -280,7 +280,7 @@ class InitState extends State<ContactComponents> {
                                           .toString()
                                       : 'Not found',
                                   overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       color: mChatData.isread
                                           ? Colors.black
                                           : SecondaryColor,
@@ -300,7 +300,7 @@ class InitState extends State<ContactComponents> {
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         child: Text(mChatData.subname.toString(),
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black54,
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold)),
@@ -359,7 +359,7 @@ class InitState extends State<ContactComponents> {
                             child: Text(
                                 mContactData.fullname.toString(),
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold)),
                           ),
@@ -378,7 +378,7 @@ class InitState extends State<ContactComponents> {
                     Container(
                       width: MediaQuery.of(context).size.width / 2,
                       child: Text('e-Learning',
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black54,
                               fontSize: 13,
                               fontWeight: FontWeight.bold)),
@@ -404,7 +404,7 @@ class InitState extends State<ContactComponents> {
                 children: [
                   Flexible(child: Align(
                     alignment: Alignment.center,
-                    child: Text('Request',style: GoogleFonts.comfortaa(
+                    child: Text('Request',style: GoogleFonts.nanumGothic(
                         fontSize: 18
                     )),
                   )),
@@ -433,7 +433,7 @@ class InitState extends State<ContactComponents> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(mContactData.fullname.toString(),textAlign: TextAlign.center,
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900, fontSize: 12)),
                             ),
                           ),
@@ -475,7 +475,7 @@ class InitState extends State<ContactComponents> {
                         ),
                         child:  Align(
                           alignment: Alignment.center,
-                          child: Text('View profile', textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
+                          child: Text('View profile', textAlign: TextAlign.center,style: GoogleFonts.nanumGothic(
                             color: const Color(0xFFFFFFFF),
                             fontWeight: FontWeight.bold,) ),
                         ),
@@ -514,7 +514,7 @@ class InitState extends State<ContactComponents> {
                       ),
                       child:  Align(
                         alignment: Alignment.center,
-                        child: Text('Cancel', textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
+                        child: Text('Cancel', textAlign: TextAlign.center,style: GoogleFonts.nanumGothic(
                           color: const Color(0xFFFFFFFF),) ),
                       ),
                     ),
@@ -546,7 +546,7 @@ class InitState extends State<ContactComponents> {
                       ),
                       child:  Align(
                         alignment: Alignment.center,
-                        child: Text('Accept', textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
+                        child: Text('Accept', textAlign: TextAlign.center,style: GoogleFonts.nanumGothic(
                           color: const Color(0xFFFFFFFF),
                           fontWeight: FontWeight.bold,) ),
                       ),

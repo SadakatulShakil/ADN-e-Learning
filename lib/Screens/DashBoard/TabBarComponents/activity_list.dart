@@ -77,12 +77,18 @@ class InitState extends State<DashBoardActivityList> {
             border: Border.all(color: Colors.black12)),
         child: Row(
           children: [
-            FadeInImage.assetNetwork(
-                placeholder: 'assets/images/course_image.png',
-                image: mCourseData.badgeurl.toString()+'?token='+widget.token,
-                height: 80,
-                width: 80,
-                fit: BoxFit.fill),
+            PhysicalModel(
+              color: Colors.black,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/course_image.png',
+                  image: mCourseData.badgeurl.toString()+'?token='+widget.token,
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.fill),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Column(
@@ -94,10 +100,10 @@ class InitState extends State<DashBoardActivityList> {
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(mCourseData.name.toString(),
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600)),
                     ),
                   ),
                   Container(
@@ -107,10 +113,9 @@ class InitState extends State<DashBoardActivityList> {
                       child: Text(mCourseData.messagesubject.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 13,)),
                     ),
                   ),
                   Padding(
@@ -120,10 +125,9 @@ class InitState extends State<DashBoardActivityList> {
                             DateFormat.yMMMEd().format(DateTime.parse(
                                 getDateStump(
                                     mCourseData.dateissued.toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            fontSize: 13,)),
                   ),
                 ],
               ),

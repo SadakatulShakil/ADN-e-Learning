@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ApiCall/HttpNetworkCall.dart';
 import '../../../Helper/operations.dart';
+import '../../forget_password_page.dart';
 
 class ProfileSettingsPage extends StatefulWidget{
 
@@ -156,7 +157,7 @@ class InitState extends State<ProfileSettingsPage> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text("General",
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
                         ),
@@ -180,7 +181,7 @@ class InitState extends State<ProfileSettingsPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("First name",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                               color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -200,7 +201,7 @@ class InitState extends State<ProfileSettingsPage> {
                               borderSide: BorderSide(color: Colors.black12),
                             ),
                             //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                            hintText: 'Enter first name',hintStyle: GoogleFonts.comfortaa(
+                            hintText: 'Enter first name',hintStyle: GoogleFonts.nanumGothic(
                           color: Colors.black,
                           fontSize: 15,
                         )
@@ -214,7 +215,7 @@ class InitState extends State<ProfileSettingsPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("Last name",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -232,7 +233,7 @@ class InitState extends State<ProfileSettingsPage> {
                               borderSide: BorderSide(color: Colors.black12),
                             ),
                             //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                            hintText: 'Enter last name',hintStyle: GoogleFonts.comfortaa(
+                            hintText: 'Enter last name',hintStyle: GoogleFonts.nanumGothic(
                           color: Colors.black,
                           fontSize: 15,
                         )
@@ -246,7 +247,7 @@ class InitState extends State<ProfileSettingsPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("Email address",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -264,7 +265,7 @@ class InitState extends State<ProfileSettingsPage> {
                               borderSide: BorderSide(color: Colors.black12),
                             ),
                             //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                            hintText: 'Enter email address',hintStyle: GoogleFonts.comfortaa(
+                            hintText: 'Enter email address',hintStyle: GoogleFonts.nanumGothic(
                           color: Colors.black,
                           fontSize: 15,
                         )
@@ -325,7 +326,7 @@ class InitState extends State<ProfileSettingsPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12),
                         child: Text("City/town",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -344,7 +345,7 @@ class InitState extends State<ProfileSettingsPage> {
                               borderSide: BorderSide(color: Colors.black12),
                             ),
                             //prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                            hintText: 'Enter city',hintStyle: GoogleFonts.comfortaa(
+                            hintText: 'Enter city',hintStyle: GoogleFonts.nanumGothic(
                           color: Colors.black,
                           fontSize: 15,
                         )
@@ -358,7 +359,7 @@ class InitState extends State<ProfileSettingsPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12),
                         child: Text("Country",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -370,7 +371,7 @@ class InitState extends State<ProfileSettingsPage> {
                         child:DropdownButton<String>(
                           // Not necessary for Option 1
                           hint: Text('Bangladesh',
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
                             ),
@@ -387,12 +388,40 @@ class InitState extends State<ProfileSettingsPage> {
                           items: countryList.map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value, style: GoogleFonts.comfortaa(
+                              child: Text(value, style: GoogleFonts.nanumGothic(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,)),
                             );
                           })
                               .toList(),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 25,),
+                    Padding(
+                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                      child: InkWell(
+                        onTap: (){
+                          print('check settings  '+ firstNameController.text.toString());
+                          OpenDialog();
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Container(
+                            width:350,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: PrimaryColor
+                            ),
+                            child: Center(
+                              child: Text("Save changes", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -409,9 +438,13 @@ class InitState extends State<ProfileSettingsPage> {
               SizedBox(height: 8,),
               InkWell(
                 onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgetPasswordPage()));
                   print('---------------- '+ 'clicked');
-                  changePasswordVisibility?changePasswordVisibility = false: changePasswordVisibility = true;
-                  generalVisibility = false;
+                  // changePasswordVisibility?changePasswordVisibility = false: changePasswordVisibility = true;
+                  // generalVisibility = false;
                   setState(() {
 
                   });
@@ -428,201 +461,169 @@ class InitState extends State<ProfileSettingsPage> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text("Change password",
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
-                          child: SvgPicture.asset("assets/vectors/arrow_down.svg"),
+                          child: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey,),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              Visibility(
-                visible: changePasswordVisibility?true:false,
-                child: Column(
-                  children: [
-                    SizedBox(height: 15,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text("Current password",
-                            style: GoogleFonts.comfortaa(color: Colors.black45,
-                                fontSize: 12, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, right: 12),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        obscureText: !_passwordVisible,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 18.0),
-                            isDense: true,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12),
-                            ),
-                            //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Based on passwordVisible state choose the icon
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: const Color(0xFFBDBDBD),
-                              ),
-                              onPressed: () {
-                                // Update the state i.e. toogle the state of passwordVisible variable
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
-                            ),
-                            hintText: 'Enter current password',hintStyle: GoogleFonts.comfortaa(
-                          fontSize: 15,
-                        )
-                        ),
-                        autofocus: false,
-                      ),
-                    ),
-                    SizedBox(height: 8,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text("New password",
-                            style: GoogleFonts.comfortaa(
-                                color: Colors.black45,
-                                fontSize: 12, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, right: 12),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        obscureText: !_passwordVisible,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 18.0),
-                            isDense: true, enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black12),
-                        ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12),
-                            ),
-                            //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Based on passwordVisible state choose the icon
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: const Color(0xFFBDBDBD),
-                              ),
-                              onPressed: () {
-                                // Update the state i.e. toogle the state of passwordVisible variable
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
-                            ),
-                            hintText: 'Enter new password',hintStyle: GoogleFonts.comfortaa(
-                          fontSize: 15,
-                        )
-                        ),
-                        autofocus: false,
-                      ),
-                    ),
-                    SizedBox(height: 8,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                        child: Text("Confirm password",
-                            style: GoogleFonts.comfortaa(
-                                color: Colors.black45,
-                                fontSize: 12, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, right: 12),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        obscureText: !_passwordVisible,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 18.0),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12),
-                            ),
-                            isDense: true, enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black12),
-                        ),
-                            //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Based on passwordVisible state choose the icon
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: const Color(0xFFBDBDBD),
-                              ),
-                              onPressed: () {
-                                // Update the state i.e. toogle the state of passwordVisible variable
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
-                            ),
-                            hintText: 'Confirm new password',hintStyle: GoogleFonts.comfortaa(
-                          fontSize: 15,
-                        )
-                        ),
-                        autofocus: false,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SizedBox(height: 28,),
               // Visibility(
-              //   visible: changePasswordVisibility?false:true,
-              //   child: Padding(
-              //     padding: const EdgeInsets.only(left: 12.0, right: 12),
-              //     child: Divider(thickness: 1,),
+              //   visible: changePasswordVisibility?true:false,
+              //   child: Column(
+              //     children: [
+              //       SizedBox(height: 15,),
+              //       Align(
+              //         alignment: Alignment.topLeft,
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
+              //           child: Text("Current password",
+              //               style: GoogleFonts.comfortaa(color: Colors.black45,
+              //                   fontSize: 12, fontWeight: FontWeight.bold)),
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //         child: TextField(
+              //           keyboardType: TextInputType.text,
+              //           obscureText: !_passwordVisible,
+              //           decoration: InputDecoration(
+              //               contentPadding: EdgeInsets.only(top: 18.0),
+              //               isDense: true,
+              //               enabledBorder: UnderlineInputBorder(
+              //                 borderSide: BorderSide(color: Colors.black12),
+              //               ),
+              //               focusedBorder: UnderlineInputBorder(
+              //                 borderSide: BorderSide(color: Colors.black12),
+              //               ),
+              //               //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
+              //               suffixIcon: IconButton(
+              //                 icon: Icon(
+              //                   // Based on passwordVisible state choose the icon
+              //                   _passwordVisible
+              //                       ? Icons.visibility
+              //                       : Icons.visibility_off,
+              //                   color: const Color(0xFFBDBDBD),
+              //                 ),
+              //                 onPressed: () {
+              //                   // Update the state i.e. toogle the state of passwordVisible variable
+              //                   setState(() {
+              //                     _passwordVisible = !_passwordVisible;
+              //                   });
+              //                 },
+              //               ),
+              //               hintText: 'Enter current password',hintStyle: GoogleFonts.comfortaa(
+              //             fontSize: 15,
+              //           )
+              //           ),
+              //           autofocus: false,
+              //         ),
+              //       ),
+              //       SizedBox(height: 8,),
+              //       Align(
+              //         alignment: Alignment.topLeft,
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
+              //           child: Text("New password",
+              //               style: GoogleFonts.comfortaa(
+              //                   color: Colors.black45,
+              //                   fontSize: 12, fontWeight: FontWeight.bold)),
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //         child: TextField(
+              //           keyboardType: TextInputType.text,
+              //           obscureText: !_passwordVisible,
+              //           decoration: InputDecoration(
+              //               contentPadding: EdgeInsets.only(top: 18.0),
+              //               isDense: true, enabledBorder: UnderlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.black12),
+              //           ),
+              //               focusedBorder: UnderlineInputBorder(
+              //                 borderSide: BorderSide(color: Colors.black12),
+              //               ),
+              //               //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
+              //               suffixIcon: IconButton(
+              //                 icon: Icon(
+              //                   // Based on passwordVisible state choose the icon
+              //                   _passwordVisible
+              //                       ? Icons.visibility
+              //                       : Icons.visibility_off,
+              //                   color: const Color(0xFFBDBDBD),
+              //                 ),
+              //                 onPressed: () {
+              //                   // Update the state i.e. toogle the state of passwordVisible variable
+              //                   setState(() {
+              //                     _passwordVisible = !_passwordVisible;
+              //                   });
+              //                 },
+              //               ),
+              //               hintText: 'Enter new password',hintStyle: GoogleFonts.comfortaa(
+              //             fontSize: 15,
+              //           )
+              //           ),
+              //           autofocus: false,
+              //         ),
+              //       ),
+              //       SizedBox(height: 8,),
+              //       Align(
+              //         alignment: Alignment.topLeft,
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
+              //           child: Text("Confirm password",
+              //               style: GoogleFonts.comfortaa(
+              //                   color: Colors.black45,
+              //                   fontSize: 12, fontWeight: FontWeight.bold)),
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //         child: TextField(
+              //           keyboardType: TextInputType.text,
+              //           obscureText: !_passwordVisible,
+              //           decoration: InputDecoration(
+              //               contentPadding: EdgeInsets.only(top: 18.0),
+              //               focusedBorder: UnderlineInputBorder(
+              //                 borderSide: BorderSide(color: Colors.black12),
+              //               ),
+              //               isDense: true, enabledBorder: UnderlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.black12),
+              //           ),
+              //               //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
+              //               suffixIcon: IconButton(
+              //                 icon: Icon(
+              //                   // Based on passwordVisible state choose the icon
+              //                   _passwordVisible
+              //                       ? Icons.visibility
+              //                       : Icons.visibility_off,
+              //                   color: const Color(0xFFBDBDBD),
+              //                 ),
+              //                 onPressed: () {
+              //                   // Update the state i.e. toogle the state of passwordVisible variable
+              //                   setState(() {
+              //                     _passwordVisible = !_passwordVisible;
+              //                   });
+              //                 },
+              //               ),
+              //               hintText: 'Confirm new password',hintStyle: GoogleFonts.comfortaa(
+              //             fontSize: 15,
+              //           )
+              //           ),
+              //           autofocus: false,
+              //         ),
+              //       ),
+              //     ],
               //   ),
               // ),
-              SizedBox(height: 25,),
-              Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                child: InkWell(
-                  onTap: (){
-                    print('check settings  '+ firstNameController.text.toString());
-                    OpenDialog();
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Container(
-                      width:350,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: PrimaryColor
-                      ),
-                      child: Center(
-                        child: Text("Save changes", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+
               //
               // SizedBox(height: 15,),
               // Padding(
@@ -790,7 +791,7 @@ class InitState extends State<ProfileSettingsPage> {
                           color: Colors.redAccent,
                         ),
                         child: Center(
-                          child: Text("Cancel", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                          child: Text("Cancel", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                         ),
                       ),
                     ),
@@ -812,7 +813,7 @@ class InitState extends State<ProfileSettingsPage> {
                           color: SecondaryColor,
                         ),
                         child: Center(
-                          child: Text("Ok", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
+                          child: Text("Ok", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
                         ),
                       ),
                     ),

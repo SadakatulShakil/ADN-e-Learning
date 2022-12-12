@@ -50,7 +50,7 @@ class InitState extends State<CategoryDetailsPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Site Home',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -197,7 +197,7 @@ class InitState extends State<CategoryDetailsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'View Courses', style: GoogleFonts.comfortaa(
+                              'View Courses', style: GoogleFonts.nanumGothic(
                               color: const Color(0xFF000000),
                               fontSize: 15,
                               fontWeight: FontWeight.w900,
@@ -226,7 +226,7 @@ class InitState extends State<CategoryDetailsPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 5.0),
                                   child: Text(
-                                    mCategoryData.name.toString(), style: GoogleFonts.comfortaa(
+                                    mCategoryData.name.toString(), style: GoogleFonts.nanumGothic(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -251,7 +251,7 @@ class InitState extends State<CategoryDetailsPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Text(
-                                    mCategoryData.coursecount.toString()+' courses', style: GoogleFonts.comfortaa(
+                                    mCategoryData.coursecount.toString()+' courses', style: GoogleFonts.nanumGothic(
                                     color: PrimaryColor,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w900,

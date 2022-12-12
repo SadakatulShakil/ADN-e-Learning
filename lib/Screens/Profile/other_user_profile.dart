@@ -53,7 +53,7 @@ class InitState extends State<OtherProfileBody> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Profile',
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -116,7 +116,7 @@ class InitState extends State<OtherProfileBody> {
                               padding: const EdgeInsets.only(
                                   left: 5.0, right: 10, top: 8, bottom: 8),
                               child: Text('Reject',
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                     color: const Color(0xFFFFFFFF),
                                     fontWeight: FontWeight.w900,
                                   )),
@@ -138,11 +138,11 @@ class InitState extends State<OtherProfileBody> {
                             padding: const EdgeInsets.only(
                                 left: 5.0, right: 10, top: 8, bottom: 8),
                             child: widget.from == 'search'?Text('Send request',
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                   color: const Color(0xFFFFFFFF),
                                   fontWeight: FontWeight.w900,
                                 )): Text('Accept',
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                   color: const Color(0xFFFFFFFF),
                                   fontWeight: FontWeight.w900,
                                 )),
@@ -155,13 +155,13 @@ class InitState extends State<OtherProfileBody> {
                   height: 20,
                 ),
                 Text(name,
-                    style: GoogleFonts.comfortaa(
+                    style: GoogleFonts.nanumGothic(
                         fontWeight: FontWeight.w900, fontSize: 18)),
                 SizedBox(
                   height: 10,
                 ),
                 Text(email,
-                    style: GoogleFonts.comfortaa(
+                    style: GoogleFonts.nanumGothic(
                         fontWeight: FontWeight.w900, fontSize: 12)),
                 SizedBox(
                   height: 10,
@@ -194,13 +194,13 @@ class InitState extends State<OtherProfileBody> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
-                                    Text('Courses I have',style: GoogleFonts.comfortaa(
+                                    Text('Courses I have',style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 15)),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(count,style: GoogleFonts.comfortaa(
+                                    Text(count,style: GoogleFonts.nanumGothic(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 15)),
                                   ],
@@ -223,13 +223,13 @@ class InitState extends State<OtherProfileBody> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  Text('Last visited',style: GoogleFonts.comfortaa(
+                                  Text('Last visited',style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 15)),
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text(lastAccess,style: GoogleFonts.comfortaa(
+                                  Text(lastAccess,style: GoogleFonts.nanumGothic(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 12)),
                                 ],

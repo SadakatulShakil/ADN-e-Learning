@@ -76,7 +76,7 @@ class InitState extends State<ProfileAboutPage> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text("Profile",
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
                         ),
@@ -99,7 +99,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("First name",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -110,7 +110,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text(firstName,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -125,7 +125,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("Last name",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -136,7 +136,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text(surName,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -151,7 +151,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("Email",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -162,7 +162,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text(email,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -203,7 +203,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12),
                         child: Text("City/town",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -214,7 +214,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text(city == 'null'? '': city,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -229,7 +229,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12),
                         child: Text("Country",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -240,7 +240,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text('Bangladesh',
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -281,7 +281,7 @@ class InitState extends State<ProfileAboutPage> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text("Recent Activity",
-                                style: GoogleFonts.comfortaa(
+                                style: GoogleFonts.nanumGothic(
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
                         ),
@@ -304,7 +304,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                         child: Text("First access to site",
-                            style: GoogleFonts.comfortaa(color: Colors.black45,
+                            style: GoogleFonts.nanumGothic(color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
                     ),
@@ -315,7 +315,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                         child: Text(startDate,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -329,7 +329,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                         child: Text("Last access to site",
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
@@ -341,7 +341,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                         child: Text(lastDate,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: Colors.black,
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
@@ -367,7 +367,7 @@ class InitState extends State<ProfileAboutPage> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                               child: Text("Courses I have taken",
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       color: Colors.black45,
                                       fontSize: 12, fontWeight: FontWeight.bold)),
                             ),
@@ -377,7 +377,7 @@ class InitState extends State<ProfileAboutPage> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
                               child: Text("View all",
-                                  style: GoogleFonts.comfortaa(
+                                  style: GoogleFonts.nanumGothic(
                                       color: SecondaryColor,
                                       fontSize: 12, fontWeight: FontWeight.bold)),
                             ),
@@ -391,7 +391,7 @@ class InitState extends State<ProfileAboutPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 50, right: 30, bottom: 5),
                         child: Text(count,
-                            style: GoogleFonts.comfortaa(
+                            style: GoogleFonts.nanumGothic(
                                 color: SecondaryColor,
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                       ),

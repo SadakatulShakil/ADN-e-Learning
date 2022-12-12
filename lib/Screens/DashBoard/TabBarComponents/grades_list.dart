@@ -45,7 +45,7 @@ class InitState extends State<DashBoardGradesList> {
                 children: [
                   Expanded(
                     child: Padding(
-                        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                         child: ListView.builder(
                             itemCount: widget.courseList.length,
                             itemBuilder: (context, index) {
@@ -145,23 +145,29 @@ class InitState extends State<DashBoardGradesList> {
                 builder: (context) => GradesDetailsPage(mCourseData, mGradeData)));
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 12.0, right: 12, top: 5, bottom: 8),
+        margin: const EdgeInsets.only(left: 12.0, right: 12, top: 5, bottom: 5),
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.black12)),
+          color: Colors.white,
+            borderRadius: BorderRadius.circular(10),),
         child: Row(
           children: [
-            FadeInImage.assetNetwork(
-                placeholder: 'assets/images/course_image.png',
-                image: mCourseData.overviewfiles.length != 0
-                    ? mCourseData.overviewfiles.first.fileurl
-                        .replaceAll("/webservice", "")
-                        .toString()
-                    : 'https://image.shutterstock.com/image-photo/online-courses-text-man-using-260nw-600126515.jpg',
-                height: 80,
-                width: 80,
-                fit: BoxFit.cover),
+            PhysicalModel(
+              color: Colors.black,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/course_image.png',
+                  image: mCourseData.overviewfiles.length != 0
+                      ? mCourseData.overviewfiles.first.fileurl
+                          .replaceAll("/webservice", "")
+                          .toString()
+                      : 'https://image.shutterstock.com/image-photo/online-courses-text-man-using-260nw-600126515.jpg',
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.fill),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Column(
@@ -173,10 +179,10 @@ class InitState extends State<DashBoardGradesList> {
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(mCourseData.displayname.toString(),
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.comfortaa(
+                          style: GoogleFonts.nanumGothic(
                               color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600)),
                     ),
                   ),
                   Padding(
@@ -186,10 +192,10 @@ class InitState extends State<DashBoardGradesList> {
                             DateFormat.yMMMEd().format(DateTime.parse(
                                 getDateStump(
                                     mCourseData.startdate.toString()))),
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
@@ -198,10 +204,10 @@ class InitState extends State<DashBoardGradesList> {
                             ? mCourseData.progress.ceil().toString() +
                                 ' % complete'
                             : '0 % complete',
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: SecondaryColor,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
@@ -209,10 +215,10 @@ class InitState extends State<DashBoardGradesList> {
                         mGradeData.grade.toString() != null && mGradeData.grade.toString() != '-'
                             ? 'Grade: ' + mGradeData.grade.toString()
                             : 'Grade: ' + "Not evaluated yet",
-                        style: GoogleFonts.comfortaa(
+                        style: GoogleFonts.nanumGothic(
                             color: Colors.black,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold)),
+                            )),
                   ),
                 ],
               ),

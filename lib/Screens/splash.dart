@@ -70,7 +70,7 @@ class _SplashState extends State<Splash> {
           Center(
             child: Container(
               margin:  EdgeInsets.only(top: 120.0),
-              child: Text('DigiNet SkillUP', style: GoogleFonts.comfortaa(color: Color(0XFF01974D), fontSize: 25, fontWeight: FontWeight.bold),),
+              child: Text('DigiNet SkillUP', style: GoogleFonts.nanumGothic(color: Color(0XFF01974D), fontSize: 25, fontWeight: FontWeight.bold),),
             ),
           ),
           Container(
@@ -95,7 +95,7 @@ class _SplashState extends State<Splash> {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text('Technical support from ADN Diginet', style: GoogleFonts.comfortaa(color: const Color(0xFFFFFFFF))),
+                  child: Text('Technical support from ADN Diginet', style: GoogleFonts.nanumGothic(color: const Color(0xFFFFFFFF))),
                 )
               ],
             ),

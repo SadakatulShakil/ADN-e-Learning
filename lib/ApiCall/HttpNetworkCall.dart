@@ -6,6 +6,7 @@ import 'package:radda_moodle_learning/ApiModel/calendar_events_response.dart';
 import 'package:radda_moodle_learning/ApiModel/contact_request_response.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeDetailsResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/group_message_response.dart';
+import 'package:radda_moodle_learning/ApiModel/quizAccessInformation.dart';
 import 'package:radda_moodle_learning/ApiModel/quiz_attempt_summery.dart';
 import 'package:radda_moodle_learning/ApiModel/quiz_question_response.dart';
 import 'package:radda_moodle_learning/ApiModel/start_quiz_attempt_response.dart';
@@ -27,7 +28,7 @@ import '../ApiModel/userDetailsResponse.dart';
 
 class NetworkCall {
   final String baseUrl = "https://diginet-elearning.adnarchive.com/";//"https://www.raddaelearning.org/";
-  final String loginUrl = "https://diginet-elearning.adnarchive.com/login/token.php?service=moodle_mobile_app&moodlewsrestformat=json&";//"https://www.raddaelearning.org/login/token.php?service=moodle_mobile_app&moodlewsrestformat=json&";
+  final String loginUrl = "https://diginet-elearning.adnarchive.com/login/token.php?service=mobile_app_webservices&moodlewsrestformat=json&";//"https://www.raddaelearning.org/login/token.php?service=moodle_mobile_app&moodlewsrestformat=json&";
   final String apiKey = "cStSLnzMq2fo5LARbLAUiULslVJiWFRCkqwN6VsK7Xg6m19h3WgwWBv23eer8kl7DIEh";
 
   Future<LoginReponse?> LoginCall(String username, String password) async {
@@ -485,6 +486,86 @@ class NetworkCall {
     print("BadgesResponseData = " + VideoUrlCallData.body);
     if (VideoUrlCallData.statusCode == 200) {
       return VideoUrlCallData.body;
+    } else {
+      return null;
+    }
+  }
+  Future<dynamic> SendMessageCall(String token, String message, String receiverId) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=core_message_send_instant_messages&moodlewsrestformat=json&wstoken=$token&messages[0][touserid]=$receiverId&messages[0][text]=$message&messages[0][textformat]=0';
+    final SendMessageData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("SendMessageData_URL = " + fullUrl);
+    print("SendMessageData = " + SendMessageData.body);
+    if (SendMessageData.statusCode == 200) {
+      return SendMessageData.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> SendGroupMessageCall(String token, String message, String conversationId) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wstoken=$token&wsfunction=core_message_send_messages_to_conversation&conversationid=$conversationId&moodlewsrestformat=json&messages[0][text]=$message&messages[0][textformat]=0';
+    final SendGroupMessageData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("SendGroupMessageData_URL = " + fullUrl);
+    print("SendGroupMessageData = " + SendGroupMessageData.body);
+    if (SendGroupMessageData.statusCode == 200) {
+      return SendGroupMessageData.body;
+    } else {
+      return null;
+    }
+  }
+
+
+  Future<dynamic> ResetPasswordMailCall(String token, String email) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=core_auth_request_password_reset&moodlewsrestformat=json&wstoken=$token&email=$email';
+    final ResetPasswordMailData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("ResetPasswordMailCall_URL = " + fullUrl);
+    print("ResetPasswordMailData = " + ResetPasswordMailData.body);
+    if (ResetPasswordMailData.statusCode == 200) {
+      return ResetPasswordMailData.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> activityViewCall(String token, String pageId) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=mod_page_view_page&moodlewsrestformat=json&wstoken=$token&pageid=$pageId';
+    final activityViewCallData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("activityViewCall_URL = " + fullUrl);
+    print("activityViewCallData = " + activityViewCallData.body);
+    if (activityViewCallData.statusCode == 200) {
+      return activityViewCallData.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<QuizAccessInformation?> QuizAccessInformationCall(String token, String quizId) async {
+    String fullUrl = baseUrl+'/webservice/rest/server.php?wsfunction=mod_quiz_get_quiz_access_information&quizid=$quizId&moodlewsrestformat=json&wstoken=$token';
+    final quizAccessInformationData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("quizAccessInformationData_URL = " + fullUrl);
+    print("quizAccessInformationDataData = " + quizAccessInformationData.body);
+    if (quizAccessInformationData.statusCode == 200) {
+      return QuizAccessInformation.fromJson(jsonDecode(quizAccessInformationData.body));
     } else {
       return null;
     }

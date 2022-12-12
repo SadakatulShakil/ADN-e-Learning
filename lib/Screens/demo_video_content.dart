@@ -32,7 +32,7 @@ class InitState extends State<VideoContentStanding> {
       initialVideoId: YoutubePlayer.convertUrlToId(widget.url).toString(),
       flags: const YoutubePlayerFlags(
         mute: false,
-        autoPlay: false,
+        autoPlay: true,
         disableDragSeek: false,
         loop: false,
         isLive: false,

@@ -6,6 +6,7 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
+import '../../ApiModel/quiz_question_response.dart';
 import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
 
@@ -25,6 +26,7 @@ class InitState extends State<QuizDetailsPage> {
   String token = '';
   String userId = '';
   String dumpQuestion='';
+  List<Questions> questionList =[];
   var unescape = HtmlUnescape();
   NetworkCall networkCall = NetworkCall();
 
@@ -47,6 +49,18 @@ class InitState extends State<QuizDetailsPage> {
       height: MediaQuery.of(context).size.height,
       transform: Matrix4.translationValues(0, 5, 1),
       child: Scaffold(
+        floatingActionButton: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 40,
+          color: Colors.green,
+          child: FloatingActionButton.extended(
+            elevation: 0,
+            backgroundColor: Colors.green,
+            onPressed: () {},
+            label: const Text('Submit'),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: AppBar(
           backgroundColor: PrimaryColor,
           elevation: 0,
@@ -55,7 +69,7 @@ class InitState extends State<QuizDetailsPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Quiz',
-              style: GoogleFonts.comfortaa(
+              style: GoogleFonts.nanumGothic(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -113,38 +127,17 @@ class InitState extends State<QuizDetailsPage> {
                     ),
                   ),
                   Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Html(data: dumpQuestion),
+                    child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 60),
+                        child: ListView.builder(
+                            itemCount: questionList.length,
+                            itemBuilder: (context, index) {
+                              final mQuestionSet = questionList[index];
 
-                          SizedBox(height: 20,),
+                              return buildQuestionSet(mQuestionSet);
+                            })),
+                  ),
 
-
-
-                          SizedBox(height: 20,),
-                          InkWell(
-                            onTap: (){
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId)));
-                            },
-                            child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                color: PrimaryColor,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text('Start Attempt', style: TextStyle(color: Colors.white),)),
-                                )),
-                          ),
-                          SizedBox(height: 10,),
-                          Text('Cancel'),
-
-
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -171,6 +164,7 @@ class InitState extends State<QuizDetailsPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
       print('data_Question ' + quizQuestionData.attempt!.id.toString());
+      questionList = quizQuestionData.questions!;
       dumpQuestion = unescape.convert(quizQuestionData.questions![0].html.toString());
       print('Unecaped String----> '+dumpQuestion);
       CommonOperation.hideProgressDialog(context);
@@ -196,4 +190,38 @@ class InitState extends State<QuizDetailsPage> {
         fontSize: 16.0 //message font size
     );
   }
+
+  Widget buildQuestionSet(Questions mQuestionSet) => GestureDetector(
+    onTap: () {
+      /// do click item task
+      //Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesDetailsPage(mCourseData)));
+    },
+    child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    //crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Html(data: unescape.convert(mQuestionSet.html.toString())),
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+            )
+          ],
+        )),
+  );
 }

@@ -36,7 +36,7 @@ class _WebViewPageState extends State<WebViewPage> {
         elevation: 0,
         backgroundColor: PrimaryColor,
         title: Text(widget.title.toString(),
-            style: GoogleFonts.comfortaa(
+            style: GoogleFonts.nanumGothic(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),leading: IconButton(
