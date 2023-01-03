@@ -1,12 +1,14 @@
 class GroupMessageResponse {
   int? id;
+  String? exception;
   List<Members>? members;
   List<Messages>? messages;
 
-  GroupMessageResponse({this.id, this.members, this.messages});
+  GroupMessageResponse({this.id, this.exception, this.members, this.messages});
 
   GroupMessageResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    exception = json['exception'];
     if (json['members'] != null) {
       members = <Members>[];
       json['members'].forEach((v) {
@@ -24,6 +26,7 @@ class GroupMessageResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['exception'] = this.exception;
     if (this.members != null) {
       data['members'] = this.members!.map((v) => v.toJson()).toList();
     }

@@ -10,6 +10,7 @@ import '../../ApiCall/HttpNetworkCall.dart';
 import '../../ApiModel/userCoursesList.dart';
 import '../../Helper/colors_class.dart';
 import '../../Helper/operations.dart';
+import '../Message&Notification/contact_components.dart';
 
 class OtherProfileBody extends StatefulWidget {
   String from, currentUserId, requestId;
@@ -30,6 +31,8 @@ class InitState extends State<OtherProfileBody> {
   String city = '';
   String email = '';
   String count = '';
+  List<dynamic> contactRequestList = [];
+  int is_accepted = 0, is_decline = 0, is_send = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -53,7 +56,7 @@ class InitState extends State<OtherProfileBody> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Profile',
-            style: GoogleFonts.nanumGothic(
+            style: GoogleFonts.comfortaa(
                 color: const Color(0xFFFFFFFF),
                 fontWeight: FontWeight.w700,
                 fontSize: 18)),
@@ -107,19 +110,28 @@ class InitState extends State<OtherProfileBody> {
                         padding: const EdgeInsets.only(right: 50),
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.redAccent,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 5.0, right: 10, top: 8, bottom: 8),
-                              child: Text('Reject',
-                                  style: GoogleFonts.nanumGothic(
-                                    color: const Color(0xFFFFFFFF),
-                                    fontWeight: FontWeight.w900,
-                                  )),
+                          child: InkWell(
+                            onTap: (){
+                              is_decline == 0?callDeclineRequest(token, widget.currentUserId, widget.requestId.toString()):print('nothing happend');
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 5.0, right: 10, top: 8, bottom: 8),
+                                child: is_decline == 0?Text('Reject',
+                                    style: GoogleFonts.comfortaa(
+                                      color: const Color(0xFFFFFFFF),
+                                      fontWeight: FontWeight.w900,
+                                    )):Text('Rejected',
+                                    style: GoogleFonts.comfortaa(
+                                      color: const Color(0xFFFFFFFF),
+                                      fontWeight: FontWeight.w900,
+                                    )),
+                              ),
                             ),
                           ),
                         ),
@@ -134,18 +146,31 @@ class InitState extends State<OtherProfileBody> {
                             color: PrimaryColor,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 5.0, right: 10, top: 8, bottom: 8),
-                            child: widget.from == 'search'?Text('Send request',
-                                style: GoogleFonts.nanumGothic(
-                                  color: const Color(0xFFFFFFFF),
-                                  fontWeight: FontWeight.w900,
-                                )): Text('Accept',
-                                style: GoogleFonts.nanumGothic(
-                                  color: const Color(0xFFFFFFFF),
-                                  fontWeight: FontWeight.w900,
-                                )),
+                          child: InkWell(
+                            onTap: (){
+                              widget.from == 'search' && is_send == 0?createContactRequest(token, widget.currentUserId, widget.requestId.toString()):is_send == 0 && is_accepted == 0?callAcceptRequest(token, widget.currentUserId, widget.requestId.toString()):print('nothing to happend');
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 5.0, right: 10, top: 8, bottom: 8),
+                              child: widget.from == 'search' && is_send == 0?Text('Send request',
+                                  style: GoogleFonts.comfortaa(
+                                    color: const Color(0xFFFFFFFF),
+                                    fontWeight: FontWeight.w900,
+                                  )): widget.from == 'search' && is_send == 1? Text('Request Sent',
+                                  style: GoogleFonts.comfortaa(
+                                    color: const Color(0xFFFFFFFF),
+                                    fontWeight: FontWeight.w900,
+                                  )):widget.from != 'search' && is_accepted == 1?Text('Accepted',
+                                  style: GoogleFonts.comfortaa(
+                                    color: const Color(0xFFFFFFFF),
+                                    fontWeight: FontWeight.w900,
+                                  )):Text('Accept',
+                                  style: GoogleFonts.comfortaa(
+                                    color: const Color(0xFFFFFFFF),
+                                    fontWeight: FontWeight.w900,
+                                  )),
+                            ),
                           ),
                         ),
                       ),
@@ -155,13 +180,13 @@ class InitState extends State<OtherProfileBody> {
                   height: 20,
                 ),
                 Text(name,
-                    style: GoogleFonts.nanumGothic(
+                    style: GoogleFonts.comfortaa(
                         fontWeight: FontWeight.w900, fontSize: 18)),
                 SizedBox(
                   height: 10,
                 ),
                 Text(email,
-                    style: GoogleFonts.nanumGothic(
+                    style: GoogleFonts.comfortaa(
                         fontWeight: FontWeight.w900, fontSize: 12)),
                 SizedBox(
                   height: 10,
@@ -194,13 +219,13 @@ class InitState extends State<OtherProfileBody> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
-                                    Text('Courses I have',style: GoogleFonts.nanumGothic(
+                                    Text('Courses I have',style: GoogleFonts.comfortaa(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 15)),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(count,style: GoogleFonts.nanumGothic(
+                                    Text(count,style: GoogleFonts.comfortaa(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 15)),
                                   ],
@@ -223,13 +248,13 @@ class InitState extends State<OtherProfileBody> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  Text('Last visited',style: GoogleFonts.nanumGothic(
+                                  Text('Last visited',style: GoogleFonts.comfortaa(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 15)),
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text(lastAccess,style: GoogleFonts.nanumGothic(
+                                  Text(lastAccess,style: GoogleFonts.comfortaa(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 12)),
                                 ],
@@ -322,5 +347,100 @@ class InitState extends State<OtherProfileBody> {
     }
   }
 
+  void callAcceptRequest(String token, String currentId, String requestUserId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final userProfilesData = await networkCall.ContactRequestAcceptCall(token, currentId, requestUserId);
 
+    if(userProfilesData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      print('accept data'+ userProfilesData.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        is_accepted = 1;
+        getContactRequest(token, widget.currentUserId);
+      });
+
+    }else{
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+  void callDeclineRequest(String token, String currentId, String requestUserId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final userProfilesData = await networkCall.ContactRequestDeclineCall(token, currentId, requestUserId);
+
+    if(userProfilesData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      print('accept data'+ userProfilesData.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        is_decline = 1;
+        getContactRequest(token, widget.currentUserId);
+      });
+
+    }else{
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+  void createContactRequest(String token, String currentId, String requestUserId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final userProfilesData = await networkCall.CreateContactRequestCall(token, requestUserId, currentId);
+
+    if(userProfilesData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      print('accept data'+ userProfilesData.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        is_send = 1;
+      });
+
+    }else{
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void getContactRequest(String token, String userId) async {
+    CommonOperation.showProgressDialog(context, "loading", true);
+    final contactRequestData =
+    await networkCall.ContactRequestCall(token, userId);
+    if (contactRequestData != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'SuccessContactList';
+
+      contactRequestList = contactRequestData;
+      //print('data_count1 ' + chatHolderData.first.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        // getContactRequest(token, userId);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ContactComponents(
+                    contactRequestList,
+                    widget.currentUserId)));
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
 }

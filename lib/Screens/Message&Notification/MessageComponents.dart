@@ -9,6 +9,7 @@ import 'package:html/parser.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:radda_moodle_learning/ApiModel/allChatsHolderResponse.dart';
 import 'package:radda_moodle_learning/Screens/Message&Notification/contact_components.dart';
+import 'package:radda_moodle_learning/Screens/searchResultPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:html/dom.dart' as dom;
 import '../../ApiCall/HttpNetworkCall.dart';
@@ -143,7 +144,7 @@ class InitState extends State<MessageComponents> {
                                       : PrimaryColor),
                               icon: GFBadge(
                                 child:
-                                    Text(groupChatHolderList.length.toString()),
+                                Text(groupChatHolderList.length.toString()),
                               ),
                             ),
                           ),
@@ -183,7 +184,6 @@ class InitState extends State<MessageComponents> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ContactComponents(
-                                            contactsList,
                                             contactRequestList,
                                             userid)));
                                 setState(() {});
@@ -194,8 +194,7 @@ class InitState extends State<MessageComponents> {
                                       ? Colors.white
                                       : PrimaryColor),
                               icon: GFBadge(
-                                child: Text((contactsList.length +
-                                        contactRequestList.length)
+                                child: Text((contactRequestList.length)
                                     .toString()),
                               ),
                             ),
@@ -219,7 +218,7 @@ class InitState extends State<MessageComponents> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 18.0, top: 8, right: 18),
+                    const EdgeInsets.only(left: 18.0, top: 8, right: 18),
                     child: SizedBox(
                       height: 40,
                       child: TextField(
@@ -377,393 +376,384 @@ class InitState extends State<MessageComponents> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 
   Widget buildChatHolderList(mChatData) => ListTile(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ChatDashBoardScreen(
-                      mChatData.type == 2 ? 'group' : 'private',
-                      userid,
-                      mChatData)));
-        },
-        title: Text(
-            mChatData.name.toString() == ''
-                ? mChatData.members.first.fullname.toString()
-                : mChatData.name.toString(),
-            overflow: TextOverflow.ellipsis),
-        subtitle: Row(
-          children: [
-            Container(
-              width: 55,
-              child: Text(
-                mChatData.members.length > 0 && mChatData.messages.length > 0
-                    ? mChatData.messages.first.useridfrom.toString() == userid
-                        ? 'you :'
-                        : mChatData.members.first.fullname.toString() + ':'
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatDashBoardScreen(
+                  mChatData.type == 2 ? 'group' : 'private',
+                  userid,
+                  mChatData)));
+    },
+    title: Text(mChatData.name.toString() == ''
+        ? mChatData.members.first.fullname.toString()
+        : mChatData.name.toString(), overflow: TextOverflow.ellipsis),
+    subtitle: Row(
+      children: [
+        Container(
+          width: 60,
+          child: Text(mChatData.members.length > 0 && mChatData.messages.length > 0
+              ? mChatData.messages.first.useridfrom.toString() == userid
+              ? 'you :'
+              : mChatData.members.first.fullname.toString() + ':'
+              : '', overflow: TextOverflow.ellipsis,),
+        ),
+        Container(
+            width: MediaQuery.of(context).size.width / 2.5,
+            child:Text(
+                mChatData.messages.length > 0
+                    ? (parse(HtmlUnescape().convert(mChatData
+                    .messages.first.text
+                    .toString())))
+                    .outerHtml
+                    .contains('<p>')
+                    ? (parse(HtmlUnescape().convert(mChatData
+                    .messages.first.text
+                    .toString())))
+                    .getElementsByTagName('p')[0]
+                    .innerHtml
+                    .toString()
+                    : (parse(HtmlUnescape().convert(mChatData
+                    .messages.first.text
+                    .toString())))
+                    .outerHtml
+                    .contains('<a href')
+                    ? (parse(HtmlUnescape().convert(mChatData
+                    .messages.first.text
+                    .toString())))
+                    .getElementsByTagName('a')[0]
+                    .innerHtml
+                    .toString()
+                    : ''
                     : '',
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-                width: MediaQuery.of(context).size.width / 2.7,
-                child: Text(
-                    mChatData.messages.length > 0
-                        ? (parse(HtmlUnescape().convert(
-                                    mChatData.messages.first.text.toString())))
-                                .outerHtml
-                                .contains('<p>')
-                            ? (parse(HtmlUnescape().convert(
-                                    mChatData.messages.first.text.toString())))
-                                .getElementsByTagName('p')[0]
-                                .innerHtml
-                                .toString()
-                            : (parse(HtmlUnescape().convert(mChatData
-                                        .messages.first.text
-                                        .toString())))
-                                    .outerHtml
-                                    .contains('<a href')
-                                ? (parse(HtmlUnescape().convert(mChatData
-                                        .messages.first.text
-                                        .toString())))
-                                    .getElementsByTagName('a')[0]
-                                    .innerHtml
-                                    .toString()
-                                : ''
-                        : '',
-                    overflow: TextOverflow.ellipsis))
-          ],
+                overflow: TextOverflow.ellipsis))
+      ],
+    ),
+    leading: Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white,
+          width: 3,
         ),
-        leading: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: 3,
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(.3),
-                  offset: Offset(0, 5),
-                  blurRadius: 25)
-            ],
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(.3),
+              offset: Offset(0, 5),
+              blurRadius: 25)
+        ],
+      ),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: CircleAvatar(
+                backgroundImage: mChatData.type == 2
+                    ? NetworkImage(mChatData.imageurl.toString())
+                    : NetworkImage(mChatData.members.first.profileimageurl
+                    .toString())),
           ),
-          child: Stack(
+        ],
+      ),
+    ),
+    trailing: Container(
+      width: 30,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Positioned.fill(
-                child: CircleAvatar(
-                    backgroundImage: mChatData.type == 2
-                        ? NetworkImage(mChatData.imageurl.toString())
-                        : NetworkImage(mChatData.members.first.profileimageurl
-                            .toString())),
-              ),
-            ],
-          ),
-        ),
-        trailing: Container(
-          width: 30,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  mChatData.isread
-                      ? Icon(
-                          Icons.check,
-                          size: 15,
-                        )
-                      : Container(height: 15, width: 15),
-                ],
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
               mChatData.isread
-                  ? Container(
-                      height: 25,
-                      width: 25,
-                    )
-                  : Container(
-                      alignment: Alignment.center,
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        "1",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
+                  ? Icon(
+                Icons.check,
+                size: 15,
+              )
+                  : Container(height: 15, width: 15),
             ],
           ),
-        ),
-      );
+          SizedBox(
+            height: 5.0,
+          ),
+          mChatData.isread
+              ? Container(
+            height: 25,
+            width: 25,
+          )
+              : Container(
+            alignment: Alignment.center,
+            height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+              color: Colors.greenAccent,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              "1",
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 
   Widget buildGroupHolderList(mGroupChatData) => ListTile(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ChatDashBoardScreen('group', userid, mGroupChatData)));
-        },
-        title: Text(
-            mGroupChatData.name.toString() == ''
-                ? mGroupChatData.members.first.fullname.toString()
-                : mGroupChatData.name.toString(),
-            overflow: TextOverflow.ellipsis),
-        subtitle: Row(
-          children: [
-            Container(
-                width: 55,
-                child: Text(
-                    mGroupChatData.members.length > 0 &&
-                            mGroupChatData.messages.length > 0
-                        ? mGroupChatData.messages.first.useridfrom.toString() ==
-                                userid
-                            ? 'you :'
-                            : mGroupChatData.members.first.fullname.toString() +
-                                ': '
-                        : '',
-                    overflow: TextOverflow.ellipsis)),
-            Container(
-                width: MediaQuery.of(context).size.width / 2.7,
-                child: Text(
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatDashBoardScreen('group', userid, mGroupChatData)));
+    },
+    title: Text(
+        mGroupChatData.name.toString() == ''
+            ? mGroupChatData.members.first.fullname.toString()
+            : mGroupChatData.name.toString(),
+        overflow: TextOverflow.ellipsis),
+    subtitle: Row(
+      children: [
+        Container(
+            width: 60,
+            child: Text(
+                mGroupChatData.members.length > 0 &&
                     mGroupChatData.messages.length > 0
-                        ? (parse(HtmlUnescape().convert(mGroupChatData
-                                    .messages.first.text
-                                    .toString())))
-                                .outerHtml
-                                .contains('<p>')
-                            ? (parse(HtmlUnescape().convert(mGroupChatData
-                                    .messages.first.text
-                                    .toString())))
-                                .getElementsByTagName('p')[0]
-                                .innerHtml
-                                .toString()
-                            : (parse(HtmlUnescape().convert(mGroupChatData
-                                        .messages.first.text
-                                        .toString())))
-                                    .outerHtml
-                                    .contains('<a href')
-                                ? (parse(HtmlUnescape().convert(mGroupChatData
-                                        .messages.first.text
-                                        .toString())))
-                                    .getElementsByTagName('a')[0]
-                                    .innerHtml
-                                    .toString()
-                                : ''
-                        : '',
-                    overflow: TextOverflow.ellipsis))
-          ],
+                    ? mGroupChatData.messages.first.useridfrom.toString() ==
+                    userid
+                    ? 'you :'
+                    : mGroupChatData.members.first.fullname.toString() +
+                    ': '
+                    : '',
+                overflow: TextOverflow.ellipsis)),
+        Container(
+            width: MediaQuery.of(context).size.width / 2.5,
+            child: Text(
+                mGroupChatData.messages.length > 0
+                    ? (parse(HtmlUnescape().convert(mGroupChatData
+                    .messages.first.text
+                    .toString())))
+                    .outerHtml
+                    .contains('<p>')
+                    ? (parse(HtmlUnescape().convert(mGroupChatData
+                    .messages.first.text
+                    .toString())))
+                    .getElementsByTagName('p')[0]
+                    .innerHtml
+                    .toString()
+                    : (parse(HtmlUnescape().convert(mGroupChatData
+                    .messages.first.text
+                    .toString())))
+                    .outerHtml
+                    .contains('<a href')
+                    ? (parse(HtmlUnescape().convert(mGroupChatData
+                    .messages.first.text
+                    .toString())))
+                    .getElementsByTagName('a')[0]
+                    .innerHtml
+                    .toString()
+                    : ''
+                    : '',
+                overflow: TextOverflow.ellipsis))
+      ],
+    ),
+    leading: Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white,
+          width: 3,
         ),
-        leading: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: 3,
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(.3),
-                  offset: Offset(0, 5),
-                  blurRadius: 25)
-            ],
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(.3),
+              offset: Offset(0, 5),
+              blurRadius: 25)
+        ],
+      ),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: CircleAvatar(
+                backgroundImage:
+                NetworkImage(mGroupChatData.imageurl.toString())),
           ),
-          child: Stack(
+        ],
+      ),
+    ),
+    trailing: Container(
+      width: 30,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Positioned.fill(
-                child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(mGroupChatData.imageurl.toString())),
-              ),
-            ],
-          ),
-        ),
-        trailing: Container(
-          width: 30,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  mGroupChatData.isread
-                      ? Icon(
-                          Icons.check,
-                          size: 15,
-                        )
-                      : Container(height: 15, width: 15),
-                ],
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
               mGroupChatData.isread
-                  ? Container(
-                      height: 25,
-                      width: 25,
-                    )
-                  : Container(
-                      alignment: Alignment.center,
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        "1",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
+                  ? Icon(
+                Icons.check,
+                size: 15,
+              )
+                  : Container(height: 15, width: 15),
             ],
           ),
-        ),
-      );
+          SizedBox(
+            height: 5.0,
+          ),
+          mGroupChatData.isread
+              ? Container(
+            height: 25,
+            width: 25,
+          )
+              : Container(
+            alignment: Alignment.center,
+            height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+              color: Colors.greenAccent,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              "1",
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 
   Widget buildPrivateHolderList(mPrivateChatData) => ListTile(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ChatDashBoardScreen(
-                      'private', userid, mPrivateChatData)));
-        },
-        title: Text(mPrivateChatData.name.toString() == ''
-            ? mPrivateChatData.members.first.fullname.toString()
-            : mPrivateChatData.name.toString()),
-        subtitle: Row(
-          children: [
-            Container(
-              width: 55,
-              child: Text(
-                mPrivateChatData.members.length > 0 &&
-                        mPrivateChatData.messages.length > 0
-                    ? mPrivateChatData.messages.first.useridfrom.toString() ==
-                            userid
-                        ? 'you :'
-                        : mPrivateChatData.members.first.fullname.toString() +
-                            ':'
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatDashBoardScreen(
+                  'private', userid, mPrivateChatData)));
+    },
+    title: Text(mPrivateChatData.name.toString() == ''
+        ? mPrivateChatData.members.first.fullname.toString()
+        : mPrivateChatData.name.toString()),
+    subtitle: Row(
+      children: [
+        Container(
+          width: 60,
+          child: Text(mPrivateChatData.members.length > 0 &&
+              mPrivateChatData.messages.length > 0
+              ? mPrivateChatData.messages.first.useridfrom.toString() ==
+              userid
+              ? 'you :'
+              : mPrivateChatData.members.first.fullname.toString() + ':'
+              : ''),
+        ),
+        Container(
+            child: Text(
+                mPrivateChatData.messages.length > 0
+                    ? (parse(HtmlUnescape().convert(mPrivateChatData
+                    .messages.first.text
+                    .toString())))
+                    .outerHtml
+                    .contains('<p>')
+                    ? (parse(HtmlUnescape().convert(mPrivateChatData
+                    .messages.first.text
+                    .toString())))
+                    .getElementsByTagName('p')[0]
+                    .innerHtml
+                    .toString()
+                    : (parse(HtmlUnescape().convert(mPrivateChatData
+                    .messages.first.text
+                    .toString())))
+                    .outerHtml
+                    .contains('<a href')
+                    ? (parse(HtmlUnescape().convert(mPrivateChatData
+                    .messages.first.text
+                    .toString())))
+                    .getElementsByTagName('a')[0]
+                    .innerHtml
+                    .toString()
+                    : ''
                     : '',
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-                width: MediaQuery.of(context).size.width / 2.7,
-                child: Text(
-                    mPrivateChatData.messages.length > 0
-                        ? (parse(HtmlUnescape().convert(mPrivateChatData
-                                    .messages.first.text
-                                    .toString())))
-                                .outerHtml
-                                .contains('<p>')
-                            ? (parse(HtmlUnescape().convert(mPrivateChatData
-                                    .messages.first.text
-                                    .toString())))
-                                .getElementsByTagName('p')[0]
-                                .innerHtml
-                                .toString()
-                            : (parse(HtmlUnescape().convert(mPrivateChatData
-                                        .messages.first.text
-                                        .toString())))
-                                    .outerHtml
-                                    .contains('<a href')
-                                ? (parse(HtmlUnescape().convert(mPrivateChatData
-                                        .messages.first.text
-                                        .toString())))
-                                    .getElementsByTagName('a')[0]
-                                    .innerHtml
-                                    .toString()
-                                : ''
-                        : '',
-                    overflow: TextOverflow.ellipsis))
-          ],
+                overflow: TextOverflow.ellipsis))
+      ],
+    ),
+    leading: Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white,
+          width: 3,
         ),
-        leading: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: 3,
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(.3),
-                  offset: Offset(0, 5),
-                  blurRadius: 25)
-            ],
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(.3),
+              offset: Offset(0, 5),
+              blurRadius: 25)
+        ],
+      ),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: CircleAvatar(
+                backgroundImage: NetworkImage(mPrivateChatData
+                    .members.first.profileimageurl
+                    .toString())),
           ),
-          child: Stack(
+        ],
+      ),
+    ),
+    trailing: Container(
+      width: 30,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Positioned.fill(
-                child: CircleAvatar(
-                    backgroundImage: NetworkImage(mPrivateChatData
-                        .members.first.profileimageurl
-                        .toString())),
-              ),
-            ],
-          ),
-        ),
-        trailing: Container(
-          width: 30,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  mPrivateChatData.isread
-                      ? Icon(
-                          Icons.check,
-                          size: 15,
-                        )
-                      : Container(height: 15, width: 15),
-                ],
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
               mPrivateChatData.isread
-                  ? Container(
-                      height: 25,
-                      width: 25,
-                    )
-                  : Container(
-                      alignment: Alignment.center,
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        "1",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
+                  ? Icon(
+                Icons.check,
+                size: 15,
+              )
+                  : Container(height: 15, width: 15),
             ],
           ),
-        ),
-      );
+          SizedBox(
+            height: 5.0,
+          ),
+          mPrivateChatData.isread
+              ? Container(
+            height: 25,
+            width: 25,
+          )
+              : Container(
+            alignment: Alignment.center,
+            height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+              color: Colors.greenAccent,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              "1",
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 
   void getContactRequest(String token, String userId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final contactRequestData =
-        await networkCall.ContactRequestCall(token, userId);
+    await networkCall.ContactRequestCall(token, userId);
     if (contactRequestData != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'SuccessContactList';
@@ -795,7 +785,8 @@ class InitState extends State<MessageComponents> {
       //showToastMessage(message);
       setState(() {
         if (searchedUserList != null && searchedUserList.length > 0) {
-          OpenUserDialog(searchedUserList);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchResultPage(searchedUserList)));
+          //OpenUserDialog(searchedUserList);
         } else {
           message = 'No User matched !';
         }
@@ -906,15 +897,15 @@ class InitState extends State<MessageComponents> {
         builder: (BuildContext context) {
           return AlertDialog(
             insetPadding:
-                const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             title: Flexible(
                 child: Align(
-              alignment: Alignment.center,
-              child: Text('Network Issue !',
-                  style: GoogleFonts.nanumGothic(fontSize: 12)),
-            )),
+                  alignment: Alignment.center,
+                  child: Text('Network Issue !',
+                      style: GoogleFonts.nanumGothic(fontSize: 12)),
+                )),
             content: Container(
               height: MediaQuery.of(context).size.height / 5,
               width: MediaQuery.of(context).size.width / 2,

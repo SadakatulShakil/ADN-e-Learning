@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -169,12 +170,7 @@ class InitState extends State<UpcomingCalenderDetailsPage> {
                       child: Row(
                         children: [
                           Flexible(
-                            child: Text(
-                                mCourseData.description.toString() == ''?'no description':mCourseData.description.toString(),
-                                style: GoogleFonts.nanumGothic(
-                                    color: Colors.black54,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
+                            child: mCourseData.description.toString() == ''?Text("no description"):Html(data: mCourseData.description.toString()),
                           ),
                         ],
                       ),

@@ -318,10 +318,14 @@ class InitState extends State<QuizViewPage> {
       quizSummeryList = attemptSummeryData.attempts!;
       print('data_content ' + attemptSummeryData.attempts!.length.toString());
       for(int i=0;i<quizSummeryList.length;i++){
-        if(quizSummeryList[i].sumgrades != null){
-          if(quizSummeryList[i].sumgrades! > quizSummeryList[0].sumgrades!){
-            highestGrade = quizSummeryList[i].sumgrades!.toString();
-          }
+        //print('data_content ' + quizSummeryList[i].sumgrades!.toString());
+        if(quizSummeryList[i].sumgrades.toString() != 'null'){
+          highestGrade = quizSummeryList[i].sumgrades.toString();
+          // if(quizSummeryList[i].sumgrades! > quizSummeryList[0].sumgrades!){
+          //
+          // }
+        }else{
+          highestGrade = 'Not graded';
         }
 
       }

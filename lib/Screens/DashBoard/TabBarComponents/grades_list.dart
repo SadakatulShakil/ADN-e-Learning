@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -168,60 +169,64 @@ class InitState extends State<DashBoardGradesList> {
                   width: 80,
                   fit: BoxFit.fill),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(mCourseData.displayname.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.nanumGothic(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                        'Start date: ' +
-                            DateFormat.yMMMEd().format(DateTime.parse(
-                                getDateStump(
-                                    mCourseData.startdate.toString()))),
-                        style: GoogleFonts.nanumGothic(
-                            color: Colors.black54,
-                            fontSize: 13,
-                            )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                        mCourseData.progress != null
-                            ? mCourseData.progress.ceil().toString() +
-                                ' % complete'
-                            : '0 % complete',
-                        style: GoogleFonts.nanumGothic(
-                            color: SecondaryColor,
-                            fontSize: 13,
-                            )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                        mGradeData.grade.toString() != null && mGradeData.grade.toString() != '-'
-                            ? 'Grade: ' + mGradeData.grade.toString()
-                            : 'Grade: ' + "Not evaluated yet",
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8,bottom: 5.0),
+                    child: Text(mCourseData.displayname.toString(),
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.nanumGothic(
                             color: Colors.black,
-                            fontSize: 13,
-                            )),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600)),
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:8,bottom: 5.0),
+                  child: Text(
+                      'Start date: ' +
+                          DateFormat.yMMMEd().format(DateTime.parse(
+                              getDateStump(
+                                  mCourseData.startdate.toString()))),
+                      style: GoogleFonts.nanumGothic(
+                          fontSize: 13,
+                          )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: LinearPercentIndicator(
+                    width: 140.0,
+                    lineHeight: 5.0,
+                    percent: mCourseData.progress != null
+                        ?mCourseData.progress.ceil()/100:0.0,
+                    trailing: Text(
+                        mCourseData.progress != null
+                            ? mCourseData.progress.ceil().toString() +
+                            ' % complete'
+                            : '0 % complete',
+                        style: GoogleFonts.nanumGothic(
+                          fontSize: 12,
+                        )),
+                    barRadius: const Radius.circular(5),
+                    backgroundColor: Colors.grey.shade300,
+                    progressColor: PrimaryColor,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:8,bottom: 5.0),
+                  child: Text(
+                      mGradeData.grade.toString() != null && mGradeData.grade.toString() != '-'
+                          ? 'Grade: ' + mGradeData.grade.toString()
+                          : 'Grade: ' + "Not evaluated yet",
+                      style: GoogleFonts.nanumGothic(
+                          color: Colors.black,
+                          fontSize: 13,
+                          )),
+                ),
+              ],
             )
           ],
         ),

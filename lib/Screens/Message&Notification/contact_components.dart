@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/components/badge/gf_badge.dart';
 import 'package:getwidget/components/badge/gf_button_badge.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:radda_moodle_learning/ApiModel/allChatsHolderResponse.dart';
+import 'package:radda_moodle_learning/Screens/Message&Notification/MessageComponents.dart';
+import 'package:radda_moodle_learning/Screens/Message&Notification/chat_dash_board.dart';
 import 'package:radda_moodle_learning/Screens/Profile/other_user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ApiCall/HttpNetworkCall.dart';
 import '../../Helper/colors_class.dart';
+import '../../Helper/operations.dart';
 
 class ContactComponents extends StatefulWidget {
-  List<Conversations> chatHolderList;
   List<dynamic> contactRequestList;
   String userid;
-  ContactComponents(this.chatHolderList, this.contactRequestList, this.userid);
+  ContactComponents(this.contactRequestList, this.userid);
 
   @override
   State<StatefulWidget> createState() => InitState();
 }
 
 class InitState extends State<ContactComponents> {
-  List<dynamic> categoryList = [];
+  List<dynamic> contactsListData = [];
   List<dynamic> subCategoryList = [];
   String token = '';
+  String currentId = '';
   double value = 0;
   int fieldVisible = 1;
   NetworkCall networkCall = NetworkCall();
@@ -55,7 +59,7 @@ class InitState extends State<ContactComponents> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Contacts',
-              style: GoogleFonts.nanumGothic(
+              style: GoogleFonts.comfortaa(
                   color: const Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w700,
                   fontSize: 18)),
@@ -100,14 +104,14 @@ class InitState extends State<ContactComponents> {
                                 color: fieldVisible == 1?PrimaryColor:Color(0xFFE7EAEC),
                                 onPressed: () {
                                   fieldVisible = 1;
-                                      setState(() {
+                                  setState(() {
 
-                                      });
+                                  });
                                 },
-                                text: 'My contacts',textStyle: GoogleFonts.nanumGothic(
+                                text: 'My contacts',textStyle: GoogleFonts.comfortaa(
                                   color: fieldVisible == 1?Colors.white:PrimaryColor),
                                 icon: GFBadge(
-                                  child: Text(widget.chatHolderList.length.toString()),
+                                  child: Text(contactsListData.length.toString()),
                                 ),
                               ),),
                             Container(
@@ -115,12 +119,12 @@ class InitState extends State<ContactComponents> {
                                 color: fieldVisible == 2?PrimaryColor:Color(0xFFE7EAEC),
                                 onPressed: () {
                                   fieldVisible = 2;
-                                      setState(() {
+                                  setState(() {
 
-                                      });
+                                  });
                                 },
-                                text: 'Request',textStyle: GoogleFonts.nanumGothic(
-                                              color: fieldVisible == 2?Colors.white:PrimaryColor),
+                                text: 'Request',textStyle: GoogleFonts.comfortaa(
+                                  color: fieldVisible == 2?Colors.white:PrimaryColor),
                                 icon: GFBadge(
                                   child: Text(widget.contactRequestList.length.toString()),
                                 ),
@@ -168,32 +172,58 @@ class InitState extends State<ContactComponents> {
                   ),
                   Visibility(
                     visible: fieldVisible == 1 ? true : false,
-                    child: Expanded(
+                    child: contactsListData.length>0?Expanded(
                       child: Padding(
                           padding:
-                              const EdgeInsets.only(left: 12.0, right: 12.0),
+                          const EdgeInsets.only(left: 12.0, right: 12.0),
                           child: ListView.builder(
-                              itemCount: widget.chatHolderList.length,
+                              itemCount: contactsListData.length,
                               itemBuilder: (context, index) {
-                                final mChatData = widget.chatHolderList[index];
+                                final mChatData = contactsListData[index];
 
                                 return buildChatHolderList(mChatData);
                               })),
+                    ):Center(
+                      child: SizedBox(
+                        height: 100,
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.warning_amber,
+                              size: 30,
+                            ),
+                            Text('No Data Found!'),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   Visibility(
                     visible: fieldVisible == 2 ? true : false,
-                    child: Expanded(
+                    child: widget.contactRequestList.length>0?Expanded(
                       child: Padding(
                           padding:
-                              const EdgeInsets.only(left: 12.0, right: 12.0),
+                          const EdgeInsets.only(left: 12.0, right: 12.0),
                           child: ListView.builder(
                               itemCount: widget.contactRequestList.length,
                               itemBuilder: (context, index) {
                                 final mContactData = widget.contactRequestList[index];
 
-                                return buildContactList(mContactData);
+                                return buildContactRequestList(mContactData);
                               })),
+                    ):Center(
+                      child: SizedBox(
+                        height: 100,
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.warning_amber,
+                              size: 30,
+                            ),
+                            Text('No Data Found1!'),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -208,7 +238,10 @@ class InitState extends State<ContactComponents> {
   void getSharedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
-    setState(() {});
+    currentId = prefs.getString('userId')!;
+    setState(() {
+      getContactList();
+    });
   }
 
   void showToastMessage(String message) {
@@ -219,102 +252,72 @@ class InitState extends State<ContactComponents> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 
   Widget buildChatHolderList(mChatData) => GestureDetector(
       onTap: () {
         /// do click item task
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => CourseDetailsPage(mCourseData)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatDashBoardScreen('contact', widget.userid, mChatData)));
       },
-      child: Visibility(
-        visible: mChatData.subname != null
-            ? mChatData.members.length > 0
-                ? mChatData.members.first.iscontact
-                    ? true
-                    : false
-                : false
-            : false,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black12)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.black12)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Image.network(mChatData.profileimageurl.toString(), height: 40, width: 40,),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FadeInImage.assetNetwork(
-                        placeholder: 'assets/images/chat_head.jpg',
-                        image:
-                            'https://www.pngkit.com/png/full/44-443934_post-navigation-people-icon-grey.png',
-                        height: 40,
-                        width: 40,
-                        fit: BoxFit.cover),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: Text(
+                                mChatData.fullname.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.comfortaa(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                        Visibility(
+                          visible: false,
+                          child: Icon(
+                            Icons.more_vert,
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            color:Colors.red,
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 5.0),
-                              child: Text(
-                                  mChatData.members.length > 0
-                                      ? mChatData.members.first.fullname
-                                          .toString()
-                                      : 'Not found',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.nanumGothic(
-                                      color: mChatData.isread
-                                          ? Colors.black
-                                          : SecondaryColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Visibility(
-                            visible: false,
-                            child: Icon(
-                              Icons.more_vert,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Text(mChatData.subname.toString(),
-                            style: GoogleFonts.nanumGothic(
-                                color: Colors.black54,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ));
 
-  Widget buildContactList(mContactData) => GestureDetector(
+  Widget buildContactRequestList(mContactData) => GestureDetector(
       onTap: () {
         /// do click item task
         // Navigator.push(
@@ -359,7 +362,7 @@ class InitState extends State<ContactComponents> {
                             child: Text(
                                 mContactData.fullname.toString(),
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.nanumGothic(
+                                style: GoogleFonts.comfortaa(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold)),
                           ),
@@ -378,7 +381,7 @@ class InitState extends State<ContactComponents> {
                     Container(
                       width: MediaQuery.of(context).size.width / 2,
                       child: Text('e-Learning',
-                          style: GoogleFonts.nanumGothic(
+                          style: GoogleFonts.comfortaa(
                               color: Colors.black54,
                               fontSize: 13,
                               fontWeight: FontWeight.bold)),
@@ -404,7 +407,7 @@ class InitState extends State<ContactComponents> {
                 children: [
                   Flexible(child: Align(
                     alignment: Alignment.center,
-                    child: Text('Request',style: GoogleFonts.nanumGothic(
+                    child: Text('Request',style: GoogleFonts.comfortaa(
                         fontSize: 18
                     )),
                   )),
@@ -433,7 +436,7 @@ class InitState extends State<ContactComponents> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(mContactData.fullname.toString(),textAlign: TextAlign.center,
-                                  style: GoogleFonts.nanumGothic(
+                                  style: GoogleFonts.comfortaa(
                                       fontWeight: FontWeight.w900, fontSize: 12)),
                             ),
                           ),
@@ -475,7 +478,7 @@ class InitState extends State<ContactComponents> {
                         ),
                         child:  Align(
                           alignment: Alignment.center,
-                          child: Text('View profile', textAlign: TextAlign.center,style: GoogleFonts.nanumGothic(
+                          child: Text('View profile', textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
                             color: const Color(0xFFFFFFFF),
                             fontWeight: FontWeight.bold,) ),
                         ),
@@ -491,10 +494,7 @@ class InitState extends State<ContactComponents> {
                   InkWell(
                     onTap: (){
                       Navigator.pop(context, false);
-                      //Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()));
-                      // setState(() {
-                      //
-                      // });
+                      callDeclineRequest(token, currentId, mContactData.id.toString());
                     },
                     child: Container(
                       width: 150,
@@ -514,7 +514,7 @@ class InitState extends State<ContactComponents> {
                       ),
                       child:  Align(
                         alignment: Alignment.center,
-                        child: Text('Cancel', textAlign: TextAlign.center,style: GoogleFonts.nanumGothic(
+                        child: Text('Cancel', textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
                           color: const Color(0xFFFFFFFF),) ),
                       ),
                     ),
@@ -522,18 +522,15 @@ class InitState extends State<ContactComponents> {
                   SizedBox(width: 8,),
                   InkWell(
                     onTap: (){
-                      Navigator.pop(context, false);
-                      //Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()));
-                      // setState(() {
-                      //
-                      // });
+                      Navigator.pop(context);
+                      callAcceptRequest(token, currentId, mContactData.id.toString());
                     },
                     child: Container(
                       width: 150,
                       margin: EdgeInsets.only(top: 5.0, bottom: 5.0,),
                       padding: EdgeInsets.only(left: 8.0,  top: 8.0, bottom: 8.0),
                       decoration: BoxDecoration(
-                        color: PrimaryColor,
+                        color: Colors.greenAccent,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -546,7 +543,7 @@ class InitState extends State<ContactComponents> {
                       ),
                       child:  Align(
                         alignment: Alignment.center,
-                        child: Text('Accept', textAlign: TextAlign.center,style: GoogleFonts.nanumGothic(
+                        child: Text('Accept', textAlign: TextAlign.center,style: GoogleFonts.comfortaa(
                           color: const Color(0xFFFFFFFF),
                           fontWeight: FontWeight.bold,) ),
                       ),
@@ -559,4 +556,100 @@ class InitState extends State<ContactComponents> {
           );
         });
   }
+
+  void callAcceptRequest(String token, String currentId, String requestUserId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final userProfilesData = await networkCall.ContactRequestAcceptCall(token, currentId, requestUserId);
+
+    if(userProfilesData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      print('accept data'+ userProfilesData.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        fieldVisible = 1;
+        getContactRequest(token, widget.userid);
+        getContactList();
+      });
+
+    }else{
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void callDeclineRequest(String token, String currentId, String requestUserId) async{
+    CommonOperation.showProgressDialog(
+        context, "loading", true);
+    final userProfilesData = await networkCall.ContactRequestDeclineCall(token, currentId, requestUserId);
+
+    if(userProfilesData != null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'Success';
+      print('accept data'+ userProfilesData.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        fieldVisible = 1;
+        getContactRequest(token, widget.userid);
+        getContactList();
+      });
+
+    }else{
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+  void getContactRequest(String token, String userId) async {
+    CommonOperation.showProgressDialog(context, "loading", true);
+    final contactRequestData =
+    await networkCall.ContactRequestCall(token, userId);
+    if (contactRequestData != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'SuccessContactList';
+
+      widget.contactRequestList.clear();
+      widget.contactRequestList = contactRequestData;
+      //print('data_count1 ' + chatHolderData.first.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        // getContactRequest(token, userId);
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
+  void getContactList() async {
+    CommonOperation.showProgressDialog(context, "loading", true);
+    final contactListData =
+    await networkCall.ContactsListCall(token, widget.userid);
+    if (contactListData != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String message = 'SuccessContactList';
+
+      contactsListData.clear();
+      contactsListData = contactListData;
+      //print('data_count1 ' + chatHolderData.first.toString());
+      CommonOperation.hideProgressDialog(context);
+      //showToastMessage(message);
+      setState(() {
+        //getContactRequest(token, widget.userid);
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+
 }

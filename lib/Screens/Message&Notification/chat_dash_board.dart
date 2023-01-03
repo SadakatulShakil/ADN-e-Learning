@@ -66,7 +66,7 @@ class InitState extends State<ChatDashBoardScreen> {
       ),
         backgroundColor: PrimaryColor,
         title: Text(
-          widget.from=='private'?widget.mChatData.members.first.fullname.toString():widget.mChatData.name.toString(),
+          widget.from=='private'?widget.mChatData.members.first.fullname.toString():widget.from=='contact'?widget.mChatData.fullname.toString():widget.mChatData.name.toString(),
           style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold
@@ -166,7 +166,7 @@ class InitState extends State<ChatDashBoardScreen> {
     CommonOperation.showProgressDialog(context, "loading", true);
     final groupMessageData =
     await networkCall.GroupMessageCall(token, userId, convId);
-    if (groupMessageData != null) {
+    if (groupMessageData != null && groupMessageData.exception == null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
       groupMessagesList = groupMessageData.messages!;
@@ -185,6 +185,9 @@ class InitState extends State<ChatDashBoardScreen> {
         // email = userProfilesData.email.toString();
         // getUserCourses(token, userId);
       });
+    }else if(groupMessageData!.exception != null){
+      CommonOperation.hideProgressDialog(context);
+      showToastMessage(groupMessageData.exception.toString());
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
@@ -196,7 +199,7 @@ class InitState extends State<ChatDashBoardScreen> {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
+        gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
@@ -249,7 +252,7 @@ class InitState extends State<ChatDashBoardScreen> {
                   child: Text(
                       DateFormat.yMMMEd().format(DateTime.parse(
                           getDateStump(mContactData.timecreated.toString()))),
-                      style: GoogleFonts.nanumGothic(
+                      style: GoogleFonts.comfortaa(
                           color: Colors.black54,
                           fontSize: 13,
                           fontWeight: FontWeight.bold)),
@@ -290,7 +293,7 @@ class InitState extends State<ChatDashBoardScreen> {
                   child: Text(
                       DateFormat.yMMMEd().format(DateTime.parse(
                           getDateStump(mContactData.timecreated.toString()))),
-                      style: GoogleFonts.nanumGothic(
+                      style: GoogleFonts.comfortaa(
                           color: Colors.black54,
                           fontSize: 13,
                           fontWeight: FontWeight.bold)),

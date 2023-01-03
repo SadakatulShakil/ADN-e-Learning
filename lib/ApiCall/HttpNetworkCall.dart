@@ -4,15 +4,19 @@ import 'package:radda_moodle_learning/ApiModel/assignmentDetailsResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/badges_response.dart';
 import 'package:radda_moodle_learning/ApiModel/calendar_events_response.dart';
 import 'package:radda_moodle_learning/ApiModel/contact_request_response.dart';
+import 'package:radda_moodle_learning/ApiModel/eventCreateResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/gradeDetailsResponse.dart';
 import 'package:radda_moodle_learning/ApiModel/group_message_response.dart';
 import 'package:radda_moodle_learning/ApiModel/quizAccessInformation.dart';
 import 'package:radda_moodle_learning/ApiModel/quiz_attempt_summery.dart';
 import 'package:radda_moodle_learning/ApiModel/quiz_question_response.dart';
+import 'package:radda_moodle_learning/ApiModel/quiz_submit_response.dart';
 import 'package:radda_moodle_learning/ApiModel/start_quiz_attempt_response.dart';
+import '../ApiModel/View_Notification.dart';
 import '../ApiModel/allChatsHolderResponse.dart';
 import '../ApiModel/assignmentResponse.dart';
 import '../ApiModel/categoryResponse.dart';
+import '../ApiModel/contactsListReponse.dart';
 import '../ApiModel/courseContentResponse.dart';
 import '../ApiModel/courseDetailsReponse.dart';
 import '../ApiModel/gradeResponse.dart';
@@ -566,6 +570,125 @@ class NetworkCall {
     print("quizAccessInformationDataData = " + quizAccessInformationData.body);
     if (quizAccessInformationData.statusCode == 200) {
       return QuizAccessInformation.fromJson(jsonDecode(quizAccessInformationData.body));
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<dynamic>?> ContactsListCall(String token ,String userid) async {
+    String fullUrl = baseUrl+'webservice/rest/server.php?wsfunction=core_message_get_user_contacts&moodlewsrestformat=json&wstoken=$token&userid=$userid';
+
+    final contactsData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("contactsData_URL = " + fullUrl);
+    print("contactsData = " + contactsData.body);
+    if (contactsData.statusCode == 200) {
+      final jsonresponse = jsonDecode(contactsData.body);
+      //print("Courses------------>"+ jsonresponse['courses'].toString());
+      List<dynamic> contactsDataList = jsonresponse.map((element){
+        return ContactsList.fromJson(element);
+      }).toList();
+
+      return contactsDataList;
+    } else {
+      return null;
+    }
+  }
+  Future<dynamic> ContactRequestAcceptCall(String token, String currentId, String requestedUserId) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=core_message_confirm_contact_request&moodlewsrestformat=json&wstoken=$token&userid=$requestedUserId&requesteduserid=$currentId';
+    final contactRequestAcceptData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("ResetPasswordMailCall_URL = " + fullUrl);
+    print("ResetPasswordMailData = " + contactRequestAcceptData.body);
+    if (contactRequestAcceptData.statusCode == 200) {
+      return contactRequestAcceptData.body;
+    } else {
+      return null;
+    }
+  }
+  Future<dynamic> ContactRequestDeclineCall(String token, String currentId, String requestedUserId) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=core_message_decline_contact_request&moodlewsrestformat=json&wstoken=$token&userid=$requestedUserId&requesteduserid=$currentId';
+    final contactRequestDeclineData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("ResetPasswordMailCall_URL = " + fullUrl);
+    print("ResetPasswordMailData = " + contactRequestDeclineData.body);
+    if (contactRequestDeclineData.statusCode == 200) {
+      return contactRequestDeclineData.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> CreateContactRequestCall(String token, String currentId, String requestedUserId) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=core_message_create_contact_request&moodlewsrestformat=json&wstoken=$token&userid=$requestedUserId&requesteduserid=$currentId';
+    final CreateContactRequestData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("ResetPasswordMailCall_URL = " + fullUrl);
+    print("ResetPasswordMailData = " + CreateContactRequestData.body);
+    if (CreateContactRequestData.statusCode == 200) {
+      return CreateContactRequestData.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<QuizSubmitResponse?> QuizSubmitCall(String token, String userId) async {
+    String fullUrl = baseUrl+'webservice/rest/server.php?wsfunction=mod_quiz_process_attempt&moodlewsrestformat=json&wstoken=85c57d2af41859b8d651de98ce1fba07&attemptid=493&data[0][name]=q521:1_choice3&data[0][value]=1&data[1][name]=q521:2_choice1&data[1][value]=1&data[2][name]=q521:3_choice1&data[2][value]=1&data[3][name]=q521:4_choice1&data[3][value]=1&data[4][name]=q521:5_answer&data[4][value]=1';
+
+    final QuizSubmitData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("QuizSubmitData_URL = " + fullUrl);
+    print("QuizSubmitDataData = " + QuizSubmitData.body);
+    if (QuizSubmitData.statusCode == 200) {
+      return QuizSubmitResponse.fromJson(jsonDecode(QuizSubmitData.body));
+    } else {
+      return null;
+    }
+  }
+
+  Future<EventCreateResponse?> EventCreateCall(String token, String name, String description, String timestart, String format, String timeduration, String visible, String sequence, String courseid, String groupid, String eventtype) async {
+    String fullUrl = baseUrl+'webservice/rest/server.php?wsfunction=core_calendar_create_calendar_events&moodlewsrestformat=json&wstoken=$token&events[0][name]=$name&events[0][description]=$description&events[0][timestart]=$timestart&events[0][format]=$format&events[0][timeduration]=$timeduration&events[0][visible]=$visible&events[0][sequence]=$sequence&events[0][courseid]=$courseid&events[0][groupid]=$groupid&events[0][eventtype]=$eventtype';
+
+    final EventCreateData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("EventCreateData_URL = " + fullUrl);
+    print("EventCreateData = " + EventCreateData.body);
+    if (EventCreateData.statusCode == 200) {
+      return EventCreateResponse.fromJson(jsonDecode(EventCreateData.body));
+    } else {
+      return null;
+    }
+  }
+  Future<ViewNotificationResponse?> ViewNotificationCall(String token, String notificationid) async {
+    String fullUrl = baseUrl+'webservice/rest/server.php?wsfunction=core_message_mark_notification_read&moodlewsrestformat=json&wstoken=$token&notificationid=$notificationid';
+
+    final ViewNotificationCall = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("EventCreateData_URL = " + fullUrl);
+    print("EventCreateData = " + ViewNotificationCall.body);
+    if (ViewNotificationCall.statusCode == 200) {
+      return ViewNotificationResponse.fromJson(jsonDecode(ViewNotificationCall.body));
     } else {
       return null;
     }

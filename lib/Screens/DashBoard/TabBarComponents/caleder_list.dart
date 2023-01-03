@@ -77,6 +77,54 @@ class InitState extends State<DashBoardCalederList> {
         physics: ScrollPhysics(),
         child: Column(
           children: [
+            // InkWell(
+            //     onTap: (){
+            //       Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
+            //     },
+            //     child: Container(
+            //         width: MediaQuery.of(context).size.width,
+            //         color: PrimaryColor,
+            //         child: Align(
+            //             alignment: Alignment.center,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Text('Create Events', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+            //             )))),
+
+            SizedBox(height: 10,),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0, right: 30.0),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
+                    //print('check settings  '+ firstNameController.text.toString());
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Container(
+                      width: 150,
+                      height: 35,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: PrimaryColor),
+                      child: Center(
+                        child: Text(
+                          "Create Event",
+                          style: GoogleFonts.nanumGothic(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -99,13 +147,8 @@ class InitState extends State<DashBoardCalederList> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 15)),
+                    Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 18)),
                     SizedBox(width: 8,),
-                    InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage()));
-                        },
-                        child: Text('[Create Events]', style: TextStyle(color: PrimaryColor, fontSize: 18, fontWeight: FontWeight.bold))),
                   ],
                 ),
                 IconButton(
@@ -140,18 +183,17 @@ class InitState extends State<DashBoardCalederList> {
 
                 },
                 onDaySelected: (selectedDay, focusedDay) {
+                  openDialog(getEventsForDay(selectedDay), eventsDataList, selectedDay);
                   if (!isSameDay(_selectedDay, selectedDay)) {
                     // Call `setState()` when updating the selected day
                     eventsDataList.clear();
-                    for (int i =0; i<widget.eventList.length;i++){
-                      if(widget.eventList[i].timesort.toString() == getEventsForDay(selectedDay).first.toString()){
+                    for (int i = 0; i < widget.eventList.length; i++) {
+                      if (widget.eventList[i].timesort.toString() ==
+                          getEventsForDay(selectedDay).first.toString()) {
                         eventsDataList.add(widget.eventList[i]);
                       }
                     }
                     setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                      openDialog(getEventsForDay(selectedDay), eventsDataList);
 
                     });
                   }
@@ -259,10 +301,10 @@ class InitState extends State<DashBoardCalederList> {
                       child: Text(mCourseData.name.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: GoogleFonts.nanumGothic(
+                          style: GoogleFonts.comfortaa(
                               color: Colors.black,
                               fontSize: 13,
-                              fontWeight: FontWeight.w600)),
+                              fontWeight: FontWeight.bold)),
                     ),
                   ),
                   Padding(
@@ -271,7 +313,7 @@ class InitState extends State<DashBoardCalederList> {
                         getDateStump(mCourseData
                             .timestart
                             .toString()))),
-                        style: GoogleFonts.nanumGothic(
+                        style: GoogleFonts.comfortaa(
                             color: Colors.black54,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),
@@ -285,7 +327,7 @@ class InitState extends State<DashBoardCalederList> {
   );
 
 
-  void openDialog(List<dynamic> eventsForDay, List<upComing.Events> eventsDataList) {
+  void openDialog(List<dynamic> eventsForDay, List<upComing.Events> eventsDataList, DateTime selectedDay) {
 
     showDialog(
         context: context,
@@ -324,7 +366,7 @@ class InitState extends State<DashBoardCalederList> {
                 child: InkWell(
                   onTap: (){
                     Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MonthlyCalenderDetailsPage(eventsForDay)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MonthlyCalenderDetailsPage(eventsDataList)));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -338,33 +380,37 @@ class InitState extends State<DashBoardCalederList> {
                           color: PrimaryColor
                       ),
                       child: Center(
-                        child: Text("View Details", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                        child: Text("View Details", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
                 ),
               ),
-              Visibility(
-                visible: eventsForDay.length>0?true:false,
-                child: InkWell(
-                  onTap: (){
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage()));
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
+              InkWell(
+                onTap: (){
+                  print('---->   '+selectedDay.year.toString()+'-'+selectedDay.month.toString()+'-'+selectedDay.day.toString());
+                  String mth = '${selectedDay.month}';
+                  String dy = '${selectedDay.day}';
+                  print('---=-=-=-=- '+mth.length.toString());
+                  mth.length == 1? mth = '0'+mth: mth = mth;
+                  dy.length == 1? dy = '0'+dy: dy = dy;
+                  String date = selectedDay.year.toString()+'-'+mth+'-'+dy;
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('selected', date)));
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    width:150,
+                    height: 30,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
                     ),
-                    child: Container(
-                      width:150,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: SecondaryColor,
-                      ),
-                      child: Center(
-                        child: Text("Create Events", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
-                      ),
+                    child: Center(
+                      child: Text("Create Events", style: GoogleFonts.comfortaa(color: Colors.white, fontWeight: FontWeight.bold),),
                     ),
                   ),
                 ),
@@ -403,7 +449,7 @@ class InitState extends State<DashBoardCalederList> {
                       child: Text(mEventData.name.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: GoogleFonts.nanumGothic(
+                          style: GoogleFonts.comfortaa(
                               color: Colors.black,
                               fontSize: 10,
                               fontWeight: FontWeight.bold)),
@@ -415,7 +461,7 @@ class InitState extends State<DashBoardCalederList> {
                         getDateStump(mEventData
                             .timesort
                             .toString()))),
-                        style: GoogleFonts.nanumGothic(
+                        style: GoogleFonts.comfortaa(
                             color: Colors.black54,
                             fontSize: 13,
                             fontWeight: FontWeight.bold)),

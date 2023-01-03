@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:radda_moodle_learning/ApiModel/notificationResponse.dart';
+import 'package:radda_moodle_learning/Screens/NotoficationComponents/notificationDetailsPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../ApiCall/HttpNetworkCall.dart';
+import '../../Helper/operations.dart';
 class RecentNotificationPage extends StatefulWidget{
   List<Messages> unReadNotiList;
   RecentNotificationPage(this.unReadNotiList);
@@ -16,9 +22,13 @@ class RecentNotificationPage extends StatefulWidget{
 class InitState extends State<RecentNotificationPage> {
 
   String lassAccess ='';
+  String token ='';
+  String userId ='';
+  NetworkCall networkCall = NetworkCall();
   @override
   void initState() {
     // TODO: implement initState
+    getSharedData();
     super.initState();
   }
 
@@ -82,7 +92,7 @@ class InitState extends State<RecentNotificationPage> {
   Widget buildNotification(mNotificationData) => GestureDetector(
     onTap: () {
       /// do click item task
-      //Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesDetailsPage(mCourseData)));
+      CallNotificationView(mNotificationData.id.toString(), mNotificationData);
     },
     child: Card(
         elevation: 8,
@@ -131,4 +141,40 @@ class InitState extends State<RecentNotificationPage> {
           ],
         )),
   );
+
+  void getSharedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('TOKEN')!;
+    userId = prefs.getString('userId')!;
+    setState(() {
+      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
+    });
+  }
+
+
+  void CallNotificationView(String notificationId, mNotificationData) async{
+    CommonOperation.showProgressDialog(context, "loading", true);
+      final quizSubmitData =
+      await networkCall.ViewNotificationCall(token, notificationId);
+      if (quizSubmitData != null) {
+        CommonOperation.hideProgressDialog(context);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationDetailsPage(mNotificationData)));
+
+      } else {
+        CommonOperation.hideProgressDialog(context);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoged', false);
+        showToastMessage('your session is expire ');
+      }
+  }
+  void showToastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0 //message font size
+    );
+  }
 }

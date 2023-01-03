@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:radda_moodle_learning/Helper/colors_class.dart';
@@ -162,8 +163,26 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Icon(Icons.access_time, color: Colors.black54, size: 20,),
+                    child: Icon(Icons.menu_book, color: Colors.black54, size: 20,),
                   ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width/1.3,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(left: 5.0),
+                  //     child: Row(
+                  //       children: [
+                  //         Flexible(
+                  //           child: Text(
+                  //               mCourseData.course.shortname.toString(),
+                  //               style: GoogleFonts.nanumGothic(
+                  //                   color: Colors.black54,
+                  //                   fontSize: 18,
+                  //                   fontWeight: FontWeight.bold)),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     width: MediaQuery.of(context).size.width/1.3,
                     child: Padding(
@@ -171,17 +190,13 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                       child: Row(
                         children: [
                           Flexible(
-                            child: Text(
-                                mCourseData.course.shortname.toString(),
-                                style: GoogleFonts.nanumGothic(
-                                    color: Colors.black54,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
+                            child: mCourseData.description.toString() == ''?Text("no description"):Html(data: mCourseData.description.toString())
                           ),
                         ],
                       ),
                     ),
                   ),
+
                 ],
               ),
             ],

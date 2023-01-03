@@ -47,6 +47,7 @@ dependencies:
   dio: ^4.0.1
   mobile_scanner: ^1.1.2
   fluttertoast: ^8.0.8
+  custom_radio_group_list: ^1.0.0
   flutter_html: ^2.0.0
   google_nav_bar: ^5.0.6
   convex_bottom_bar: ^3.1.0+1
@@ -64,6 +65,7 @@ dependencies:
   connectivity_plus: ^3.0.2
   video_player: ^2.4.8
   html: ^0.15.1
+  percent_indicator: ^4.2.2
   webview_flutter: ^2.5.0
   flutter_localizations:
     sdk: flutter
