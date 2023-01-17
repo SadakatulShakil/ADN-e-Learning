@@ -1,8 +1,6 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-
 import '../../Helper/colors_class.dart';
 import 'HomeComponents.dart';
 import '../Message&Notification/MessageComponents.dart';
@@ -21,12 +19,11 @@ class _DashBoardState extends State<DashBoard> {
   @override
   void initState() {
     super.initState();
-    setState(() {});
   }
 
   void _changeTab(int index) {
+    _currentIndex = index;
     setState(() {
-      _currentIndex = index;
     });
   }
 

@@ -174,22 +174,17 @@ class InitState extends State<GradesDetailsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
+    Future.wait([getGradeContent(token, widget.mGradeData.id.toString(), userId)]);
   }
 
-  void getGradeContent(String token, String courseId, String userId) async {
+  Future getGradeContent(String token, String courseId, String userId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userGradeDetailsData =
-        await networkCall.GradesDetailsCall(token, courseId, userId);
+    await networkCall.GradesDetailsCall(token, courseId, userId);
     if (userGradeDetailsData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       gradeDetailsList = userGradeDetailsData.usergrades![0].gradeitems!;
       print('data_content ' + gradeDetailsList.first.itemname.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);
@@ -207,24 +202,24 @@ class InitState extends State<GradesDetailsPage> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 
   List<DataRow> _createRows() {
     return gradeDetailsList
         .map((item) => DataRow(cells: [
-              DataCell(Container(
-                  width: MediaQuery.of(context).size.width / 2.8,
-                  child: Text(item.itemname.toString() == 'null'?'Not evaluated yet':
-                    item.itemname.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ))),
-              DataCell(Text(item.weightformatted.toString() == 'null'?'Not evaluated yet':item.weightformatted.toString())),
-              DataCell(Text(item.gradeformatted.toString() != null && item.gradeformatted.toString() != '-'?item.gradeformatted.toString():"Not evaluated yet")),
-              DataCell(Text(
-                  item.grademin.toString() + '-' + item.grademax.toString()))
-            ]))
+      DataCell(Container(
+          width: MediaQuery.of(context).size.width / 2.8,
+          child: Text(item.itemname.toString() == 'null'?'Not evaluated yet':
+          item.itemname.toString(),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ))),
+      DataCell(Text(item.weightformatted.toString() == 'null'?'Not evaluated yet':item.weightformatted.toString())),
+      DataCell(Text(item.gradeformatted.toString() != null && item.gradeformatted.toString() != '-'?item.gradeformatted.toString():"Not evaluated yet")),
+      DataCell(Text(
+          item.grademin.toString() + '-' + item.grademax.toString()))
+    ]))
         .toList();
   }
   String getDateStump(String sTime) {

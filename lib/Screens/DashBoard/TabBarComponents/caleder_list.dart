@@ -29,26 +29,13 @@ class DashBoardCalederList extends StatefulWidget{
 }
 class InitState extends State<DashBoardCalederList> {
   NetworkCall networkCall = NetworkCall();
-  String token = '';
-  String userId = '';
   List<upComing.Events> eventsDataList = [];
-  // String firstUpcomingEvent = '';
-  // String firstUpcomingEventDate = '';
-  // Map<String, dynamic> dateList = {};
-  // List<upComing.Events> eventList = [];
-  // List<monthly.Weeks> weekList = [];
-  // List<monthly.Days> daysList = [];
-  // List<monthly.Events> monthlyEventList = [];
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   late PageController pageController;
-  // final kToday = DateTime.now();
-// final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-// final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
   @override
   void initState() {
     super.initState();
-    getSharedData();
     setState(() {
 
     });
@@ -60,8 +47,12 @@ class InitState extends State<DashBoardCalederList> {
   }
 
   List<dynamic> getEventsForDay(day){
-    print(">>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<"+widget.dateList[day.toString().replaceAll("Z", "")].toString());
-    return widget.dateList[day.toString().replaceAll("Z", "")] ?? [];
+    print(">>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<"+widget.dateList.toString());
+    print(">>>>>++<<<<"+day.toString());
+
+    return widget.dateList[day.toString().split(" ")[0]] ?? [];
+
+
   }
 
   @override
@@ -73,189 +64,164 @@ class InitState extends State<DashBoardCalederList> {
     String headerText = DateFormat.MMMM().format(_focusedDay);
     print('Syear: '+ _focusedDay.year.toString()+'Smonth: '+ _focusedDay.month.toString());
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          children: [
-            // InkWell(
-            //     onTap: (){
-            //       Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
-            //     },
-            //     child: Container(
-            //         width: MediaQuery.of(context).size.width,
-            //         color: PrimaryColor,
-            //         child: Align(
-            //             alignment: Alignment.center,
-            //             child: Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: Text('Create Events', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-            //             )))),
-
-            SizedBox(height: 10,),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 30.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
-                    //print('check settings  '+ firstNameController.text.toString());
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Container(
-                      width: 150,
-                      height: 35,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: PrimaryColor),
-                      child: Center(
-                        child: Text(
-                          "Create Event",
-                          style: GoogleFonts.nanumGothic(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+      body: Column(
+        children: [
+          SizedBox(height: 10,),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Container(
+                        width: 130,
+                        height: 35,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: PrimaryColor),
+                        child: Center(
+                          child: Text(
+                            "Create Event",
+                            style: GoogleFonts.nanumGothic(
+                                color: Colors.white, fontSize: 13,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+
+                  Visibility(
+                    visible: widget.eventList.length>0?true:false,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => UpcomingCalenderDetailsPage(widget.eventList)));
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Container(
+                          width: 130,
+                          height: 35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: PrimaryColor),
+                          child: Center(
+                            child: Text(
+                              "Upcoming Event " + widget.eventList.length.toString(),
+                              style: GoogleFonts.nanumGothic(
+                                  color: Colors.white, fontSize: 13,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    print(_focusedDay);
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                    _focusedDay = _focusedDay.subtract(const Duration(days: 30));
-                    print('year-: '+ _focusedDay.year.toString()+' month-: '+ _focusedDay.month.toString());
-                    setState((){});
-                  },
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Colors.black,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 18)),
-                    SizedBox(width: 8,),
-                  ],
-                ),
-                IconButton(
-                  onPressed: () {
-                    pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                    _focusedDay = _focusedDay.add(const Duration(days: 30));
-                    print('year+: '+ _focusedDay.year.toString()+' month+: '+ _focusedDay.month.toString());
-                    setState((){});
-                  },
-                  icon: const Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            Card(
-              clipBehavior: Clip.antiAlias,
-              margin: EdgeInsets.all(8),
-              child: TableCalendar(
-                firstDay: DateTime.utc(DateTime.now().year,DateTime.now().month-10,DateTime.now().day),
-                lastDay: DateTime.utc(DateTime.now().year,DateTime.now().month+10,DateTime.now().day),
-                focusedDay: _focusedDay,
-                headerVisible: false,
-                onCalendarCreated: (controller) => pageController = controller,
-                onPageChanged: (focusedDay) => _focusedDay = focusedDay,
-                selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
-
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  print(_focusedDay);
+                  pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                  _focusedDay = _focusedDay.subtract(const Duration(days: 30));
+                  print('year-: '+ _focusedDay.year.toString()+' month-: '+ _focusedDay.month.toString());
+                  setState((){});
                 },
-                onDaySelected: (selectedDay, focusedDay) {
-                  openDialog(getEventsForDay(selectedDay), eventsDataList, selectedDay);
-                  if (!isSameDay(_selectedDay, selectedDay)) {
-                    // Call `setState()` when updating the selected day
-                    eventsDataList.clear();
-                    for (int i = 0; i < widget.eventList.length; i++) {
-                      if (widget.eventList[i].timesort.toString() ==
-                          getEventsForDay(selectedDay).first.toString()) {
-                        eventsDataList.add(widget.eventList[i]);
-                      }
-                    }
-                    setState(() {
+                icon: Icon(
+                  Icons.keyboard_arrow_left,
+                  color: Colors.black,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 18)),
+                  SizedBox(width: 8,),
+                ],
+              ),
+              IconButton(
+                onPressed: () {
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                  _focusedDay = _focusedDay.add(const Duration(days: 30));
+                  print('year+: '+ _focusedDay.year.toString()+' month+: '+ _focusedDay.month.toString());
+                  setState((){});
+                },
+                icon: const Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          Card(
+            clipBehavior: Clip.antiAlias,
+            margin: EdgeInsets.all(8),
+            child: TableCalendar(
+              firstDay: DateTime.utc(DateTime.now().year,DateTime.now().month-10,DateTime.now().day),
+              lastDay: DateTime.utc(DateTime.now().year,DateTime.now().month+10,DateTime.now().day),
+              focusedDay: _focusedDay,
+              headerVisible: false,
+              onCalendarCreated: (controller) => pageController = controller,
+              onPageChanged: (focusedDay) => _focusedDay = focusedDay,
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
 
-                    });
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                eventsDataList.clear();
+                openDialog(getEventsForDay(selectedDay), eventsDataList, selectedDay);
+                print('-----> '+getEventsForDay(selectedDay).first.toString());
+                for (int i = 0; i < widget.eventList.length; i++) {
+                  if (DateTime.parse(getDateStump(widget.eventList[i].timesort.toString())).toString().split(" ")[0] ==
+                      DateTime.parse(getDateStump(getEventsForDay(selectedDay).first.toString())).toString().split(" ")[0]) {
+                    eventsDataList.add(widget.eventList[i]);
                   }
-                },
-                // holidayPredicate: (day) {
-                //   // Every 20th day of the month will be treated as a holiday
-                //   return day.weekday == 5;
-                // },
-                daysOfWeekVisible: true,
-                sixWeekMonthsEnforced: true,
-                shouldFillViewport: false,
-                headerStyle: HeaderStyle(titleTextStyle: TextStyle(fontSize: 20, color: Colors.deepPurple, fontWeight: FontWeight.w800)),
-                calendarStyle: CalendarStyle(todayTextStyle: TextStyle(fontSize:20, color: Colors.white, fontWeight: FontWeight.bold )),
-                eventLoader: getEventsForDay,
-              ),
+                }
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                });
+              },
+              // holidayPredicate: (day) {
+              //   // Every 20th day of the month will be treated as a holiday
+              //   return day.weekday == 5;
+              // },
+              daysOfWeekVisible: true,
+              sixWeekMonthsEnforced: true,
+              shouldFillViewport: false,
+              headerStyle: HeaderStyle(titleTextStyle: TextStyle(fontSize: 20, color: Colors.deepPurple, fontWeight: FontWeight.w800)),
+              calendarStyle: CalendarStyle(todayTextStyle: TextStyle(fontSize:20, color: Colors.white, fontWeight: FontWeight.bold )),
+              eventLoader: getEventsForDay,
             ),
-            const SizedBox(height: 8.0),
-            ///upcoming events list
-            Visibility(
-              visible: widget.eventList.length>0?true:false,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                child: InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => UpcomingCalenderDetailsPage(widget.eventList)));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Upcoming Event', style: TextStyle(fontSize: 12)),
-                      Text('View all', style: TextStyle(color: SecondaryColor, fontSize: 12),),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Divider(),
-            Padding(
-                padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: widget.eventList.length,
-                    itemBuilder: (context, index) {
-                      final mCourseData = widget.eventList[index];
-
-                      return buildUpcomingEvent(mCourseData);
-                    })),
-          ],
-        ),
+          ),
+          const SizedBox(height: 8.0),
+        ],
       ),
     );
   }
-  void getSharedData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('TOKEN')!;
-    userId = prefs.getString('userId')!;
-    setState(() {
-      //getEventsData(token);
-      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
-  }
+
   void showToastMessage(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -266,69 +232,14 @@ class InitState extends State<DashBoardCalederList> {
         fontSize: 16.0 //message font size
     );
   }
+
   String getDateStump(String sTime) {
     int timeNumber = int.parse(sTime);
     return DateTime.fromMillisecondsSinceEpoch(timeNumber * 1000).toString();
   }
 
-  Widget buildUpcomingEvent(upComing.Events mCourseData) => GestureDetector(
-      onTap: () {
-        /// do click item task
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => CoursesDetailsPage(mCourseData)));
-      },
-      child:
-      Container(
-        margin: const EdgeInsets.only(left: 12.0, right: 12, top: 5, bottom: 8),
-        padding: const EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.black12)),
-        child: Row(
-          children: [
-            Image.asset('assets/images/course_image.png',height: 30, width: 30,fit: BoxFit.cover,),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Text(mCourseData.name.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: GoogleFonts.comfortaa(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text( DateFormat.yMMMEd().format(DateTime.parse(
-                        getDateStump(mCourseData
-                            .timestart
-                            .toString()))),
-                        style: GoogleFonts.comfortaa(
-                            color: Colors.black54,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      )
-  );
-
-
   void openDialog(List<dynamic> eventsForDay, List<upComing.Events> eventsDataList, DateTime selectedDay) {
-
+    print('length: '+eventsDataList.length.toString()+'--------'+eventsForDay.toString());
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -419,6 +330,7 @@ class InitState extends State<DashBoardCalederList> {
           );
         });
   }
+
   Widget buildDialogEvent(mEventData) => GestureDetector(
       onTap: () {
         /// do click item task

@@ -106,9 +106,7 @@ class InitState extends State<NotificationPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getURNotification(token, userId);
-    });
+    Future.wait([getURNotification(token, userId), getRNotification(token, userId)]);
   }
 
   Future getURNotification(String token, String userId) async{
@@ -116,38 +114,26 @@ class InitState extends State<NotificationPage> {
         context, "loading", true);
     final uRNotificationData = await networkCall.UserUnReadNotificationCall(token, userId);
     if(uRNotificationData != null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
-
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       unReadNotiList = uRNotificationData.messages!;
       allNotification.addAll(unReadNotiList);
       setState(() {
-
-        getRNotification(token, userId);
       });
 
     }else{
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');
     }
   }
 
-  void getRNotification(String token, String userId) async{
-    CommonOperation.showProgressDialog(
-        context, "loading", true);
+  Future getRNotification(String token, String userId) async{
     final rNotificationData = await networkCall.UserReadNotificationCall(token, userId);
     if(rNotificationData != null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
-
-      CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       readNotiList = rNotificationData.messages!;
+      allNotification.addAll(readNotiList);
       setState(() {
-        allNotification.addAll(readNotiList);
       });
 
     }else{
@@ -175,7 +161,6 @@ class InitState extends State<NotificationPage> {
     }else{
       openNetworkDialog();
       setState(() {
-
       });
     }
   }

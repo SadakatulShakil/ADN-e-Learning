@@ -32,70 +32,70 @@ class InitState extends State<ProfileSettingsPage> {
     'Bangla'
   ];
   List <String> cityList = [
-  'Dhaka',
-  'Faridpur',
-  'Gazipur',
-  'Gopalganj',
-  'Jamalpur',
-  'Kishoreganj',
-  'Madaripur',
-  'Manikganj',
-  'Munshiganj',
-  'Mymensingh',
- 'Narayanganj',
-  'Narsingdi',
-  'Netrokona',
-  'Rajbari',
-  'Shariatpur',
-  'Sherpur',
-  'Tangail',
-  'Bogura',
-  'Joypurhat',
-  'Naogaon',
-  'Natore',
-  'Nawabganj',
-  'Pabna',
-  'Rajshahi',
-  'Sirajgonj',
-  'Dinajpur',
-  'Gaibandha',
-  'Kurigram',
-  'Lalmonirhat',
-  'Nilphamari',
-  'Panchagarh',
-  'Rangpur',
-  'Thakurgaon',
-  'Barguna',
-  'Barishal',
-  'Bhola',
-  'Jhalokati',
-  'Patuakhali',
-  'Pirojpur',
-  'Bandarban',
-  'Brahmanbaria',
-  'Chandpur',
-  'Chattogram',
-  'Cumilla',
-  'Coxs Bazar',
-  'Feni',
-  'Khagrachari',
-  'Lakshmipur',
-  'Noakhali',
-  'Rangamati',
-  'Habiganj',
-  'Maulvibazar',
-  'Sunamganj',
-  'Sylhet',
-  'Bagerhat',
-  'Chuadanga',
-  'Jashore',
-  'Jhenaidah',
-  'Khulna',
-  'Kushtia',
-  'Magura',
-  'Meherpur',
-  'Narail',
-  'Satkhira',
+    'Dhaka',
+    'Faridpur',
+    'Gazipur',
+    'Gopalganj',
+    'Jamalpur',
+    'Kishoreganj',
+    'Madaripur',
+    'Manikganj',
+    'Munshiganj',
+    'Mymensingh',
+    'Narayanganj',
+    'Narsingdi',
+    'Netrokona',
+    'Rajbari',
+    'Shariatpur',
+    'Sherpur',
+    'Tangail',
+    'Bogura',
+    'Joypurhat',
+    'Naogaon',
+    'Natore',
+    'Nawabganj',
+    'Pabna',
+    'Rajshahi',
+    'Sirajgonj',
+    'Dinajpur',
+    'Gaibandha',
+    'Kurigram',
+    'Lalmonirhat',
+    'Nilphamari',
+    'Panchagarh',
+    'Rangpur',
+    'Thakurgaon',
+    'Barguna',
+    'Barishal',
+    'Bhola',
+    'Jhalokati',
+    'Patuakhali',
+    'Pirojpur',
+    'Bandarban',
+    'Brahmanbaria',
+    'Chandpur',
+    'Chattogram',
+    'Cumilla',
+    'Coxs Bazar',
+    'Feni',
+    'Khagrachari',
+    'Lakshmipur',
+    'Noakhali',
+    'Rangamati',
+    'Habiganj',
+    'Maulvibazar',
+    'Sunamganj',
+    'Sylhet',
+    'Bagerhat',
+    'Chuadanga',
+    'Jashore',
+    'Jhenaidah',
+    'Khulna',
+    'Kushtia',
+    'Magura',
+    'Meherpur',
+    'Narail',
+    'Satkhira',
   ];
   List <String> countryList = [
     'Bangladesh',
@@ -116,9 +116,7 @@ class InitState extends State<ProfileSettingsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      getSharedData();
-    });
+    getSharedData();
   }
 
 
@@ -141,9 +139,7 @@ class InitState extends State<ProfileSettingsPage> {
                   print('---------------- '+ 'clicked');
                   changePasswordVisibility = false;
                   generalVisibility?generalVisibility = false:generalVisibility = true;
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: Container(
                   color: Colors.white,
@@ -182,7 +178,7 @@ class InitState extends State<ProfileSettingsPage> {
                         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
                         child: Text("First name",
                             style: GoogleFonts.nanumGothic(
-                              color: Colors.black45,
+                                color: Colors.black45,
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
                     ),
@@ -274,53 +270,6 @@ class InitState extends State<ProfileSettingsPage> {
                       ),
                     ),
                     SizedBox(height: 20,),
-                    // Align(
-                    //   alignment: Alignment.topLeft,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(left: 12, right: 12),
-                    //     child: Text("Preferred language",
-                    //         style: GoogleFonts.comfortaa(
-                    //             color: Colors.black45,
-                    //             fontSize: 12, fontWeight: FontWeight.bold)),
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                    //   child: Container(
-                    //     width: MediaQuery.of(context).size.width,
-                    //
-                    //     child:DropdownButton<String>(
-                    //       // Not necessary for Option 1
-                    //       //underline: SizedBox(), //remove underline
-                    //       hint: Text('Select language',
-                    //         style: GoogleFonts.comfortaa(
-                    //           color: Colors.black45,
-                    //           fontSize: 15,
-                    //           fontWeight: FontWeight.w700,
-                    //         ),
-                    //       ),
-                    //       value: _selectedLanguage,
-                    //       isExpanded: true,
-                    //       onChanged: (String? newValue) {
-                    //         setState(() {
-                    //           //hint = '';
-                    //           _selectedLanguage = newValue!;
-                    //           print("Accoutn no: " + _selectedLanguage.toString());
-                    //         });
-                    //       },
-                    //       items: languageList.map<DropdownMenuItem<String>>((String value) {
-                    //         return DropdownMenuItem<String>(
-                    //           value: value,
-                    //           child: Text(value, style: GoogleFonts.comfortaa(
-                    //             fontSize: 15,
-                    //             fontWeight: FontWeight.w700,)),
-                    //         );
-                    //       })
-                    //           .toList(),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 8,),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
@@ -379,11 +328,8 @@ class InitState extends State<ProfileSettingsPage> {
                           value: _selectedCountry,
                           isExpanded: true,
                           onChanged: (String? newValue) {
-                            setState(() {
-                              //hint = '';
-                              _selectedCountry = newValue!;
-                              print("Accoutn no: " + _selectedCountry.toString());
-                            });
+                            _selectedCountry = newValue!;
+                            setState(() {});
                           },
                           items: countryList.map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
@@ -443,11 +389,7 @@ class InitState extends State<ProfileSettingsPage> {
                       MaterialPageRoute(
                           builder: (context) => ForgetPasswordPage()));
                   print('---------------- '+ 'clicked');
-                  // changePasswordVisibility?changePasswordVisibility = false: changePasswordVisibility = true;
-                  // generalVisibility = false;
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: Container(
                   color: Colors.white,
@@ -474,182 +416,7 @@ class InitState extends State<ProfileSettingsPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 28,),
-              // Visibility(
-              //   visible: changePasswordVisibility?true:false,
-              //   child: Column(
-              //     children: [
-              //       SizedBox(height: 15,),
-              //       Align(
-              //         alignment: Alignment.topLeft,
-              //         child: Padding(
-              //           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-              //           child: Text("Current password",
-              //               style: GoogleFonts.comfortaa(color: Colors.black45,
-              //                   fontSize: 12, fontWeight: FontWeight.bold)),
-              //         ),
-              //       ),
-              //       Padding(
-              //         padding: const EdgeInsets.only(left: 12.0, right: 12),
-              //         child: TextField(
-              //           keyboardType: TextInputType.text,
-              //           obscureText: !_passwordVisible,
-              //           decoration: InputDecoration(
-              //               contentPadding: EdgeInsets.only(top: 18.0),
-              //               isDense: true,
-              //               enabledBorder: UnderlineInputBorder(
-              //                 borderSide: BorderSide(color: Colors.black12),
-              //               ),
-              //               focusedBorder: UnderlineInputBorder(
-              //                 borderSide: BorderSide(color: Colors.black12),
-              //               ),
-              //               //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-              //               suffixIcon: IconButton(
-              //                 icon: Icon(
-              //                   // Based on passwordVisible state choose the icon
-              //                   _passwordVisible
-              //                       ? Icons.visibility
-              //                       : Icons.visibility_off,
-              //                   color: const Color(0xFFBDBDBD),
-              //                 ),
-              //                 onPressed: () {
-              //                   // Update the state i.e. toogle the state of passwordVisible variable
-              //                   setState(() {
-              //                     _passwordVisible = !_passwordVisible;
-              //                   });
-              //                 },
-              //               ),
-              //               hintText: 'Enter current password',hintStyle: GoogleFonts.comfortaa(
-              //             fontSize: 15,
-              //           )
-              //           ),
-              //           autofocus: false,
-              //         ),
-              //       ),
-              //       SizedBox(height: 8,),
-              //       Align(
-              //         alignment: Alignment.topLeft,
-              //         child: Padding(
-              //           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-              //           child: Text("New password",
-              //               style: GoogleFonts.comfortaa(
-              //                   color: Colors.black45,
-              //                   fontSize: 12, fontWeight: FontWeight.bold)),
-              //         ),
-              //       ),
-              //       Padding(
-              //         padding: const EdgeInsets.only(left: 12.0, right: 12),
-              //         child: TextField(
-              //           keyboardType: TextInputType.text,
-              //           obscureText: !_passwordVisible,
-              //           decoration: InputDecoration(
-              //               contentPadding: EdgeInsets.only(top: 18.0),
-              //               isDense: true, enabledBorder: UnderlineInputBorder(
-              //             borderSide: BorderSide(color: Colors.black12),
-              //           ),
-              //               focusedBorder: UnderlineInputBorder(
-              //                 borderSide: BorderSide(color: Colors.black12),
-              //               ),
-              //               //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-              //               suffixIcon: IconButton(
-              //                 icon: Icon(
-              //                   // Based on passwordVisible state choose the icon
-              //                   _passwordVisible
-              //                       ? Icons.visibility
-              //                       : Icons.visibility_off,
-              //                   color: const Color(0xFFBDBDBD),
-              //                 ),
-              //                 onPressed: () {
-              //                   // Update the state i.e. toogle the state of passwordVisible variable
-              //                   setState(() {
-              //                     _passwordVisible = !_passwordVisible;
-              //                   });
-              //                 },
-              //               ),
-              //               hintText: 'Enter new password',hintStyle: GoogleFonts.comfortaa(
-              //             fontSize: 15,
-              //           )
-              //           ),
-              //           autofocus: false,
-              //         ),
-              //       ),
-              //       SizedBox(height: 8,),
-              //       Align(
-              //         alignment: Alignment.topLeft,
-              //         child: Padding(
-              //           padding: const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-              //           child: Text("Confirm password",
-              //               style: GoogleFonts.comfortaa(
-              //                   color: Colors.black45,
-              //                   fontSize: 12, fontWeight: FontWeight.bold)),
-              //         ),
-              //       ),
-              //       Padding(
-              //         padding: const EdgeInsets.only(left: 12.0, right: 12),
-              //         child: TextField(
-              //           keyboardType: TextInputType.text,
-              //           obscureText: !_passwordVisible,
-              //           decoration: InputDecoration(
-              //               contentPadding: EdgeInsets.only(top: 18.0),
-              //               focusedBorder: UnderlineInputBorder(
-              //                 borderSide: BorderSide(color: Colors.black12),
-              //               ),
-              //               isDense: true, enabledBorder: UnderlineInputBorder(
-              //             borderSide: BorderSide(color: Colors.black12),
-              //           ),
-              //               //prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-              //               suffixIcon: IconButton(
-              //                 icon: Icon(
-              //                   // Based on passwordVisible state choose the icon
-              //                   _passwordVisible
-              //                       ? Icons.visibility
-              //                       : Icons.visibility_off,
-              //                   color: const Color(0xFFBDBDBD),
-              //                 ),
-              //                 onPressed: () {
-              //                   // Update the state i.e. toogle the state of passwordVisible variable
-              //                   setState(() {
-              //                     _passwordVisible = !_passwordVisible;
-              //                   });
-              //                 },
-              //               ),
-              //               hintText: 'Confirm new password',hintStyle: GoogleFonts.comfortaa(
-              //             fontSize: 15,
-              //           )
-              //           ),
-              //           autofocus: false,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
-              //
-              // SizedBox(height: 15,),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30),
-              //   child: InkWell(
-              //     onTap: (){
-              //       //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-              //     },
-              //     child: Card(
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(15),
-              //       ),
-              //       child: Container(
-              //         width:350,
-              //         height: 50,
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(15),
-              //
-              //         ),
-              //         child: Center(
-              //           child: Text("Cancel", style: GoogleFonts.comfortaa(color: Colors.black, fontWeight: FontWeight.bold),),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(height: 28,)
             ],
           ),
         )
@@ -660,24 +427,17 @@ class InitState extends State<ProfileSettingsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('TOKEN')!;
     String userid = prefs.getString('userId')!;
-    setState(() {
-      getSiteInfo(token, userid);
-    });
+    Future.wait([getSiteInfo(token, userid), getProfileInfo(token, userid), getAllCourses(token, userid)]);
   }
 
-  void getSiteInfo(String token, String userid) async{
+  Future getSiteInfo(String token, String userid) async{
     //CommonOperation.showProgressDialog(context, "loading", true);
     final userDetailsData = await networkCall.UserDetailsCall(token);
     if(userDetailsData != null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       print('hospital data'+ userDetailsData.firstname.toString());
       surName = userDetailsData.lastname.toString();
       firstName = userDetailsData.firstname.toString();
-      setState(() {
-        if (!mounted)
-        getProfileInfo(token, userid);
-      });
+      setState(() {});
 
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -687,24 +447,18 @@ class InitState extends State<ProfileSettingsPage> {
 
   }
 
-  void getProfileInfo(String token, String userId) async {
+  Future getProfileInfo(String token, String userId) async {
     //CommonOperation.showProgressDialog(context, "loading", true);
     final profileInfoData =
     await networkCall.ProfileInfoCall(token, userId);
     if (profileInfoData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       profileInfoList = profileInfoData;
       name = profileInfoList[0].fullname.toString();
       email = profileInfoList[0].email.toString();
       _selectedLanguage = profileInfoList[0].lang.toString()=='en'?'English':'Bangla';
       city = profileInfoList[0].city.toString();
       print('data_count1 ' + profileInfoList.first.toString());
-      //CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      setState(() {
-        getAllCourses(token, userId);
-      });
+      setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
@@ -721,18 +475,13 @@ class InitState extends State<ProfileSettingsPage> {
         fontSize: 16.0 //message font size
     );
   }
-  void getAllCourses(String token, String userId) async {
+  Future getAllCourses(String token, String userId) async {
     //CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
     await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success2';
       courseList = userCoursesData;
-      //count = courseList.length.toString();
       print('data_count1 ' + courseList[0].fullname.toString());
-      //showToastMessage(message);
-      //CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -209,7 +209,7 @@ class InitState extends State<OtherProfileBody> {
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => MyCourses(widget.userId.toString())));
                           },
                           child: Container(
-                            width: 160,
+                            width: 150,
                             child: Card(
                               elevation: 5,
                               shape: RoundedRectangleBorder(
@@ -221,7 +221,7 @@ class InitState extends State<OtherProfileBody> {
                                   children: [
                                     Text('Courses I have',style: GoogleFonts.comfortaa(
                                         fontWeight: FontWeight.w900,
-                                        fontSize: 15)),
+                                        fontSize: 14)),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -238,7 +238,7 @@ class InitState extends State<OtherProfileBody> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          width: 160,
+                          width: 150,
                           child: Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -250,7 +250,7 @@ class InitState extends State<OtherProfileBody> {
                                 children: [
                                   Text('Last visited',style: GoogleFonts.comfortaa(
                                       fontWeight: FontWeight.w900,
-                                      fontSize: 15)),
+                                      fontSize: 14)),
                                   SizedBox(
                                     height: 10,
                                   ),

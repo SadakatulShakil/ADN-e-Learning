@@ -27,9 +27,7 @@ class InitState extends State<CategoryWiseCoursesPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      getSharedData();
-    });
+    getSharedData();
   }
 
   @override
@@ -225,18 +223,14 @@ class InitState extends State<CategoryWiseCoursesPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('TOKEN')!;
     String userid = prefs.getString('userId')!;
-    setState(() {
-      getAllCourses(token, userid);
-    });
+    Future.wait([getAllCourses(token, userid)]);
   }
 
-  void getAllCourses(String token, String userId) async {
+  Future getAllCourses(String token, String userId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
     await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success2';
       courseList = userCoursesData;
       categoryWiseCourseList = courseList
           .where((element) =>
@@ -244,10 +238,10 @@ class InitState extends State<CategoryWiseCoursesPage> {
           .toList();
       //count = courseList.length.toString();
       print('data_count1 ' + courseList.first.toString());
-      //showToastMessage(message);
       CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');

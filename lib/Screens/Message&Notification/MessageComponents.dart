@@ -48,9 +48,7 @@ class InitState extends State<MessageComponents> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      checkconnectivity();
-    });
+    checkconnectivity();
   }
 
   @override
@@ -186,7 +184,6 @@ class InitState extends State<MessageComponents> {
                                         builder: (context) => ContactComponents(
                                             contactRequestList,
                                             userid)));
-                                setState(() {});
                               },
                               text: 'Contact',
                               textStyle: GoogleFonts.nanumGothic(
@@ -329,18 +326,14 @@ class InitState extends State<MessageComponents> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userid = prefs.getString('userId')!;
-    setState(() {
-      getChatHolders(token, userid);
-    });
+    Future.wait([getChatHolders(token, userid), getContactRequest(token, userid)]);
+
   }
 
   Future getChatHolders(String token, String userId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final chatHolderData = await networkCall.ChatHolderListCall(token, userId);
     if (chatHolderData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
-
       chatHolderList = chatHolderData.conversations!;
       groupChatHolderList =
           chatHolderList.where((element) => element.type == 2).toList();
@@ -354,14 +347,12 @@ class InitState extends State<MessageComponents> {
         }
       }
       print('new data' + contactsList.length.toString());
-
-      //print('data_count1 ' + chatHolderData.first.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        getContactRequest(token, userId);
+
       });
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');
@@ -395,7 +386,7 @@ class InitState extends State<MessageComponents> {
     subtitle: Row(
       children: [
         Container(
-          width: 60,
+          width: 45,
           child: Text(mChatData.members.length > 0 && mChatData.messages.length > 0
               ? mChatData.messages.first.useridfrom.toString() == userid
               ? 'you :'
@@ -518,7 +509,7 @@ class InitState extends State<MessageComponents> {
     subtitle: Row(
       children: [
         Container(
-            width: 60,
+            width: 45,
             child: Text(
                 mGroupChatData.members.length > 0 &&
                     mGroupChatData.messages.length > 0
@@ -642,16 +633,17 @@ class InitState extends State<MessageComponents> {
     subtitle: Row(
       children: [
         Container(
-          width: 60,
+          width: 45,
           child: Text(mPrivateChatData.members.length > 0 &&
               mPrivateChatData.messages.length > 0
               ? mPrivateChatData.messages.first.useridfrom.toString() ==
               userid
               ? 'you :'
               : mPrivateChatData.members.first.fullname.toString() + ':'
-              : ''),
+              : '',overflow: TextOverflow.ellipsis,),
         ),
         Container(
+            width: MediaQuery.of(context).size.width / 2.5,
             child: Text(
                 mPrivateChatData.messages.length > 0
                     ? (parse(HtmlUnescape().convert(mPrivateChatData
@@ -750,20 +742,12 @@ class InitState extends State<MessageComponents> {
     ),
   );
 
-  void getContactRequest(String token, String userId) async {
-    CommonOperation.showProgressDialog(context, "loading", true);
+  Future getContactRequest(String token, String userId) async {
     final contactRequestData =
     await networkCall.ContactRequestCall(token, userId);
     if (contactRequestData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'SuccessContactList';
-
       contactRequestList = contactRequestData;
-      //print('data_count1 ' + chatHolderData.first.toString());
-      CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        // getContactRequest(token, userId);
       });
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -776,23 +760,18 @@ class InitState extends State<MessageComponents> {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userSearchData = await networkCall.UserSearchCall(token, searchText);
     if (userSearchData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'SuccessMessage done';
-
       searchedUserList = userSearchData;
-      //print('data_count1 ' + chatHolderData.first.toString());
-      CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
+      if (searchedUserList != null && searchedUserList.length > 0) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SearchResultPage(searchedUserList)));
+      } else {
+        String message = 'No User matched !';
+        showToastMessage(message);
+      }
       setState(() {
-        if (searchedUserList != null && searchedUserList.length > 0) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchResultPage(searchedUserList)));
-          //OpenUserDialog(searchedUserList);
-        } else {
-          message = 'No User matched !';
-        }
-        // getContactRequest(token, userId);
+
       });
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');

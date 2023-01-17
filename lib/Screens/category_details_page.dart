@@ -27,8 +27,6 @@ class InitState extends State<CategoryDetailsPage> {
     // TODO: implement initState
     super.initState();
     getSubCat(widget.catId);
-    print('kkkkk '+ widget.catId.toString());
-    setState(() {});
   }
 
   @override
@@ -130,44 +128,6 @@ class InitState extends State<CategoryDetailsPage> {
       ),
     );
   }
-  // void getSharedData() async{
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   token = prefs.getString('TOKEN')!;
-  //   setState(() {
-  //     getCategories(token);
-  //   });
-  // }
-  // void getCategories(String token) async{
-  //   CommonOperation.showProgressDialog(
-  //       context, "loading", true);
-  //   final categoryListCallData = await networkCall.CategoryListCall(token);
-  //   if(categoryListCallData != null){
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success';
-  //     categoryList = categoryListCallData;
-  //     //count = categoryList.length.toString();
-  //     print('data_count1 '+ categoryList.first.toString());
-  //     showToastMessage(message);
-  //     setState(() {
-  //       CommonOperation.hideProgressDialog(context);
-  //     });
-  //
-  //   }else{
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  // }
-  // void showToastMessage(String message) {
-  //   Fluttertoast.showToast(
-  //       msg: message,
-  //       toastLength: Toast.LENGTH_SHORT,
-  //       gravity: ToastGravity.TOP,
-  //       timeInSecForIosWeb: 1,
-  //       textColor: Colors.white,
-  //       fontSize: 16.0 //message font size
-  //   );
-  // }
   Widget buildCategoryCourse(mCategoryData) =>
       Visibility(
         visible: mCategoryData.parent.toString() == widget.catId.toString()?true:false,

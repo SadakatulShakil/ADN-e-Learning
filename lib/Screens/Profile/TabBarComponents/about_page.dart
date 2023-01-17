@@ -36,9 +36,7 @@ class InitState extends State<ProfileAboutPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      getSharedData();
-    });
+    getSharedData();
   }
 
   @override
@@ -61,7 +59,6 @@ class InitState extends State<ProfileAboutPage> {
                   changePasswordVisibility = false;
                   generalVisibility?generalVisibility = false:generalVisibility = true;
                   setState(() {
-
                   });
                 },
                 child: Container(
@@ -266,7 +263,6 @@ class InitState extends State<ProfileAboutPage> {
                   changePasswordVisibility?changePasswordVisibility = false: changePasswordVisibility = true;
                   generalVisibility = false;
                   setState(() {
-
                   });
                 },
                 child: Container(
@@ -421,23 +417,18 @@ class InitState extends State<ProfileAboutPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('TOKEN')!;
     String userid = prefs.getString('userId')!;
-    setState(() {
-      getSiteInfo(token, userid);
-    });
+    Future.wait([getSiteInfo(token, userid), getProfileInfo(token, userid), getAllCourses(token, userid)]);
   }
-  void getSiteInfo(String token, String userid) async{
+  Future getSiteInfo(String token, String userid) async{
 
     //CommonOperation.showProgressDialog(context, "loading", true);
     final userDetailsData = await networkCall.UserDetailsCall(token);
     if(userDetailsData != null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
+
       print('hospital data'+ userDetailsData.firstname.toString());
       surName = userDetailsData.lastname.toString();
       firstName = userDetailsData.firstname.toString();
-      setState(() {
-        getProfileInfo(token, userid);
-      });
+      setState(() {});
 
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -446,18 +437,12 @@ class InitState extends State<ProfileAboutPage> {
     }
 
   }
-
-
-  void getProfileInfo(String token, String userId) async {
-    //CommonOperation.showProgressDialog(context, "loading", true);
+  Future getProfileInfo(String token, String userId) async {
     final profileInfoData =
     await networkCall.ProfileInfoCall(token, userId);
     if (profileInfoData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       profileInfoList = profileInfoData;
       name = profileInfoList[0].fullname.toString();
-      //userName = profileInfoList[0].username.toString();
       email = profileInfoList[0].email.toString();
       language = profileInfoList[0].lang.toString();
       city = profileInfoList[0].city.toString();
@@ -470,10 +455,8 @@ class InitState extends State<ProfileAboutPage> {
               .lastaccess
               .toString())));
       print('data_count1 ' + profileInfoList.first.toString());
-      //CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        getAllCourses(token, userId);
+
       });
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -491,18 +474,14 @@ class InitState extends State<ProfileAboutPage> {
         fontSize: 16.0 //message font size
     );
   }
-  void getAllCourses(String token, String userId) async {
+  Future getAllCourses(String token, String userId) async {
     //CommonOperation.showProgressDialog(context, "loading", true);
     final userCoursesData =
     await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success2';
       courseList = userCoursesData;
       count = courseList.length.toString();
       print('data_count1 ' + courseList[0].fullname.toString());
-      //showToastMessage(message);
-      //CommonOperation.hideProgressDialog(context);
       setState(() {});
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();

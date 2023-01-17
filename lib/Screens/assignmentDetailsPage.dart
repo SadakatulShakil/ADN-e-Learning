@@ -151,178 +151,23 @@ class InitState extends State<AssignmentDetailsPage> {
                           )),
                       Expanded(
                         child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Container(
-                                color: Color(0xFFCAECFF),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left: 8.0, top: 10),
-                                          child: Text('Topic'),
-                                        )),
-                                    Html(data: htmlData)
-                                  ],
+                            child: Column(
+                              children: [
+                                Container(
+                                  color: Color(0xFFCAECFF),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 8.0, top: 10),
+                                            child: Text('Topic'),
+                                          )),
+                                      Html(data: htmlData)
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      color: Colors.grey[350],
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text("Submission Status", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
-                                      ),
-                                    ),
-                                    SizedBox(height: 8,),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text("Submission Status: ", style: TextStyle(fontSize: 15),)),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text(submissionStatus == 'new'?'Not Attempt':'Submitted', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                          child: Divider(thickness: 2,),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text("Grading Status: ", style: TextStyle(fontSize: 15),)),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text(gradingStatus == 'notgraded'?'Not Graded':'Graded', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                          child: Divider(thickness: 2,),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text("Last Modified: ", style: TextStyle(fontSize: 15),)),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text(DateFormat.yMMMEd().format(
-                                                      DateTime.parse(getDateStump(
-                                                          lastDateSubmission
-                                                              .toString()))), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                          child: Divider(thickness: 2,),
-                                        ),
-                                      ],
-                                    ),
-                                    Visibility(
-                                      visible: onlineText?true:false,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text("Submitted Text: ", style: TextStyle(fontSize: 15),)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Html(data: onlineTextAnswer)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                            child: Divider(thickness: 2,),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Visibility(
-                                      visible: subFileShow?true:false,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text("Submission File: ", style: TextStyle(fontSize: 15),)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(subFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SecondaryColor),)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                            child: Divider(thickness: 2,),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text("Comments: ", style: TextStyle(fontSize: 15),)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text('No comments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Visibility(
-                                visible: feedbackShow?true:false,
-                                child: Container(
+                                Container(
                                   child: Column(
                                     children: [
                                       Container(
@@ -331,45 +176,25 @@ class InitState extends State<AssignmentDetailsPage> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: Align(
                                               alignment: Alignment.centerLeft,
-                                              child: Text("Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                              child: Text("Submission Status", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                         ),
                                       ),
                                       SizedBox(height: 8,),
                                       Column(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text("Grade: ", style: TextStyle(fontSize: 15),)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Html(data: gradeFromTeacher)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                            child: Divider(thickness: 2,),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
                                           Row(
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Align(
                                                     alignment: Alignment.centerLeft,
-                                                    child: Text("Grade on: ", style: TextStyle(fontSize: 15),)),
+                                                    child: Text("Submission Status: ", style: TextStyle(fontSize: 15),)),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Align(
                                                     alignment: Alignment.centerLeft,
-                                                    child: Text(gradeDate, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                    child: Text(submissionStatus == 'new'?'Not Attempt':'Submitted', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                               ),
                                             ],
                                           ),
@@ -387,13 +212,13 @@ class InitState extends State<AssignmentDetailsPage> {
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Align(
                                                     alignment: Alignment.centerLeft,
-                                                    child: Text("Feedback Comments: ", style: TextStyle(fontSize: 15),)),
+                                                    child: Text("Grading Status: ", style: TextStyle(fontSize: 15),)),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Align(
                                                     alignment: Alignment.centerLeft,
-                                                    child: Text('No Comments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                    child: Text(gradingStatus == 'notgraded'?'Not Graded':'Graded', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                               ),
                                             ],
                                           ),
@@ -405,56 +230,231 @@ class InitState extends State<AssignmentDetailsPage> {
                                       ),
                                       Column(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text("Annotate File: ", style: TextStyle(fontSize: 15),)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(feedBackFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SecondaryColor),)),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Text("Last Modified: ", style: TextStyle(fontSize: 15),)),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Text(DateFormat.yMMMEd().format(
+                                                        DateTime.parse(getDateStump(
+                                                            lastDateSubmission
+                                                                .toString()))), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                              ),
+                                            ],
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                                             child: Divider(thickness: 2,),
+                                          ),
+                                        ],
+                                      ),
+                                      Visibility(
+                                        visible: onlineText?true:false,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text("Submitted Text: ", style: TextStyle(fontSize: 15),)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Html(data: onlineTextAnswer)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Divider(thickness: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: subFileShow?true:false,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text("Submission File: ", style: TextStyle(fontSize: 15),)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(subFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SecondaryColor),)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Divider(thickness: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text("Comments: ", style: TextStyle(fontSize: 15),)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text('No comments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-
-                              InkWell(
-                                onTap: (){
-                                  //callLoginApi(userNameController.text, passwordController.text);
-                                  //agree?Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())): showToastMessage('please accept our terms & condition');
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Container(
-                                      width:350,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          color: PrimaryColor
-                                      ),
-                                      child: Center(
-                                        child: Text("Submit", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
-                                      ),
+                                Visibility(
+                                  visible: feedbackShow?true:false,
+                                  child: Container(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          color: Colors.grey[350],
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text("Feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                          ),
+                                        ),
+                                        SizedBox(height: 8,),
+                                        Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text("Grade: ", style: TextStyle(fontSize: 15),)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Html(data: gradeFromTeacher)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Divider(thickness: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Text("Grade on: ", style: TextStyle(fontSize: 15),)),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Text(gradeDate, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Divider(thickness: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Text("Feedback Comments: ", style: TextStyle(fontSize: 15),)),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Text('No Comments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Divider(thickness: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text("Annotate File: ", style: TextStyle(fontSize: 15),)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(feedBackFileName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SecondaryColor),)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Divider(thickness: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          )
+
+                                InkWell(
+                                  onTap: (){
+                                    //callLoginApi(userNameController.text, passwordController.text);
+                                    //agree?Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())): showToastMessage('please accept our terms & condition');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Container(
+                                        width:350,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15),
+                                            color: PrimaryColor
+                                        ),
+                                        child: Center(
+                                          child: Text("Submit", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
                         ),
                       ),
                     ],
@@ -468,9 +468,7 @@ class InitState extends State<AssignmentDetailsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getAssignmentContent(token, widget.courseId.toString());
-    });
+    Future.wait([getAssignmentContent(token, widget.courseId.toString()), getAssignmentDetails(token, widget.assignmentId)]);
   }
 
   void showToastMessage(String message) {
@@ -489,7 +487,7 @@ class InitState extends State<AssignmentDetailsPage> {
     return DateTime.fromMillisecondsSinceEpoch(timeNumber * 1000).toString();
   }
 
-  void getAssignmentContent(String token, String courseid) async{
+  Future getAssignmentContent(String token, String courseid) async{
     CommonOperation.showProgressDialog(context, "loading", true);
     final assignmentData =
     await networkCall.CourseAssignmentCall(token, courseid);
@@ -503,12 +501,9 @@ class InitState extends State<AssignmentDetailsPage> {
           print('------>intro '+ assignmentIntroList[i].intro.toString());
         }
       }
-      //print('data_content ' + gradeDetailsList.first.itemname.toString());
       CommonOperation.hideProgressDialog(context);
       showToastMessage(message);
-      setState(() {
-        getAssignmentDetails(token, widget.assignmentId);
-      });
+      setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -517,15 +512,13 @@ class InitState extends State<AssignmentDetailsPage> {
     }
 
   }
-  void getAssignmentDetails(String token, String assignmentId) async {
+  Future getAssignmentDetails(String token, String assignmentId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final assignmentDetailsData =
     await networkCall.AssignmentDetailsCall(token, assignmentId);
     if (assignmentDetailsData != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
-      //gradeDetailsList = userGradeDetailsData.usergrades![0].gradeitems!;
-      //print('data_content ' + assignmentDetailsData.lastattempt!.submission!.status.toString());
       submissionStatus = assignmentDetailsData.lastattempt!.submission!.status.toString();
       gradingStatus = assignmentDetailsData.lastattempt!.gradingstatus.toString();
       lastDateSubmission = assignmentDetailsData.lastattempt!.submission!.timemodified.toString();
@@ -533,7 +526,7 @@ class InitState extends State<AssignmentDetailsPage> {
         if(assignmentDetailsData.lastattempt!.submission!.plugins![i].type == 'onlinetext'){
           onlineText = true;
           onlineTextAnswer = assignmentDetailsData.lastattempt!.submission!.plugins![i].editorfields!.first.text.toString();
-    }else if(assignmentDetailsData.lastattempt!.submission!.plugins![i].type =="file" && assignmentDetailsData.lastattempt!.submission!.plugins![i].fileareas!.first.files!.length>0){
+        }else if(assignmentDetailsData.lastattempt!.submission!.plugins![i].type =="file" && assignmentDetailsData.lastattempt!.submission!.plugins![i].fileareas!.first.files!.length>0){
           subFileShow = true;
           subFileName = assignmentDetailsData.lastattempt!.submission!.plugins![i].fileareas!.first.files!.first.filename.toString();
         }
@@ -548,7 +541,6 @@ class InitState extends State<AssignmentDetailsPage> {
           }
         }
       }
-
       CommonOperation.hideProgressDialog(context);
       showToastMessage(message);
       setState(() {});

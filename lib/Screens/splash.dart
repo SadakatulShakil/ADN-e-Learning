@@ -21,11 +21,7 @@ class _SplashState extends State<Splash> {
     // TODO: implement initState
     print("running splash");
     super.initState();
-
     getSharedData();
-    setState(() {
-
-    });
   }
 
   startTimer(String isLog) async{
@@ -39,13 +35,13 @@ class _SplashState extends State<Splash> {
     }
   }
 
- loginPageRoute(){
+  loginPageRoute(){
     // Navigator.pushReplacement(context, MaterialPageRoute(
     //     builder: (context) => LoginScreen()
     // ));
-   Navigator.pushReplacement(context, MaterialPageRoute(
-       builder: (context) => LoginScreen()
-   ));
+    Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) => LoginScreen()
+    ));
   }
   homePageRoute(){
     Navigator.pushReplacement(context, MaterialPageRoute(
@@ -70,7 +66,7 @@ class _SplashState extends State<Splash> {
           Center(
             child: Container(
               margin:  EdgeInsets.only(top: 120.0),
-              child: Text('DigiNet SkillUP', style: GoogleFonts.nanumGothic(color: Color(0XFF01974D), fontSize: 25, fontWeight: FontWeight.bold),),
+              child: Text('Diginet Skillup ', style: GoogleFonts.nanumGothic(color: Color(0XFF01974D), fontSize: 25, fontWeight: FontWeight.bold),),
             ),
           ),
           Container(
@@ -110,8 +106,6 @@ class _SplashState extends State<Splash> {
     print('?????????  '+widget.isLog.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     widget.isLog = await prefs.getString('isLoged').toString();
-    setState(() {
-    });
     startTimer(widget.isLog);
   }
 

@@ -114,8 +114,8 @@ class InitState extends State<DashBoardActivityList> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: GoogleFonts.nanumGothic(
-                              color: Colors.black,
-                              fontSize: 13,)),
+                            color: Colors.black,
+                            fontSize: 13,)),
                     ),
                   ),
                   Padding(
@@ -126,8 +126,8 @@ class InitState extends State<DashBoardActivityList> {
                                 getDateStump(
                                     mCourseData.dateissued.toString()))),
                         style: GoogleFonts.nanumGothic(
-                            color: Colors.black54,
-                            fontSize: 13,)),
+                          color: Colors.black54,
+                          fontSize: 13,)),
                   ),
                 ],
               ),

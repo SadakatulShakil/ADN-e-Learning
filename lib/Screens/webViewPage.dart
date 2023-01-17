@@ -54,11 +54,10 @@ class _WebViewPageState extends State<WebViewPage> {
 
             },
             onPageFinished: (finish) {
-              setState(() {
-                _controller.evaluateJavascript("document.getElementByTagName('header')[0].style.display='none'");
-                _controller.evaluateJavascript("document.getElementByTagName('footer')[0].style.display='none'");
-                isLoading = false;
-              });
+              _controller.evaluateJavascript("document.getElementByTagName('header')[0].style.display='none'");
+              _controller.evaluateJavascript("document.getElementByTagName('footer')[0].style.display='none'");
+              isLoading = false;
+              setState(() {});
             },
           ),
           isLoading ? Center( child: CircularProgressIndicator(),)

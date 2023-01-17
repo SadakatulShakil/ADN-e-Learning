@@ -37,7 +37,6 @@ class InitState extends State<ContactComponents> {
     // TODO: implement initState
     super.initState();
     getSharedData();
-    setState(() {});
   }
 
   @override
@@ -105,7 +104,6 @@ class InitState extends State<ContactComponents> {
                                 onPressed: () {
                                   fieldVisible = 1;
                                   setState(() {
-
                                   });
                                 },
                                 text: 'My contacts',textStyle: GoogleFonts.comfortaa(
@@ -120,7 +118,6 @@ class InitState extends State<ContactComponents> {
                                 onPressed: () {
                                   fieldVisible = 2;
                                   setState(() {
-
                                   });
                                 },
                                 text: 'Request',textStyle: GoogleFonts.comfortaa(
@@ -239,9 +236,7 @@ class InitState extends State<ContactComponents> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     currentId = prefs.getString('userId')!;
-    setState(() {
-      getContactList();
-    });
+    getContactList();
   }
 
   void showToastMessage(String message) {
@@ -456,9 +451,6 @@ class InitState extends State<ContactComponents> {
                       onTap: (){
                         Navigator.pop(context, false);
                         Navigator.push(context, MaterialPageRoute(builder: (context) => OtherProfileBody('contact', widget.userid, mContactData.id.toString())));
-                        // setState(() {
-                        //
-                        // });
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -568,12 +560,11 @@ class InitState extends State<ContactComponents> {
       print('accept data'+ userProfilesData.toString());
       CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
+      fieldVisible = 1;
+      getContactRequest(token, widget.userid);
+      getContactList();
       setState(() {
-        fieldVisible = 1;
-        getContactRequest(token, widget.userid);
-        getContactList();
       });
-
     }else{
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -593,10 +584,10 @@ class InitState extends State<ContactComponents> {
       print('accept data'+ userProfilesData.toString());
       CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
+      fieldVisible = 1;
+      getContactRequest(token, widget.userid);
+      getContactList();
       setState(() {
-        fieldVisible = 1;
-        getContactRequest(token, widget.userid);
-        getContactList();
       });
 
     }else{
@@ -618,11 +609,10 @@ class InitState extends State<ContactComponents> {
       widget.contactRequestList = contactRequestData;
       //print('data_count1 ' + chatHolderData.first.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        // getContactRequest(token, userId);
       });
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');
@@ -639,13 +629,11 @@ class InitState extends State<ContactComponents> {
 
       contactsListData.clear();
       contactsListData = contactListData;
-      //print('data_count1 ' + chatHolderData.first.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        //getContactRequest(token, widget.userid);
       });
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');

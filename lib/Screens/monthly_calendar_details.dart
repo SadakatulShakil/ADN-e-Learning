@@ -134,7 +134,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                       maxLines: 5,
                       style: GoogleFonts.nanumGothic(
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold)),
                 ),
               ),
@@ -150,7 +150,7 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                             .toString()))),
                         style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
-                            fontSize: 18,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold)),
                   ),
                 ],
@@ -158,11 +158,10 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
               SizedBox(height: 8,),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.centerLeft,
                     child: Icon(Icons.menu_book, color: Colors.black54, size: 20,),
                   ),
                   // Container(
@@ -184,13 +183,13 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
                   //   ),
                   // ),
                   Container(
-                    width: MediaQuery.of(context).size.width/1.3,
+                    width: MediaQuery.of(context).size.width/1.4,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
                       child: Row(
                         children: [
                           Flexible(
-                            child: mCourseData.description.toString() == ''?Text("no description"):Html(data: mCourseData.description.toString())
+                              child: mCourseData.description.toString() == ''?Text("no description"):Html(data: mCourseData.description.toString())
                           ),
                         ],
                       ),

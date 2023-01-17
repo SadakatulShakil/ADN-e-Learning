@@ -30,16 +30,16 @@ class _MyApp2State extends State<MyApp2> {
   Locale? _locale;
 
   void setLocale(Locale locale) {
+    _locale = locale;
     setState(() {
-      _locale = locale;
     });
   }
 
   @override
   void didChangeDependencies() async {
     getLocale().then((locale) {
+      _locale = locale;
       setState(() {
-        _locale = locale;
       });
     });
     super.didChangeDependencies();

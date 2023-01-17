@@ -694,4 +694,19 @@ class NetworkCall {
     }
   }
 
+  Future<dynamic> ViewManualActivityCall(String token, String cmId, int completed) async {
+    String fullUrl = '$baseUrl/webservice/rest/server.php?wsfunction=core_completion_update_activity_completion_status_manually&moodlewsrestformat=json&wstoken=$token&cmid=$cmId&completed=$completed';
+    final activityViewCallData = await http.get(Uri.parse(fullUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },);
+    print("activityViewCall_URL = " + fullUrl);
+    print("activityViewCallData = " + activityViewCallData.body);
+    if (activityViewCallData.statusCode == 200) {
+      return activityViewCallData.body;
+    } else {
+      return null;
+    }
+  }
 }

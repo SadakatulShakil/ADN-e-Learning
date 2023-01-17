@@ -116,7 +116,7 @@ class InitState extends State<UpcomingCalenderDetailsPage> {
         margin: const EdgeInsets.only(left: 12.0, right: 12, top: 5, bottom: 8),
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.black12)),
         child: Padding(
@@ -132,7 +132,7 @@ class InitState extends State<UpcomingCalenderDetailsPage> {
                       maxLines: 5,
                       style: GoogleFonts.nanumGothic(
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold)),
                 ),
               ),
@@ -148,23 +148,21 @@ class InitState extends State<UpcomingCalenderDetailsPage> {
                             .toString()))),
                         style: GoogleFonts.nanumGothic(
                             color: Colors.black54,
-                            fontSize: 18,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
-              SizedBox(height: 8,),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.centerLeft,
                     child: Icon(Icons.menu_book, color: Colors.black54, size: 20,),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width/1.3,
+                    width: MediaQuery.of(context).size.width/1.4,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
                       child: Row(

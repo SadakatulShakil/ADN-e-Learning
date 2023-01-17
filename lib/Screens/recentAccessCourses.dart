@@ -139,9 +139,9 @@ class InitState extends State<RecentAccessCourses> {
                                 .startdate
                                 .toString()))),
                         style: GoogleFonts.nanumGothic(
-                            color: Colors.black54,
-                            fontSize: 13,
-                            )),
+                          color: Colors.black54,
+                          fontSize: 13,
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
@@ -153,9 +153,9 @@ class InitState extends State<RecentAccessCourses> {
                               ' % complete'
                               : '0 % complete',
                           style: GoogleFonts.nanumGothic(
-                              color: PrimaryColor,
-                              fontSize: 13,
-                              )),
+                            color: PrimaryColor,
+                            fontSize: 13,
+                          )),
                     ),
                   )
                 ],

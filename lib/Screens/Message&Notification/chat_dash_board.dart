@@ -27,7 +27,6 @@ class ChatDashBoardScreen extends StatefulWidget {
 class InitState extends State<ChatDashBoardScreen> {
   final textController = TextEditingController();
   final messageController = TextEditingController();
-  final _scrollController = ScrollController();
 
   NetworkCall networkCall = NetworkCall();
   List<dynamic> courseList = [];
@@ -156,39 +155,30 @@ class InitState extends State<ChatDashBoardScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
+    Future.wait([getGroupMessage(token, widget.currentId, widget.mChatData.id.toString()), ]);
     setState(() {
-      getGroupMessage(
-          token, widget.currentId, widget.mChatData.id.toString());
+
     });
+
   }
 
-  void getGroupMessage(String token, String userId, String convId) async {
+  Future getGroupMessage(String token, String userId, String convId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final groupMessageData =
     await networkCall.GroupMessageCall(token, userId, convId);
     if (groupMessageData != null && groupMessageData.exception == null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       groupMessagesList = groupMessageData.messages!;
       groupMembersList = groupMessageData.members!;
-      //print('hospital data' + groupMessageData.messages!.first.text.toString());
+
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
+
       setState(() {
-        // name = userProfilesData.fullname.toString();
-        // imageUrl = userProfilesData.profileimageurl.toString();
-        // String lastAccessRaw =
-        //     getDateStump(userProfilesData.lastaccess.toString());
-        // DateTime raw = DateTime.parse(lastAccessRaw);
-        // lastAccess = DateFormat.yMMMEd().format(raw);
-        // city = userProfilesData.city.toString();
-        // email = userProfilesData.email.toString();
-        // getUserCourses(token, userId);
       });
     }else if(groupMessageData!.exception != null){
       CommonOperation.hideProgressDialog(context);
       showToastMessage(groupMessageData.exception.toString());
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');
@@ -209,25 +199,6 @@ class InitState extends State<ChatDashBoardScreen> {
   String getDateStump(String sTime) {
     int timeNumber = int.parse(sTime);
     return DateTime.fromMillisecondsSinceEpoch(timeNumber * 1000).toString();
-  }
-
-  void getUserCourses(String token, String id) async {
-    CommonOperation.showProgressDialog(context, "loading", true);
-    final userCoursesData = await networkCall.UserCoursesListCall(token, id);
-    if (userCoursesData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
-      courseList = userCoursesData;
-      count = courseList.length.toString();
-      print('data_count ' + courseList.toString());
-      CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      setState(() {});
-    } else {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoged', false);
-      showToastMessage('your session is expire ');
-    }
   }
 
   Widget MessageWidget(Messages mContactData) {
@@ -313,8 +284,6 @@ class InitState extends State<ChatDashBoardScreen> {
     CommonOperation.hideProgressDialog(context);
     if(sendMessageResponse != null){
       getSharedData();
-      setState(() {
-      });
     }
   }
   Future sendGroupMessage(String token, String message, String conversationId) async{
@@ -324,8 +293,6 @@ class InitState extends State<ChatDashBoardScreen> {
     CommonOperation.hideProgressDialog(context);
     if(sendMessageResponse != null){
       getSharedData();
-      setState(() {
-      });
     }
   }
 

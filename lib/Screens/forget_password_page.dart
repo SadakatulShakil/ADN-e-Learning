@@ -14,15 +14,12 @@ class ForgetPasswordPage extends StatefulWidget{
 
 class _ForgetPasswordPageState extends State<ForgetPasswordPage>{
 
-final userEmailController = TextEditingController();
-String token ='';
-NetworkCall networkCall = NetworkCall();
+  final userEmailController = TextEditingController();
+  String token ='';
+  NetworkCall networkCall = NetworkCall();
   @override
   void initState() {
-
-    setState(() {
     getSharedData();
-    });
   }
 
   @override
@@ -121,13 +118,13 @@ NetworkCall networkCall = NetworkCall();
     );
   }
 
-void getSharedData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  token = prefs.getString('TOKEN')!;
-  setState(() {
+  void getSharedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('TOKEN')!;
+    setState(() {
 
-  });
-}
+    });
+  }
 
   Future sendResetPasswordMail(String token, String email) async{
     CommonOperation.showProgressDialog(context, "loading", true);
@@ -140,65 +137,65 @@ void getSharedData() async {
     }
   }
 
-ShowSuccessDialog() {
-  print(',,,,,,,,,,,,,,,,,,,,,');
-  showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0))),
-          title:Flexible(child: Align(
-            alignment: Alignment.center,
-            child: Text('Successfull !',style: GoogleFonts.nanumGothic(
-                fontSize: 18
+  ShowSuccessDialog() {
+    print(',,,,,,,,,,,,,,,,,,,,,');
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            title:Flexible(child: Align(
+              alignment: Alignment.center,
+              child: Text('Successfull !',style: GoogleFonts.nanumGothic(
+                  fontSize: 18
+              )),
             )),
-          )),
 
-          content: Container(
-            height: MediaQuery.of(context).size.height/4,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text('If you supplied a correct or unique email address then an email should have been sent to you. If you continue to have difficulty, please contact the site Administrator.'
-                      '\n\n\nNote: After change password, please logout and login with new password.')
-                ],
+            content: Container(
+              height: MediaQuery.of(context).size.height/4,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text('If you supplied a correct or unique email address then an email should have been sent to you. If you continue to have difficulty, please contact the site Administrator.'
+                        '\n\n\nNote: After change password, please logout and login with new password.')
+                  ],
+                ),
               ),
             ),
-          ),
-          actions: [
-            InkWell(
-              onTap: (){
-                Navigator.pop(context);
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => HomeScreen()
-                ));
-                setState(() {
+            actions: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => HomeScreen()
+                  ));
+                  setState(() {
 
-                });
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
+                  });
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    color: SecondaryColor,
                   ),
-                  child: Center(
-                    child: Text("OK", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: SecondaryColor,
+                    ),
+                    child: Center(
+                      child: Text("OK", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        );
-      });
-}
+            ],
+          );
+        });
+  }
 
 
 

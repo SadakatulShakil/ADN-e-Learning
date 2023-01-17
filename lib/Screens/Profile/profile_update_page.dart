@@ -16,7 +16,6 @@ class InitState extends State<ProfileUpdatePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {});
   }
 
   @override
@@ -71,7 +70,7 @@ class InitState extends State<ProfileUpdatePage> {
                       ),
                       radius: 120.0,
                       backgroundImage:
-                          AssetImage("assets/icons/profile_demo.jpg"),
+                      AssetImage("assets/icons/profile_demo.jpg"),
                     ),
                   ),
                 ),

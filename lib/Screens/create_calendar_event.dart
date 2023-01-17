@@ -40,7 +40,6 @@ class InitState extends State<CreateCalenderEventPage> {
     getSharedData();
     duration_val = 0;
     startdate = DateTime.now();
-    setState(() {});
   }
 
   @override
@@ -123,8 +122,8 @@ class InitState extends State<CreateCalenderEventPage> {
                           child: Text("Event title",
                               style: GoogleFonts.nanumGothic(
 
-                                  fontSize: 12,
-                                  )),
+                                fontSize: 12,
+                              )),
                         ),
                       ),
                       Padding(
@@ -160,8 +159,8 @@ class InitState extends State<CreateCalenderEventPage> {
                           child: Text("Description",
                               style: GoogleFonts.nanumGothic(
 
-                                  fontSize: 12,
-                                  )),
+                                fontSize: 12,
+                              )),
                         ),
                       ),
                       Padding(
@@ -191,84 +190,84 @@ class InitState extends State<CreateCalenderEventPage> {
                       ),
                       widget.isSelectd != 'selected'
                           ? Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 12.0, right: 15.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text('Event start date',
-                                        style: GoogleFonts.nanumGothic(
-                                          fontSize: 12,
-                                        )),
-                                  ),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 12.0, right: 15.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Event start date',
+                                  style: GoogleFonts.nanumGothic(
+                                    fontSize: 12,
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 12.0, right: 15.0, bottom: 5.0),
+                            child: InkWell(
+                              onTap: () async {
+                                final newDate = await pickDate();
+                                if (newDate == null) return;
+                                final newDateTime = DateTime(newDate.year,
+                                    newDate.month, newDate.day);
+
+                                startdate = newDateTime;
+                                String mth = '${startdate!.month}';
+                                String dy = '${startdate!.day}';
+                                print('---=-=-=-=- '+mth.length.toString());
+                                mth.length == 1? mth = '0'+mth: mth = mth;
+                                dy.length == 1? dy = '0'+dy: dy = dy;
+                                String dateTimeText =
+                                    '${startdate!.year}-'+mth+'-'+dy;
+                                initialDateText = dateTimeText;
+                                setState(() {});
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 2))
+                                  ],
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      width: 1, color: Color(0XFFE8E8E8)),
                                 ),
-                                SizedBox(
-                                  height: 10,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 15.0, left: 5.0),
+                                          child: Text(
+                                            initialDateText,
+                                            style:
+                                            GoogleFonts.nanumGothic(
+                                              color: Colors.black54,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(Icons.calendar_today_rounded,
+                                            size: 15,
+                                            color: Colors.black54),
+                                      ]),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 12.0, right: 15.0, bottom: 5.0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      final newDate = await pickDate();
-                                      if (newDate == null) return;
-                                      final newDateTime = DateTime(newDate.year,
-                                          newDate.month, newDate.day);
-                                      setState(() {
-                                        startdate = newDateTime;
-                                        String mth = '${startdate!.month}';
-                                        String dy = '${startdate!.day}';
-                                        print('---=-=-=-=- '+mth.length.toString());
-                                        mth.length == 1? mth = '0'+mth: mth = mth;
-                                        dy.length == 1? dy = '0'+dy: dy = dy;
-                                        String dateTimeText =
-                                            '${startdate!.year}-'+mth+'-'+dy;
-                                        initialDateText = dateTimeText;
-                                      });
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.grey,
-                                              blurRadius: 7,
-                                              offset: Offset(0, 2))
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            width: 1, color: Color(0XFFE8E8E8)),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 15.0, left: 5.0),
-                                                child: Text(
-                                                  initialDateText,
-                                                  style:
-                                                      GoogleFonts.nanumGothic(
-                                                    color: Colors.black54,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                              ),
-                                              Icon(Icons.calendar_today_rounded,
-                                                  size: 15,
-                                                  color: Colors.black54),
-                                            ]),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                           : Column(
                         children: [
                           Align(
@@ -312,7 +311,7 @@ class InitState extends State<CreateCalenderEventPage> {
                         children: [
                           Padding(
                             padding:
-                                const EdgeInsets.only(left: 12.0, right: 15.0),
+                            const EdgeInsets.only(left: 12.0, right: 15.0),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text('Event start time',
@@ -332,7 +331,6 @@ class InitState extends State<CreateCalenderEventPage> {
                               onTap: () {
                                 print('----------  ' + 'clicked time');
                                 displayTimeDialog();
-                                setState(() {});
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -352,7 +350,7 @@ class InitState extends State<CreateCalenderEventPage> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -435,17 +433,16 @@ class InitState extends State<CreateCalenderEventPage> {
                                         if (newDate == null) return;
                                         final newDateTime = DateTime(newDate.year,
                                             newDate.month, newDate.day);
-                                        setState(() {
-                                          startdate = newDateTime;
-                                          String mth = '${startdate!.month}';
-                                          String dy = '${startdate!.day}';
-                                          print('---=-=-=-=- '+mth.length.toString());
-                                          mth.length == 1? mth = '0'+mth: mth = mth;
-                                          dy.length == 1? dy = '0'+dy: dy = dy;
-                                          String dateTimeText =
-                                              '${startdate!.year}-'+mth+'-'+dy;
-                                          initialDateText2 = dateTimeText;
-                                        });
+                                        startdate = newDateTime;
+                                        String mth = '${startdate!.month}';
+                                        String dy = '${startdate!.day}';
+                                        print('---=-=-=-=- '+mth.length.toString());
+                                        mth.length == 1? mth = '0'+mth: mth = mth;
+                                        dy.length == 1? dy = '0'+dy: dy = dy;
+                                        String dateTimeText =
+                                            '${startdate!.year}-'+mth+'-'+dy;
+                                        initialDateText2 = dateTimeText;
+                                        setState(() {});
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width,
@@ -573,9 +570,8 @@ class InitState extends State<CreateCalenderEventPage> {
                         padding: EdgeInsets.only(left: 30.0, right: 30.0),
                         child: InkWell(
                           onTap: () {
-
-                            String startDateValue = widget.isSelectd != 'selected'?getEpochTime(initialDateText, selectedTime!):getEpochTime(widget.date, selectedTime!);
-                            String durationDate = duration_val == 0?'0':getEpochTime(initialDateText2, selectedTime2!);
+                            String startDateValue = widget.isSelectd != 'selected'?getEpochTime(initialDateText, DateFormat.jm().parse(selectedTime!).toString().split(" ")[1]):getEpochTime(widget.date, DateFormat.jm().parse(selectedTime!).toString().split(" ")[1]);
+                            String durationDate = duration_val == 0?'0':getEpochTime(initialDateText2, DateFormat.jm().parse(selectedTime2!).toString().split(" ")[1]);
                             String name = eventTitleController.text.toString();
                             String description = eventDescriptionController.text.toString();
                             String format = '1';
@@ -586,8 +582,7 @@ class InitState extends State<CreateCalenderEventPage> {
                             String eventtype = 'user';
 
                             CallEventCreate(name, description, startDateValue, durationDate, format, visible, sequence, courseid, groupid, eventtype);
-                            //print('check settings  '+ firstNameController.text.toString());
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
                           },
                           child: Card(
                             shape: RoundedRectangleBorder(
@@ -614,36 +609,6 @@ class InitState extends State<CreateCalenderEventPage> {
                       SizedBox(
                         height: 15,
                       ),
-
-                      // Padding(
-                      //   padding: EdgeInsets.only(
-                      //       left: 30.0, right: 30.0, bottom: 30),
-                      //   child: InkWell(
-                      //     onTap: () {
-                      //       //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                      //     },
-                      //     child: Card(
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(15),
-                      //       ),
-                      //       child: Container(
-                      //         width: 350,
-                      //         height: 50,
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(15),
-                      //         ),
-                      //         child: Center(
-                      //           child: Text(
-                      //             "Cancel",
-                      //             style: GoogleFonts.nanumGothic(
-                      //                 color: Colors.black,
-                      //                 fontWeight: FontWeight.bold),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   )),
             ],
@@ -659,11 +624,11 @@ class InitState extends State<CreateCalenderEventPage> {
   }
 
   Future<DateTime?> pickDate() => showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1990),
-        lastDate: DateTime(2050),
-      );
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(1990),
+    lastDate: DateTime(2050),
+  );
 
   Future<void> displayTimeDialog() async {
     final TimeOfDay? time = await showTimePicker(
@@ -671,9 +636,8 @@ class InitState extends State<CreateCalenderEventPage> {
       initialTime: TimeOfDay.now(),
     );
     if (time != null) {
-      setState(() {
-        selectedTime = time.format(context);
-      });
+      selectedTime = time.format(context);
+      setState(() {});
     }
   }
   Future<void> displayTimeDialog2() async {
@@ -682,36 +646,34 @@ class InitState extends State<CreateCalenderEventPage> {
       initialTime: TimeOfDay.now(),
     );
     if (time != null) {
-      setState(() {
-        selectedTime2 = time.format(context);
-      });
+      selectedTime2 = time.format(context);
+      setState(() {});
     }
   }
 
 
   void _handleRadioValueChange(int? value) {
-    setState(() {
-      duration_val = value!;
-
-      switch (value) {
-        case 0:
-          durationValue = "Without duration";
-          break;
-        case 1:
-          durationValue = "Until";
-          break;
-      }
-    });
+    duration_val = value!;
+    switch (value) {
+      case 0:
+        durationValue = "Without duration";
+        break;
+      case 1:
+        durationValue = "Until";
+        break;
+    }
+    setState(() {});
   }
 
 
 
   getEpochTime(String date, String time){
     DateTime timeStartDt = DateTime.parse(date+' '+time);
-    return timeStartDt.millisecondsSinceEpoch.toString();
+    int value = (timeStartDt.millisecondsSinceEpoch/1000).toInt();
+    return value.toString();
   }
 
-  Future CallEventCreate(String name,
+  void CallEventCreate(String name,
       String description,
       String startDateValue,
       String durationDate,
@@ -728,13 +690,9 @@ class InitState extends State<CreateCalenderEventPage> {
     final eventCreateData =
     await networkCall.EventCreateCall(token, name, description, startDateValue, format, durationDate, visible, sequence, courseid, groupid, eventtype);
     if (eventCreateData != null) {
-
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      setState(() {
-        showToastMessage('Event Create successfully !');
-        Navigator.of(context).pop();
-      });
+      showToastMessage('Event Create successfully !');
+      Navigator.of(context).pop();
     } else {
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -743,13 +701,11 @@ class InitState extends State<CreateCalenderEventPage> {
     }
   }
 
+
   void getSharedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-
-    });
   }
 
   void showToastMessage(String message) {

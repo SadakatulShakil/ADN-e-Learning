@@ -36,9 +36,6 @@ class InitState extends State<DashBoardCoursesList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      getSharedData();
-    });
   }
 
   @override
@@ -49,343 +46,293 @@ class InitState extends State<DashBoardCoursesList> {
   Widget initWidget(BuildContext context) {
     final List<Widget> sliderList = widget.recentCourseList
         .map((item) => Container(
-                child: InkWell(
-              onTap: () {
-                final recentCourseData = item;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CourseDetailsPage('recent', recentCourseData)));
-              },
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.black12)),
-                child: Row(
-                  children: [
-                    PhysicalModel(
-                      color: Colors.black,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      borderRadius: BorderRadius.circular(12),
-                      child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/images/course_image.png',
-                          image: widget.recentCourseList.length > 0
-                              ? item.courseimage.toString()
-                              : "",
-                          height: 80,
-                          width: 80,
-                          fit: BoxFit.fill),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 5.0, top: 5),
-                              child: Text(
-                                  widget.recentCourseList.length > 0
-                                      ? item.coursecategory.toString()
-                                      : "",
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.nanumGothic(
-                                    color: Colors.black54,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 5.0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width / 2.2,
-                                child: Text(
-                                    widget.recentCourseList.length > 0
-                                        ? item.fullname.toString()
-                                        : "",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.nanumGothic(
-                                        color: Colors.black,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 5.0),
-                              child: Text(
-                                  widget.recentCourseList.length > 0
-                                      ? DateFormat.yMMMEd().format(
-                                          DateTime.parse(getDateStump(
-                                              item.startdate.toString())))
-                                      : "",
-                                  style: GoogleFonts.nanumGothic(
-                                      color: Colors.black54,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(bottom: 5.0),
-                            //   child: Text('50% complete ',
-                            //       style: GoogleFonts.comfortaa(
-                            //           color: Colors.greenAccent,
-                            //           fontSize: 13,
-                            //           fontWeight: FontWeight.bold)),
-                            // )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+        child: InkWell(
+          onTap: () {
+            final recentCourseData = item;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CourseDetailsPage('recent', recentCourseData)));
+          },
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black12)),
+            child: Row(
+              children: [
+                PhysicalModel(
+                  color: Colors.black,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  borderRadius: BorderRadius.circular(12),
+                  child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/images/course_image.png',
+                      image: widget.recentCourseList.length > 0
+                          ? item.courseimage.toString()
+                          : "",
+                      height: 80,
+                      width: 80,
+                      fit: BoxFit.fill),
                 ),
-              ),
-            )))
-        .toList();
-    return Scaffold(
-        backgroundColor: Color(0xFFF1F1FA),
-        body: SingleChildScrollView(
-                physics: ScrollPhysics(),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 12.0, top: 5),
-                                    child: Text('Recently accessed courses ',
-                                        style: GoogleFonts.nanumGothic(
-                                            color: Colors.black,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  Visibility(
-                                    visible: widget.recentCourseList.length > 0?true:false,
-                                    child: InkWell(
-                                      onTap: () {
-                                        print(
-                                            'asjgcshcJZbcjhjhbchbhbsbddvsjsbjhbbb jbhu z');
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RecentAccessCourses(widget
-                                                        .recentCourseList)));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 8.0, top: 5),
-                                        child: Container(
-                                          height: 25,
-                                          width: 60,
-                                          child: Center(
-                                            child: Text('See All',
-                                                style: GoogleFonts.nanumGothic(
-                                                    color: SecondaryColor,
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.bold)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            widget.recentCourseList.length > 0?CarouselSlider(
-                                items: sliderList,
-                                options: CarouselOptions(
-                                    autoPlay: sliderList.length>1?true:false,
-                                    enlargeCenterPage: true,
-                                    aspectRatio: 3.0,
-                                    viewportFraction: 0.9,
-                                    onPageChanged: (index, reason) {
-                                      setState(() {
-                                        current = index;
-                                      });
-                                    }))
-                                : Center(
-                              child: SizedBox(
-                                height: 100,
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.warning_amber,
-                                      size: 30,
-                                    ),
-                                    Text('No Data Found!'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: sliderList.asMap().entries.map((entry) {
-                                return GestureDetector(
-                                  onTap: () =>
-                                      _controller.animateToPage(entry.key),
-                                  child: Container(
-                                    width: 8.0,
-                                    height: 8.0,
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 4.0),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: (Theme.of(context).brightness ==
-                                                    Brightness.dark
-                                                ? Colors.white
-                                                : PrimaryColor)
-                                            .withOpacity(current == entry.key
-                                                ? 0.9
-                                                : 0.4)),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding:
+                          const EdgeInsets.only(bottom: 5.0, top: 5),
+                          child: Text(
+                              widget.recentCourseList.length > 0
+                                  ? item.coursecategory.toString()
+                                  : "",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.nanumGothic(
+                                color: Colors.black54,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0, top: 5),
-                            child: Text('All courses ',
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 2.2,
+                            child: Text(
+                                widget.recentCourseList.length > 0
+                                    ? item.fullname.toString()
+                                    : "",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.nanumGothic(
                                     color: Colors.black,
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold)),
                           ),
-                          Visibility(
-                            visible: widget.courseList.length > 0?true:false,
-                            child: InkWell(
-                              onTap: () {
-                                print(
-                                    'asjgcshcJZbcjhjhbchbhbsbddvsjsbjhbbb jbhu z');
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AllCoursesPage(widget.courseList)));
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12.0, top: 5),
-                                child: Container(
-                                  height: 25,
-                                  width: 60,
-                                  child: Center(
-                                    child: Text('See All',
-                                        style: GoogleFonts.nanumGothic(
-                                            color: SecondaryColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                              widget.recentCourseList.length > 0
+                                  ? DateFormat.yMMMEd().format(
+                                  DateTime.parse(getDateStump(
+                                      item.startdate.toString())))
+                                  : "",
+                              style: GoogleFonts.nanumGothic(
+                                  color: Colors.black54,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(bottom: 5.0),
+                        //   child: Text('50% complete ',
+                        //       style: GoogleFonts.comfortaa(
+                        //           color: Colors.greenAccent,
+                        //           fontSize: 13,
+                        //           fontWeight: FontWeight.bold)),
+                        // )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        )))
+        .toList();
+    return Scaffold(
+        backgroundColor: Color(0xFFF1F1FA),
+        body: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12.0, top: 5),
+                              child: Text('Recently accessed courses ',
+                                  style: GoogleFonts.nanumGothic(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            Visibility(
+                              visible: widget.recentCourseList.length > 0?true:false,
+                              child: InkWell(
+                                onTap: () {
+                                  print(
+                                      'asjgcshcJZbcjhjhbchbhbsbddvsjsbjhbbb jbhu z');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RecentAccessCourses(widget
+                                                  .recentCourseList)));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 8.0, top: 5),
+                                  child: Container(
+                                    height: 25,
+                                    width: 60,
+                                    child: Center(
+                                      child: Text('See All',
+                                          style: GoogleFonts.nanumGothic(
+                                              color: SecondaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    widget.courseList.length > 0?Padding(
-                        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                        child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: widget.courseList.length,
-                            itemBuilder: (context, index) {
-                              final mCourseData = widget.courseList[index];
-
-                              return buildAllCourse(mCourseData);
-                            })): Center(
-                      child: SizedBox(
-                        height: 100,
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.warning_amber,
-                              size: 30,
-                            ),
-                            Text('No Data Found!'),
                           ],
+                        ),
+                      ),
+                      widget.recentCourseList.length > 0?CarouselSlider(
+                          items: sliderList,
+                          options: CarouselOptions(
+                              autoPlay: sliderList.length>1?true:false,
+                              enlargeCenterPage: true,
+                              aspectRatio: 3.0,
+                              viewportFraction: 0.9,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  current = index;
+                                });
+                              }))
+                          : Center(
+                        child: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.warning_amber,
+                                size: 30,
+                              ),
+                              Text('No Data Found!'),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: sliderList.asMap().entries.map((entry) {
+                          return GestureDetector(
+                            onTap: () =>
+                                _controller.animateToPage(entry.key),
+                            child: Container(
+                              width: 8.0,
+                              height: 8.0,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: (Theme.of(context).brightness ==
+                                      Brightness.dark
+                                      ? Colors.white
+                                      : PrimaryColor)
+                                      .withOpacity(current == entry.key
+                                      ? 0.9
+                                      : 0.4)),
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0, top: 5),
+                      child: Text('All courses ',
+                          style: GoogleFonts.nanumGothic(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    Visibility(
+                      visible: widget.courseList.length > 0?true:false,
+                      child: InkWell(
+                        onTap: () {
+                          print(
+                              'asjgcshcJZbcjhjhbchbhbsbddvsjsbjhbbb jbhu z');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllCoursesPage(widget.courseList)));
+                        },
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.only(right: 12.0, top: 5),
+                          child: Container(
+                            height: 25,
+                            width: 60,
+                            child: Center(
+                              child: Text('See All',
+                                  style: GoogleFonts.nanumGothic(
+                                      color: SecondaryColor,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              widget.courseList.length > 0?Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: widget.courseList.length,
+                      itemBuilder: (context, index) {
+                        final mCourseData = widget.courseList[index];
+
+                        return buildAllCourse(mCourseData);
+                      })): Center(
+                child: SizedBox(
+                  height: 100,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.warning_amber,
+                        size: 30,
+                      ),
+                      Text('No Data Found!'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
     );
   }
-
-  void getSharedData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('TOKEN')!;
-    String userid = prefs.getString('userId')!;
-    setState(() {
-      //getRecentCourses(token, userid);
-    });
-  }
-
-  // void getRecentCourses(String token, String userId) async {
-  //   CommonOperation.showProgressDialog(context, "loading", true);
-  //   final recentCoursesData =
-  //       await networkCall.RecentCoursesListCall(token, userId);
-  //   if (recentCoursesData != null) {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success';
-  //     recentCourseList = recentCoursesData;
-  //     print('data_count1 ' + recentCourseList.first.toString());
-  //     CommonOperation.hideProgressDialog(context);
-  //     //showToastMessage(message);
-  //     setState(() {
-  //       getAllCourses(token, userId);
-  //     });
-  //   } else {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  // }
-  //
-  // void getAllCourses(String token, String userId) async {
-  //   CommonOperation.showProgressDialog(context, "loading", true);
-  //   final userCoursesData =
-  //       await networkCall.UserCoursesListCall(token, userId);
-  //   if (userCoursesData != null) {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success2';
-  //     courseList = userCoursesData;
-  //     //count = courseList.length.toString();
-  //     print('data_count1 ' + courseList.first.toString());
-  //     //showToastMessage(message);
-  //     CommonOperation.hideProgressDialog(context);
-  //     setState(() {});
-  //   } else {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  // }
 
   String getDateStump(String sTime) {
     int timeNumber = int.parse(sTime);
@@ -400,7 +347,7 @@ class InitState extends State<DashBoardCoursesList> {
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0 //message font size
-        );
+    );
   }
 
   Widget buildAllCourse(mCourseData) => GestureDetector(
@@ -428,8 +375,8 @@ class InitState extends State<DashBoardCoursesList> {
                   placeholder: 'assets/images/course_image.png',
                   image: mCourseData.overviewfiles.length != 0
                       ? mCourseData.overviewfiles.first.fileurl
-                          .replaceAll("/webservice", "")
-                          .toString()
+                      .replaceAll("/webservice", "")
+                      .toString()
                       : 'https://image.shutterstock.com/image-photo/online-courses-text-man-using-260nw-600126515.jpg',
                   height: 80,
                   width: 80,
@@ -457,8 +404,8 @@ class InitState extends State<DashBoardCoursesList> {
                       DateFormat.yMMMEd().format(DateTime.parse(
                           getDateStump(mCourseData.startdate.toString()))),
                       style: GoogleFonts.nanumGothic(
-                          fontSize: 13,
-                          )),
+                        fontSize: 13,
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
@@ -486,8 +433,8 @@ class InitState extends State<DashBoardCoursesList> {
                       'Total user: ' +
                           mCourseData.enrolledusercount.toString(),
                       style: GoogleFonts.nanumGothic(
-                          fontSize: 13,
-                          )),
+                        fontSize: 13,
+                      )),
                 ),
               ],
             )

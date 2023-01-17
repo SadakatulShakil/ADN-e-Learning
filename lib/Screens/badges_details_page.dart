@@ -271,7 +271,5 @@ class InitState extends State<BadgesDetailsPage> {
         courseName = widget.courseList[i].displayname.toString();
       }
     }
-    setState(() {
-    });
   }
 }

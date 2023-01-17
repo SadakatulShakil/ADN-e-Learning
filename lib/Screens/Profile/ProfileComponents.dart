@@ -32,9 +32,7 @@ class InitState extends State<ProfileComponents> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      checkconnectivity();
-    });
+    checkconnectivity();
   }
 
 
@@ -86,8 +84,8 @@ class InitState extends State<ProfileComponents> {
                             child: Align(
                               alignment: Alignment.topRight,
                               child: CircleAvatar(
-                                radius: 15.0,
-                                child: SvgPicture.asset("assets/vectors/edit_icon.svg")
+                                  radius: 15.0,
+                                  child: SvgPicture.asset("assets/vectors/edit_icon.svg")
                               ),
                             ),
                           ),
@@ -164,25 +162,22 @@ class InitState extends State<ProfileComponents> {
     imageurl = prefs.getString('imageUrl')!;
     String token = prefs.getString('TOKEN')!;
     String userid = prefs.getString('userId')!;
-    setState(() {
-      getSiteInfo(token, userid);
-    });
+    Future.wait([getSiteInfo(token, userid), getProfileInfo(token, userid)]);
   }
   Future getSiteInfo(String token, String userid) async{
 
     CommonOperation.showProgressDialog(context, "loading", true);
     final userDetailsData = await networkCall.UserDetailsCall(token);
     if(userDetailsData != null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
+      CommonOperation.hideProgressDialog(context);
       print('hospital data'+ userDetailsData.firstname.toString());
       surName = userDetailsData.lastname.toString();
       firstName = userDetailsData.firstname.toString();
       setState(() {
-        getProfileInfo(token, userid);
       });
 
     }else{
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');
@@ -192,20 +187,13 @@ class InitState extends State<ProfileComponents> {
 
 
   Future getProfileInfo(String token, String userId) async {
-    //CommonOperation.showProgressDialog(context, "loading", true);
     final profileInfoData =
     await networkCall.ProfileInfoCall(token, userId);
     if (profileInfoData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       profileInfoList = profileInfoData;
       email = profileInfoList[0].email.toString();
-      //userName = profileInfoList[0].username.toString();
       print('data_count1 ' + profileInfoList.first.toString());
-      CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        //getAllCourses(token, userId);
       });
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -270,9 +258,7 @@ class InitState extends State<ProfileComponents> {
                 onTap: (){
                   Navigator.pop(context);
                   checkconnectivity();
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(

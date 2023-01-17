@@ -123,8 +123,8 @@ class InitState extends State<AllCoursesPage> {
                             .startdate
                             .toString()))),
                         style: GoogleFonts.nanumGothic(
-                            color: Colors.black54,
-                            fontSize: 13,)),
+                          color: Colors.black54,
+                          fontSize: 13,)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
@@ -134,17 +134,17 @@ class InitState extends State<AllCoursesPage> {
                             ' % complete'
                             : '0 % complete',
                         style: GoogleFonts.nanumGothic(
-                            color: SecondaryColor,
-                            fontSize: 13,
-                            )),
+                          color: SecondaryColor,
+                          fontSize: 13,
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: Text( 'Total user: '+mCourseData.enrolledusercount.toString(),
                         style: GoogleFonts.nanumGothic(
-                            color: Colors.black54,
-                            fontSize: 13,
-                            )),
+                          color: Colors.black54,
+                          fontSize: 13,
+                        )),
                   ),
                 ],
               ),

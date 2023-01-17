@@ -141,9 +141,6 @@ class InitState extends State<SearchResultPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-
-    });
   }
 
 }

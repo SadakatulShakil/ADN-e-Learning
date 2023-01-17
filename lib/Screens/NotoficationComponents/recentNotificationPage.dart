@@ -127,10 +127,10 @@ class InitState extends State<RecentNotificationPage> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                                DateFormat.yMMMEd().format(DateTime.parse(DateTime.fromMillisecondsSinceEpoch(mNotificationData.timecreated * 1000).toString())),
+                              DateFormat.yMMMEd().format(DateTime.parse(DateTime.fromMillisecondsSinceEpoch(mNotificationData.timecreated * 1000).toString())),
                               style: GoogleFonts.nanumGothic(
-                              fontSize: 14,
-                            ),),
+                                fontSize: 14,
+                              ),),
 
                           ),
                         ),
@@ -146,26 +146,23 @@ class InitState extends State<RecentNotificationPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
   }
 
 
   void CallNotificationView(String notificationId, mNotificationData) async{
     CommonOperation.showProgressDialog(context, "loading", true);
-      final quizSubmitData =
-      await networkCall.ViewNotificationCall(token, notificationId);
-      if (quizSubmitData != null) {
-        CommonOperation.hideProgressDialog(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationDetailsPage(mNotificationData)));
+    final quizSubmitData =
+    await networkCall.ViewNotificationCall(token, notificationId);
+    if (quizSubmitData != null) {
+      CommonOperation.hideProgressDialog(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationDetailsPage(mNotificationData)));
 
-      } else {
-        CommonOperation.hideProgressDialog(context);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isLoged', false);
-        showToastMessage('your session is expire ');
-      }
+    } else {
+      CommonOperation.hideProgressDialog(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
   }
   void showToastMessage(String message) {
     Fluttertoast.showToast(
