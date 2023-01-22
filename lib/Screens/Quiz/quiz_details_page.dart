@@ -174,13 +174,11 @@ class InitState extends State<QuizDetailsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getQuizQuestionData(token, widget.quizId, widget.attemptId);
-      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
+    Future.wait([getQuizQuestionData(token, widget.quizId, widget.attemptId)]);
+
   }
 
-  void getQuizQuestionData(String token, String quizId, String attemptId) async{
+  Future getQuizQuestionData(String token, String quizId, String attemptId) async{
     CommonOperation.showProgressDialog(context, "loading", true);
     final quizQuestionData =
     await networkCall.QuizQuestionCall(token, attemptId);
@@ -192,9 +190,7 @@ class InitState extends State<QuizDetailsPage> {
       dumpQuestion = unescape.convert(quizQuestionData.questions![0].html.toString());
       print('Unecaped String----> '+dumpQuestion);
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
       });
     } else {
       CommonOperation.hideProgressDialog(context);

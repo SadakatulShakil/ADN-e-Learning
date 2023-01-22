@@ -39,7 +39,6 @@ class InitState extends State<QuizViewPage> {
     // TODO: implement initState
     super.initState();
     getSharedData();
-    setState(() {});
   }
 
   @override
@@ -273,13 +272,10 @@ class InitState extends State<QuizViewPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getQuizAccessInformation(token, widget.quizId);
-      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
+    Future.wait([getQuizAccessInformation(token, widget.quizId),  getQuizSummeryData(token, widget.quizId)]);
   }
 
-  void callAttemptApi(String token, String quizId) async{
+  Future callAttemptApi(String token, String quizId) async{
     CommonOperation.showProgressDialog(context, "loading", true);
     final startAttemptData =
     await networkCall.StartQuizAttemptCall(token, quizId);
@@ -290,10 +286,7 @@ class InitState extends State<QuizViewPage> {
 
 
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      setState(() {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
-      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
     } else {
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -325,17 +318,13 @@ class InitState extends State<QuizViewPage> {
         //print('data_content ' + quizSummeryList[i].sumgrades!.toString());
         if(quizSummeryList[i].sumgrades.toString() != 'null'){
           highestGrade = quizSummeryList[i].sumgrades.toString();
-          // if(quizSummeryList[i].sumgrades! > quizSummeryList[0].sumgrades!){
-          //
-          // }
         }else{
           highestGrade = 'Not graded';
         }
 
       }
-
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
+
       setState(() {
         //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
       });
@@ -347,8 +336,7 @@ class InitState extends State<QuizViewPage> {
     }
   }
 
-  void getQuizAccessInformation(String token, String quizId) async{
-    //CommonOperation.showProgressDialog(context, "loading", true);
+  Future getQuizAccessInformation(String token, String quizId) async{
     final quizAccessData =
     await networkCall.QuizAccessInformationCall(token, quizId);
     if (quizAccessData != null) {
@@ -362,9 +350,8 @@ class InitState extends State<QuizViewPage> {
       //CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);
       canAttempt = quizAccessData.canattempt!;
+
       setState(() {
-        getQuizSummeryData(token, widget.quizId);
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => QuizDetailsPage(widget.name, widget.quizId, startAttemptData.attempt!.id.toString())));
       });
     } else {
       CommonOperation.hideProgressDialog(context);
